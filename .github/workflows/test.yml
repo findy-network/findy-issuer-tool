@@ -2,8 +2,10 @@ name: test
 on: push
 jobs:
   api:
-    working-directory: ./api
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
     strategy:
       matrix:
         node-version: [14.x]
