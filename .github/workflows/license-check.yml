@@ -16,7 +16,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://npm.pkg.github.com'
           scope: '@findy-network'
+          always-auth: true
       - name: install deps
         run: npm ci
       - name: run check
-        run: npm run licenses:check
+        run: cat /home/runner/work/_temp/.npmrc && npm run licenses:check
