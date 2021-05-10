@@ -15,7 +15,7 @@ const runCheck = async (path, verbose) => {
     console.log(`Scanning ${arg}`);
   });
   checker.on('error', (err) => {
-    console.log(err);
+    throw err;
   });
   await checker.checkLocalDirectory(path);
   return licenses;
@@ -37,35 +37,45 @@ const scan = async (packageJsonPath, report) => {
       JSON.stringify({ greenLicenses: [] })
     );
 
-    const licenses = await runCheck(path);
-    const reportPath = process.argv[3];
-    writeFileSync(
-      reportPath,
-      licenses.reduce(
-        (result, { packageName, version, licenseName }) =>
-          `${result}\n${packageName}@${version} ${licenseName}`,
-        ''
-      )
-    );
-    console.log(`Licenses listed to ${reportPath}`);
+    try {
+      const licenses = await runCheck(path);
+      const reportPath = process.argv[3];
+      writeFileSync(
+        reportPath,
+        licenses.reduce(
+          (result, { packageName, version, licenseName }) =>
+            `${result}\n${packageName}@${version} ${licenseName}`,
+          ''
+        )
+      );
+      console.log(`Licenses listed to ${reportPath}`);
+    } catch (err) {
+      console.log(err)
+      process.exit(1); 
+    }
   }
 
   copyFileSync(
     `./tools/js-green-licenses.json`,
     `${path}/js-green-licenses.json`
   );
-  const licenses = await runCheck(path, true);
-  if (licenses.length > 0) {
-    licenses.map(({ packageName, version, licenseName }) =>
-      console.log(
-        `Found invalid license for ${packageName}@${version}: ${licenseName}`
-      )
-    );
-    console.log('Check license terms for invalid licenses! Either');
-    console.log('1) remove incompatible package');
-    console.log('2) add license to greenLicenses');
-    console.log('3) add package to exception list (packageAllowList)');
-    process.exit(1);
+  try {
+    const licenses = await runCheck(path, true);
+    if (licenses.length > 0) {
+      licenses.map(({ packageName, version, licenseName }) =>
+        console.log(
+          `Found invalid license for ${packageName}@${version}: ${licenseName}`
+        )
+      );
+      console.log('Check license terms for invalid licenses! Either');
+      console.log('1) remove incompatible package');
+      console.log('2) add license to greenLicenses');
+      console.log('3) add package to exception list (packageAllowList)');
+      process.exit(1);
+    }  
+  } catch (err) {
+    console.log(err)
+    process.exit(1); 
   }
 };
 
