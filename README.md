@@ -9,3 +9,5 @@ Utility (UI) tool and sample project for issuing and verifying
     1. Run
 
 1. Start frontend server
+    1. Configuration
+    1. Run

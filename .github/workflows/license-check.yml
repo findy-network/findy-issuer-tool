@@ -20,4 +20,6 @@ jobs:
       - name: install deps
         run: npm ci
       - name: run check
-        run: cat /home/runner/work/_temp/.npmrc && npm run licenses:check
+        run: |
+          cp ${NPM_CONFIG_USERCONFIG} .
+          npm run licenses:check
