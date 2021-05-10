@@ -32,8 +32,9 @@ export default (createToken) => {
     );
 
     // TODO: handle errors
-    const primaryEmail = userEmailsResponse.data.find((item) => item.primary)
-      .email;
+    const primaryEmail = userEmailsResponse.data.find(
+      (item) => item.primary,
+    ).email;
     const index = primaryEmail.indexOf('@');
     if (
       index > -1 &&

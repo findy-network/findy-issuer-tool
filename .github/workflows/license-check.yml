@@ -1,7 +1,9 @@
 name: license-check
 on: push
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -12,6 +14,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: 'https://npm.pkg.github.com'
       - name: install deps
         run: npm ci
       - name: run check
