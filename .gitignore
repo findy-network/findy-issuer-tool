@@ -1,0 +1,11 @@
+node_modules
+build
+coverage/
+.vscode
+.secrets
+.docker
+.temp
+
+.DS_Store
+.envrc
+.npmrc

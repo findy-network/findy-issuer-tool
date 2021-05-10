@@ -1,0 +1,29 @@
+name: test
+on: push
+jobs:
+  api:
+    working-directory: ./api
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install deps
+        run: npm ci
+      - name: build
+        run: npm run build
+      - name: test
+        run: npm test
+        env:
+          AWS_ACCESS_KEY_ID: foo # needed for
+          AWS_SECRET_ACCESS_KEY: bar # dynamodb connection
+    services:
+      dynamodb:
+        image: amazon/dynamodb-local
+        ports:
+          - 8000:8000

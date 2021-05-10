@@ -1,0 +1,37 @@
+{
+  "port": 3001,
+  "ourName": "issuer-tool",
+  "storage": {
+    "devMode": "true",
+    "type": "DYNAMODB",
+    "host": "http://localhost:8000",
+    "region": "eu-north-1"
+  },
+  "auth": {
+    "jwtSharedSecret": "anotherSuperSecretKeyLol",
+    "apps": {
+      "findy-issuer-app": {
+        "github": {
+          "username": "",
+          "clientId": "",
+          "clientSecret": ""
+        },
+        "redirectUrl": "http://localhost:8081"
+      }
+    },
+    "allowedDomains": ["op.fi", "gmail.com"]
+  },
+  "log": {
+    "colorize": true,
+    "level": "debug"
+  },
+  "agency": {
+    "authUrl": "",
+    "userName": "",
+    "key": "",
+    "serverAddress": "",
+    "serverPort": 50051,
+    "certPath": "./tools/server.crt",
+    "verifyServerIdentity": false
+  }
+}
