@@ -1,0 +1,72 @@
+{
+  "name": "findy-issuer-api",
+  "version": "1.31.0",
+  "description": "Sample issuer service API for Findy identity network",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "rimraf build/ && babel ./src --out-dir build/ --ignore **/*.test.js",
+    "build:production": "export NODE_ENV=production && npm run build",
+    "db": "npm run db:clean && docker run -d -p 8000:8000 --name dynamodb amazon/dynamodb-local",
+    "db:clean": "npm run db:stop && npm run db:rm",
+    "db:stop": "(docker stop dynamodb || true)",
+    "db:rm": "(docker rm dynamodb || true)",
+    "debug": "babel-node --inspect ./src/index.js",
+    "deps:update": "npm-outdated-to-latest",
+    "release": "npm version minor && git push --tags",
+    "start": "npm run build && node ./build/index.js",
+    "test": "npm run test:lint && npm run test:unit",
+    "test:lint": "eslint ./src --format codeframe",
+    "test:lint:fix": "eslint ./src --format codeframe --fix",
+    "test:unit": "jest ./src --coverage",
+    "tools:token": "babel-node ./tools/create-jwt.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "issuer",
+    "verifier",
+    "ssi",
+    "identity"
+  ],
+  "author": "findy-network",
+  "license": "Apache-2.0",
+  "jest": {
+    "testRegex": ".*\\.test\\.js$",
+    "testEnvironment": "node"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.14.0",
+    "@findy-network/findy-common-ts": "0.0.16",
+    "aws-sdk": "^2.903.0",
+    "axios": "^0.21.1",
+    "config": "^3.3.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-json-validator-middleware": "^2.1.1",
+    "express-jwt": "^6.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
+    "uuid": "^8.3.2",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.14.0",
+    "@babel/node": "^7.13.13",
+    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/preset-env": "^7.14.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^26.6.3",
+    "npm-outdated-to-latest": "^1.0.3",
+    "prettier": "^2.3.0",
+    "rimraf": "^3.0.2"
+  }
+}

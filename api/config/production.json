@@ -1,0 +1,8 @@
+{
+  "storage": {
+    "devMode": "false"
+  },
+  "log": {
+    "colorize": false
+  }
+}

@@ -1,0 +1,36 @@
+name: test
+on: push
+jobs:
+  test-api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@findy-network'
+      - name: install deps
+        run: npm ci
+        env: # TODO: remove when public - not secure to expose to all scripts
+          NODE_AUTH_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
+      - name: build
+        run: npm run build
+      - name: test
+        run: npm test
+        env:
+          AWS_ACCESS_KEY_ID: foo # needed for
+          AWS_SECRET_ACCESS_KEY: bar # dynamodb connection
+    services:
+      dynamodb:
+        image: amazon/dynamodb-local
+        ports:
+          - 8000:8000
