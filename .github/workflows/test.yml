@@ -1,7 +1,7 @@
 name: test
 on: push
 jobs:
-  api:
+  test-api:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -15,6 +15,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: 'https://npm.pkg.github.com'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
       - name: install deps
         run: npm ci
       - name: build
