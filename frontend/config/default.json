@@ -1,0 +1,19 @@
+{
+  "auth": {
+    "github": {
+      "clientId": ""
+    }
+  },
+  "api": {
+    "url": "http://localhost:3001"
+  },
+  "ledger": {
+    "browserUrl": "http://localhost:9000"
+  },
+  "wallets": {
+    "findy": {
+      "label": "Findy Web Wallet",
+      "url": "http://localhost:3000/connect/"
+    }
+  }
+}

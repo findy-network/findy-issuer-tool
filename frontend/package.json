@@ -1,0 +1,101 @@
+{
+  "name": "findy-issuer-app",
+  "version": "1.17.0",
+  "description": "Sample service app for issuing credentials via Findy Network.",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "rimraf build/* && export NODE_ENV=production && webpack --config ./webpack/prod.js",
+    "build:demo": "rimraf build/* && export NODE_ENV=demo && webpack --config ./webpack/prod.js",
+    "build:docker": "docker build -t findy-issuer-app-builder . && docker run -it --rm -v $PWD/build:/app/build -e GITHUB_CLIENT_ID=$GITHUB_CLIENT_ID findy-issuer-app-builder",
+    "release": "npm version minor && git push --tags",
+    "start": "webpack-dev-server --port 8081 --open \"Google Chrome\" --config ./webpack/dev.js",
+    "storybook": "start-storybook",
+    "test": "npm run test:lint && npm run test:unit",
+    "test:lint": "eslint ./src --format codeframe",
+    "test:lint:fix": "eslint ./src --format codeframe --fix",
+    "test:unit": "jest ./src --coverage",
+    "test:update": "jest ./src --updateSnapshot",
+    "update:deps": "npm-outdated-to-latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "TODO"
+  },
+  "keywords": [
+    "SSI",
+    "Findy",
+    "DLT",
+    "hyperledger-indy"
+  ],
+  "author": "TODO",
+  "license": "Apache-2.0",
+  "jest": {
+    "setupFiles": [
+      "jest-localstorage-mock"
+    ],
+    "testRegex": ".*\\.test\\.js$",
+    "testEnvironment": "node",
+    "transform": {
+      ".+\\.jsx?$": "babel-jest",
+      ".+\\.svg$": "jest-svg-transformer"
+    }
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.14.0",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "connected-react-router": "^6.9.1",
+    "history": "^5.0.0",
+    "immutable": "4.0.0-rc.12",
+    "prop-types": "15.7.2",
+    "qrcode.react": "^1.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-observable": "1.2.0",
+    "rxjs": "^7.0.0",
+    "seamless-immutable": "7.1.4",
+    "styled-components": "^5.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.14.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/preset-env": "^7.14.1",
+    "@babel/preset-react": "^7.13.13",
+    "@storybook/addon-storyshots": "^6.2.9",
+    "@storybook/react": "^6.2.9",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-styled-components": "^1.12.0",
+    "config": "^3.3.6",
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "html-webpack-plugin": "^5.3.1",
+    "jest": "^26.6.3",
+    "jest-localstorage-mock": "^2.4.10",
+    "jest-svg-transformer": "1.0.0",
+    "npm-outdated-to-latest": "^1.0.3",
+    "prettier": "^2.3.0",
+    "react-test-renderer": "^17.0.2",
+    "rimraf": "3.0.2",
+    "svg-url-loader": "^7.1.1",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3",
+    "webpack-version-file": "0.1.6"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "auth": {
+    "github": {
+      "clientId": "GITHUB_CLIENT_ID"
+    }
+  },
+  "api": {
+    "url": "API_URL"
+  },
+  "ledger": {
+    "browserUrl": "LEDGER_URL"
+  },
+  "wallets": {
+    "findy": {
+      "label": "DEFAULT_WEB_WALLET_LABEL",
+      "url": "DEFAULT_WEB_WALLET_URL"
+    }
+  }
+}
