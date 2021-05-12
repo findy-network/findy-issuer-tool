@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Divider from '@material-ui/core/Divider';
 import { saveSchema, saveCredDef } from '../store/actions';
-import LedgerEditor from '../components/ledger-editor';
+import CredDefEditor from '../components/cred-def-editor';
 import SchemaEditor from '../components/schema-editor';
 
 const defaultSchemaJSON = JSON.stringify({
@@ -17,7 +17,9 @@ const Tools = ({
   doSaveSchema,
   doSaveCredDef,
   schemaId,
+  sendingSchema,
   credDefId,
+  sendingCredDef,
   schemas,
   credDefs,
 }) => {
@@ -37,17 +39,20 @@ const Tools = ({
         label="SchemaJSON"
         defaultValue={defaultSchemaJSON}
         items={schemas}
+        sending={sendingSchema}
       />
       <Divider />
-      <LedgerEditor
+      <CredDefEditor
         doSaveEditorItem={doSaveCredDef}
         value={credDefId}
         txnType="102"
         title="Credential Definition"
         label="CredDefJSON"
-        description="Replace 'schema-id' with appropriate value. 'info'-field sets cred def tag."
+        description="Note: creation may take a while depending on the ledger type."
         defaultValue={defaultCredDefJSON}
         items={credDefs}
+        schemas={schemas}
+        sending={sendingCredDef}
       />
     </div>
   );
@@ -57,19 +62,28 @@ Tools.propTypes = {
   doSaveSchema: PropTypes.func.isRequired,
   doSaveCredDef: PropTypes.func.isRequired,
   schemaId: PropTypes.string,
+  sendingSchema: PropTypes.bool,
   credDefId: PropTypes.string,
+  sendingCredDef: PropTypes.bool,
   schemas: PropTypes.arrayOf(PropTypes.string).isRequired,
   credDefs: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 Tools.defaultProps = {
   schemaId: null,
+  sendingSchema: false,
   credDefId: null,
+  sendingCredDef: false,
 };
 
-const mapStateWithProps = ({ result: { schemaId, credDefId }, ledger }) => ({
+const mapStateWithProps = ({
+  result: { schemaId, sendingSchema, credDefId, sendingCredDef },
+  ledger,
+}) => ({
   schemaId,
+  sendingSchema,
   credDefId,
+  sendingCredDef,
   schemas: ledger ? ledger.schemas : [],
   credDefs: ledger ? ledger.credDefs : [],
 });

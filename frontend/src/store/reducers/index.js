@@ -14,6 +14,8 @@ import {
   FETCH_EVENTS_LOG_FULFILLED,
   FETCH_LEDGER_FULFILLED,
   FETCH_CONNECTIONS_FULFILLED,
+  SAVE_SCHEMA_REJECTED,
+  SAVE_CRED_DEF_REJECTED,
 } from '../actions';
 import initialState from './initial-state';
 
@@ -61,17 +63,24 @@ export const result = (state = initialState.result, action) => {
       return { ...state, pairwiseInvitation: action.payload };
     }
     case SAVE_SCHEMA: {
-      return { ...state, schemaId: null };
+      return { ...state, schemaId: null, sendingSchema: true };
     }
     case SAVE_SCHEMA_FULFILLED: {
-      return { ...state, schemaId: action.payload.id };
+      return { ...state, schemaId: action.payload.id, sendingSchema: false };
     }
     case SAVE_CRED_DEF: {
-      return { ...state, credDefId: null };
+      return { ...state, credDefId: null, sendingCredDef: true };
     }
     case SAVE_CRED_DEF_FULFILLED: {
-      return { ...state, credDefId: action.payload.id };
+      return { ...state, credDefId: action.payload.id, sendingCredDef: false };
     }
+    case SAVE_SCHEMA_REJECTED: {
+      return { ...state, sendingSchema: false };
+    }
+    case SAVE_CRED_DEF_REJECTED: {
+      return { ...state, sendingCredDef: false };
+    }
+
     default:
       return state;
   }

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
 
 import Typography from '@material-ui/core/Typography';
 import LedgerLink from '../ledger-link';
 import TextField from '../text-input';
 import EditorButtons from '../editor-buttons';
+import DropDown from '../drop-down';
 
 const Container = styled.div`
   display: flex;
@@ -39,25 +39,21 @@ const Header = styled(Typography)`
   font-weight: bold !important;
 `;
 
-const SchemaEditor = ({
+const CredDefEditor = ({
   doSaveEditorItem,
   txnType,
   title,
   description,
   items,
   value: result,
+  schemas,
   sending,
 }) => {
   const defaultValue = {
-    attrs: [],
-    name: '',
-    version: '',
+    schemaId: '',
+    tag: '',
   };
   const [value, setValue] = useState(defaultValue);
-  const trimSchema = (schema) => ({
-    ...schema,
-    attrs: schema.attrs.filter((item) => item),
-  });
 
   return (
     <Container>
@@ -71,67 +67,30 @@ const SchemaEditor = ({
         <FormContainer>
           <Header>{title}</Header>
           {description && <Description>{description}</Description>}
-          <TextField
-            rows="1"
-            label="Name e.g. Email"
-            onChange={(name) => setValue({ ...value, name })}
-            value={value.name}
+          <DropDown
+            value={value.schemaId}
+            values={schemas.map((item) => ({
+              id: item,
+              title: item,
+            }))}
+            onValueChange={(schemaId) => setValue({ ...value, schemaId })}
+            label={value.schemaId ? 'Schema' : 'Select schema'}
           />
           <TextField
             rows="1"
-            label="Version e.g. 1.0"
-            onChange={(version) => setValue({ ...value, version })}
-            value={value.version}
+            label="Tag e.g. Passport"
+            onChange={(tag) => setValue({ ...value, tag })}
+            value={value.tag}
           />
-          {value.attrs.map((item, index) => (
-            <TextField
-              key={`${index + 1}. attribute`}
-              rows="1"
-              label={`${index + 1}. attribute`}
-              onChange={(attr) =>
-                setValue({
-                  ...value,
-                  attrs: value.attrs.map((attrItem, itemIndex) =>
-                    itemIndex === index ? attr : attrItem
-                  ),
-                })
-              }
-              value={item}
-            />
-          ))}
-          <Button
-            onClick={() => setValue({ ...value, attrs: [...value.attrs, ''] })}
-          >
-            Add attribute
-          </Button>
 
           <EditorButtons
             canReset={
-              (() => {
-                const schema = trimSchema(value);
-                return (
-                  schema.name !== defaultValue.name ||
-                  schema.version !== defaultValue.version ||
-                  schema.attrs.length !== 0 ||
-                  schema.attrs.find(
-                    (item, index) => item !== defaultValue.attrs[index]
-                  )
-                );
-              })() || false
+              value.schemaId !== defaultValue.schemaId &&
+              value.tag !== defaultValue.tag
             }
             onReset={() => setValue(defaultValue)}
-            canSave={
-              !sending &&
-              (() => {
-                const schema = trimSchema(value);
-                return (
-                  schema.name !== '' &&
-                  schema.version !== '' &&
-                  schema.attrs.length > 0
-                );
-              })()
-            }
-            onSave={() => doSaveEditorItem(trimSchema(value))}
+            canSave={!sending && value.schemaId !== '' && value.tag !== ''}
+            onSave={() => doSaveEditorItem(value)}
           />
         </FormContainer>
       </div>
@@ -149,20 +108,22 @@ const SchemaEditor = ({
   );
 };
 
-SchemaEditor.propTypes = {
+CredDefEditor.propTypes = {
   doSaveEditorItem: PropTypes.func.isRequired,
   value: PropTypes.string,
   txnType: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   items: PropTypes.arrayOf(PropTypes.string),
+  schemas: PropTypes.arrayOf(PropTypes.string),
   sending: PropTypes.bool.isRequired,
 };
 
-SchemaEditor.defaultProps = {
+CredDefEditor.defaultProps = {
   value: null,
   description: null,
   items: [],
+  schemas: [],
 };
 
-export default SchemaEditor;
+export default CredDefEditor;
