@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Divider from '@material-ui/core/Divider';
 import { saveSchema, saveCredDef } from '../store/actions';
 import LedgerEditor from '../components/ledger-editor';
+import SchemaEditor from '../components/schema-editor';
 
 const defaultSchemaJSON = JSON.stringify({
   attrs: ['email'],
@@ -28,7 +29,7 @@ const Tools = ({
   });
   return (
     <div>
-      <LedgerEditor
+      <SchemaEditor
         doSaveEditorItem={doSaveSchema}
         value={schemaId}
         txnType="101"

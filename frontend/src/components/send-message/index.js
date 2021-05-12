@@ -26,7 +26,7 @@ const SendMessage = ({ connections, onSendMessage }) => {
         canSave={canSaveMessage}
         onSave={() => {
           setMessage('');
-          return onSendMessage({ name: pairwiseName, msg: message });
+          return onSendMessage({ connectionId: pairwiseName, msg: message });
         }}
         okLabel="Send"
       />

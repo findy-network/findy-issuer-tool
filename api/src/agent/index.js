@@ -38,26 +38,37 @@ export default async (storage) => {
       const notification = status.agent.getNotification();
       const protocolStatus = status.protocol;
       const state = protocolStatus.getState().getState();
+
+      const typeName = getValueName(
+        agencyv1.Notification.Type,
+        notification.getTypeid(),
+      );
+      const protocolName = getValueName(
+        agencyv1.Protocol.Type,
+        notification.getProtocolType(),
+      );
+      const statusName = getValueName(agencyv1.ProtocolState.State, state);
+      log.debug(`Received ${typeName} for ${protocolName} - ${statusName}`);
+
       await storage.saveEvent(Date.now(), {
-        type: getValueName(
-          agencyv1.Notification.Type,
-          notification.getTypeid(),
-        ),
-        protocol: getValueName(
-          agencyv1.Protocol.Type,
-          notification.getProtocolType(),
-        ),
+        type: typeName,
+        protocol: protocolName,
         id: notification.getProtocolid(),
-        status: getValueName(agencyv1.ProtocolState.State, state),
+        status: statusName,
       });
       if (
         notification.getTypeid() === agencyv1.Notification.Type.STATUS_UPDATE &&
-        notification.getProtocolid() === agencyv1.Protocol.Type.CONNECT &&
+        notification.getProtocolType() === agencyv1.Protocol.Type.DIDEXCHANGE &&
         state === agencyv1.ProtocolState.State.OK
       ) {
+        log.debug(
+          `Saving connection with id ${protocolStatus
+            .getDidExchange()
+            .getId()}`,
+        );
         await storage.saveConnection(
-          protocolStatus.getConnection().getId(),
-          protocolStatus.getConnection().toObject(),
+          protocolStatus.getDidExchange().getId(),
+          protocolStatus.getDidExchange().toObject(),
         );
       }
     },

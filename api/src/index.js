@@ -17,6 +17,33 @@ class Stream {
   }
 }
 
+const validateConfig = () => {
+  if (!config.auth.jwtSharedSecret) {
+    log.error(`JWT secret missing`);
+    process.exit(1);
+  }
+  if (!config.agency.authUrl) {
+    log.error(`Authentication server URL missing`);
+    process.exit(1);
+  }
+  if (!config.agency.userName) {
+    log.error(`Unique agent name missing`);
+    process.exit(1);
+  }
+  if (!config.agency.key) {
+    log.error(`Authenticator key missing`);
+    process.exit(1);
+  }
+  if (!config.agency.serverAddress) {
+    log.error(`API server address missing`);
+    process.exit(1);
+  }
+  if (!config.agency.serverPort) {
+    log.error(`API server port missing`);
+    process.exit(1);
+  }
+};
+
 const init = async () => {
   const { validate } = new Validator();
   const jwtMw = jwt({
@@ -74,5 +101,6 @@ const init = async () => {
 };
 
 (async () => {
+  validateConfig();
   await init();
 })();

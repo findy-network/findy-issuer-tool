@@ -10,7 +10,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
       },
       {
         test: /\.(png|jpg|gif)$/i,
@@ -18,29 +18,29 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 8192
-            }
-          }
-        ]
+              limit: 8192,
+            },
+          },
+        ],
       },
       {
         test: /\.svg/,
         use: {
           loader: 'svg-url-loader',
-          options: {}
-        }
-      }
-    ]
+          options: {},
+        },
+      },
+    ],
   },
   output: {
     path: buildFolderPath,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Findy Issuer App',
-      template: './webpack/template.html'
+      template: './webpack/template.html',
     }),
-    new webpack.DefinePlugin({ CONFIG: JSON.stringify(require('config')) })
-  ]
+    new webpack.DefinePlugin({ CONFIG: JSON.stringify(require('config')) }),
+  ],
 };

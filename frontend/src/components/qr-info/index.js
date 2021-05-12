@@ -31,11 +31,9 @@ const QRInfo = ({ value, title }) => (
     {Object.keys(CONFIG.wallets).map((key) => {
       const item = CONFIG.wallets[key];
       return (
-        <LinkContainer>
+        <LinkContainer key={item.label}>
           <a
-            href={`${item.url}${Buffer.from(value, 'utf-8').toString(
-              'base64'
-            )}`}
+            href={`${item.url}${btoa(encodeURIComponent(value))}`}
             target="_blank"
             rel="noopener noreferrer"
           >

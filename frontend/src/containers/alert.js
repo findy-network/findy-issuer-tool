@@ -15,7 +15,9 @@ const Alert = ({ alert }) => (
   <div>
     {alert && (
       <AlertComponent elevation={6} variant="filled" severity={alert.severity}>
-        {`${alert.description} ${alert.reason ? `(${alert.reason})` : ''}`}
+        {`${alert.description} ${
+          alert.reason ? `(${JSON.stringify(alert.reason)})` : ''
+        }`}
       </AlertComponent>
     )}
   </div>
