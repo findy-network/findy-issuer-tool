@@ -30,24 +30,22 @@ const PairwiseEditor = ({
   onSetName,
   title,
   description,
-}) => {
-  return (
-    <Container>
-      <Header>{title}</Header>
-      <Description>{description}</Description>
-      <DropDown
-        value={name}
-        values={connections.map((item) => ({
-          id: item.id,
-          title: `${item.theirLabel} (${item.id})`,
-        }))}
-        onValueChange={onSetName}
-        label={name ? 'Connection' : 'Select connection'}
-      />
-      <Content visible={name}>{children}</Content>
-    </Container>
-  );
-};
+}) => (
+  <Container>
+    <Header>{title}</Header>
+    <Description>{description}</Description>
+    <DropDown
+      value={name}
+      values={connections.map((item) => ({
+        id: item.id,
+        title: `${item.theirLabel} (${item.id})`,
+      }))}
+      onValueChange={onSetName}
+      label={name ? 'Connection' : 'Select connection'}
+    />
+    <Content visible={name}>{children}</Content>
+  </Container>
+);
 
 PairwiseEditor.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,

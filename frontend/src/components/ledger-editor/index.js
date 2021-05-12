@@ -32,37 +32,35 @@ const LedgerEditor = ({
   description,
   defaultValue,
   items,
-}) => {
-  return (
-    <Container>
-      <div>
-        {value && (
-          <Typography variant="subtitle2">
-            {`Successfully saved ${title} with id`}
-            <LedgerLink value={value} txnType={txnType} />
-          </Typography>
-        )}
-        <InputEditor
-          title={title}
-          label={label}
-          description={description}
-          onSave={doSaveEditorItem}
-          defaultValue={defaultValue}
-        />
-      </div>
-      {items.length > 0 && (
-        <div>
-          <ItemsHeader>{title}s created by us:</ItemsHeader>
-          {items.map((item) => (
-            <ItemContainer key={item}>
-              <LedgerLink value={item} txnType={txnType} />
-            </ItemContainer>
-          ))}
-        </div>
+}) => (
+  <Container>
+    <div>
+      {value && (
+        <Typography variant="subtitle2">
+          {`Successfully saved ${title} with id`}
+          <LedgerLink value={value} txnType={txnType} />
+        </Typography>
       )}
-    </Container>
-  );
-};
+      <InputEditor
+        title={title}
+        label={label}
+        description={description}
+        onSave={doSaveEditorItem}
+        defaultValue={defaultValue}
+      />
+    </div>
+    {items.length > 0 && (
+      <div>
+        <ItemsHeader>{title}s created by us:</ItemsHeader>
+        {items.map((item) => (
+          <ItemContainer key={item}>
+            <LedgerLink value={item} txnType={txnType} />
+          </ItemContainer>
+        ))}
+      </div>
+    )}
+  </Container>
+);
 
 LedgerEditor.propTypes = {
   doSaveEditorItem: PropTypes.func.isRequired,

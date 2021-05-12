@@ -1,4 +1,4 @@
-const merge = require('webpack-merge');
+const  { merge } = require('webpack-merge');
 const VersionFile = require('webpack-version-file');
 
 const common = require('./common.js');

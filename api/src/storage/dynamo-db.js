@@ -104,7 +104,7 @@ export default async () => {
   };
 
   // Create table when in dev environment
-  if (config.storage.devMode) {
+  if (config.devMode) {
     log.info('Creating dynamodb storage');
     const params = {
       TableName: tableName,

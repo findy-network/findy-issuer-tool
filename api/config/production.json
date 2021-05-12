@@ -1,7 +1,5 @@
 {
-  "storage": {
-    "devMode": "false"
-  },
+  "devMode": "false",
   "log": {
     "colorize": false
   }

@@ -23,7 +23,7 @@ const init = async () => {
     secret: config.auth.jwtSharedSecret,
     algorithms: ['HS256'],
   }).unless({
-    path: [/\/auth/i, '/issuer'],
+    path: [/\/auth/i],
   });
   const appStorage = await storage();
   const appAgent = await agent(appStorage);
@@ -33,13 +33,15 @@ const init = async () => {
 
   const { port } = config;
 
-  if (config.storage.devMode) {
+  if (config.devMode) {
+    log.info('Running in dev mode');
     app.use(cors());
   }
   app.use(jwtMw);
   app.use(morgan('combined', { stream: new Stream() }));
   app.use(express.json());
 
+  app.get('/auth/dev', appRoutes.devLogin);
   app.get('/auth/callback/findy-issuer-app', appRoutes.githubLoginIssuer);
 
   app.get('/user', (req, res) => res.json(req.user));

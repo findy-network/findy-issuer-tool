@@ -9,18 +9,16 @@ const ButtonContainer = styled.div`
   text-align: right;
 `;
 
-const EditorButtons = ({ canReset, onReset, canSave, onSave, okLabel }) => {
-  return (
-    <ButtonContainer>
-      <Button disabled={!canReset} onClick={onReset}>
-        Reset
-      </Button>
-      <Button disabled={!canSave} onClick={onSave}>
-        {okLabel || 'Save'}
-      </Button>
-    </ButtonContainer>
-  );
-};
+const EditorButtons = ({ canReset, onReset, canSave, onSave, okLabel }) => (
+  <ButtonContainer>
+    <Button disabled={!canReset} onClick={onReset}>
+      Reset
+    </Button>
+    <Button disabled={!canSave} onClick={onSave}>
+      {okLabel || 'Save'}
+    </Button>
+  </ButtonContainer>
+);
 
 EditorButtons.propTypes = {
   canReset: PropTypes.bool.isRequired,

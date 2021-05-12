@@ -2,7 +2,8 @@
   "auth": {
     "github": {
       "clientId": ""
-    }
+    },
+    "dev": true
   },
   "api": {
     "url": "http://localhost:3001"

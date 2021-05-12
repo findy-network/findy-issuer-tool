@@ -1,4 +1,4 @@
-import { empty, of } from 'rxjs';
+import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map, mergeMap, switchMap, catchError, filter } from 'rxjs/operators';
 import { combineEpics, ofType } from 'redux-observable';
@@ -66,19 +66,17 @@ const get = (state$, path) =>
 const initUserFetchEpic = (action$, state$) =>
   action$.pipe(
     ofType(LOCATION_CHANGE),
+    filter(() => !state$.value.user),
     switchMap(() => {
-      if (!state$.value.user) {
-        const query = state$.value.router.location.search;
-        if (query) {
-          const params = new URLSearchParams(query);
-          if (params) {
-            const token = params.get('token');
-            return of(setToken(token));
-          }
+      const query = state$.value.router.location.search;
+      if (query) {
+        const params = new URLSearchParams(query);
+        if (params) {
+          const token = params.get('token');
+          return of(setToken(token));
         }
-        return of(fetchUser());
       }
-      return empty();
+      return of(fetchUser());
     })
   );
 
@@ -95,9 +93,7 @@ const fetchLedgerEpic = (action$, state$) =>
     mergeMap(() =>
       get(state$, '/ledger').pipe(
         map(({ response }) => fetchLedgerFulfilled(response)),
-        catchError((error) => {
-          return of(fetchLedgerRejected(error.xhr.response));
-        })
+        catchError((error) => of(fetchLedgerRejected(error.xhr.response)))
       )
     )
   );
@@ -121,9 +117,7 @@ const fetchConnectionsEpic = (action$, state$) =>
     mergeMap(() =>
       get(state$, '/connections').pipe(
         map(({ response }) => fetchConnectionsFulfilled(response)),
-        catchError((error) => {
-          return of(fetchConnectionsRejected(error.xhr.response));
-        })
+        catchError((error) => of(fetchConnectionsRejected(error.xhr.response)))
       )
     )
   );
@@ -143,33 +137,26 @@ const fetchUserEpic = (action$, state$) =>
     mergeMap(() =>
       get(state$, '/user').pipe(
         map(({ response }) => fetchUserFulfilled(response)),
-        catchError(() => {
+        catchError(() =>
           // TODO: do we need to: push('/');
-          return of(fetchUserFulfilled({}));
-        })
+          of(fetchUserFulfilled({}))
+        )
       )
     )
   );
 
-const createEpic = (
-  actionType,
-  httpVerb,
-  path,
-  reqPayload,
-  fulfilled,
-  rejected
-) => (action$, state$) =>
-  action$.pipe(
-    ofType(actionType),
-    mergeMap(({ payload }) =>
-      httpVerb(state$, path(payload), reqPayload(payload)).pipe(
-        map(({ response }) => fulfilled(response)),
-        catchError((error) => {
-          return of(rejected(error.xhr.response));
-        })
+const createEpic =
+  (actionType, httpVerb, path, reqPayload, fulfilled, rejected) =>
+  (action$, state$) =>
+    action$.pipe(
+      ofType(actionType),
+      mergeMap(({ payload }) =>
+        httpVerb(state$, path(payload), reqPayload(payload)).pipe(
+          map(({ response }) => fulfilled(response)),
+          catchError((error) => of(rejected(error.xhr.response)))
+        )
       )
-    )
-  );
+    );
 
 export default combineEpics(
   initUserFetchEpic,
