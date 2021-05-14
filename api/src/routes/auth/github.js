@@ -1,8 +1,7 @@
 import axios from 'axios';
-import config from 'config';
 import log from '../../log';
 
-export default (createToken) => {
+export default (createToken, config) => {
   const githubLogin = async (ghAuth, redirectUrl, { query: { code } }, res) => {
     log.info(`Received github auth callback with code ${code}`);
     const payload = {

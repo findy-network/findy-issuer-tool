@@ -1,9 +1,11 @@
 import AWS from 'aws-sdk';
-import config from 'config';
 
 import dynamodb from './dynamo-db';
+import conf from '../config';
 
-describe('Storage', () => {
+describe('Storage', async () => {
+  const { config } = await conf();
+
   const awsConfig = {
     region: config.storage.region,
     endpoint: config.storage.host,
@@ -14,7 +16,7 @@ describe('Storage', () => {
 
   afterEach(() => {
     const params = {
-      TableName: 'findyIssuerData',
+      TableName: 'issuerToolData',
     };
     return awsDb.deleteTable(params).promise();
   });

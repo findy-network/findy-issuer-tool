@@ -1,32 +1,31 @@
 {
   "storage": {
-    "host": "FINDY_ISSUER_API_STORAGE_HOST",
-    "region": "FINDY_ISSUER_API_STORAGE_REGION"
+    "host": "ISSUER_TOOL_STORAGE_HOST",
+    "region": "ISSUER_TOOL_STORAGE_REGION"
   },
   "auth": {
     "apps": {
       "findy-issuer-app": {
         "github": {
-          "username": "FINDY_ISSUER_API_GITHUB_USERNAME",
-          "clientId": "FINDY_ISSUER_API_GITHUB_CLIENT_ID",
-          "clientSecret": "FINDY_ISSUER_API_GITHUB_CLIENT_SECRET"
+          "username": "ISSUER_TOOL_GITHUB_USERNAME",
+          "clientId": "ISSUER_TOOL_GITHUB_CLIENT_ID",
+          "clientSecret": "ISSUER_TOOL_GITHUB_CLIENT_SECRET"
         },
-        "redirectUrl": "FINDY_ISSUER_API_REDIRECT_URL"
+        "redirectUrl": "ISSUER_TOOL_REDIRECT_URL"
       }
     },
     "allowedDomains": {
-      "__name": "FINDY_ISSUER_API_AUTH_ALLOWED_DOMAINS",
+      "__name": "ISSUER_TOOL_AUTH_ALLOWED_DOMAINS",
       "__format": "json"
     },
-    "jwtSharedSecret": "FINDY_ISSUER_API_JWT_SHARED_SECRET"
+    "jwtSharedSecret": "ISSUER_TOOL_JWT_SHARED_SECRET"
   },
 
   "agency": {
-    "authUrl": "FINDY_ISSUER_API_AGENCY_AUTH_URL",
-    "userName": "FINDY_ISSUER_API_AGENCY_USER_NAME",
-    "key": "FINDY_ISSUER_API_AGENCY_KEY",
-    "serverAddress": "FINDY_ISSUER_API_SERVER_ADDRESS",
-    "certPath": "FINDY_ISSUER_API_SERVER_CERT_PATH"
+    "authUrl": "ISSUER_TOOL_AGENCY_AUTH_URL",
+    "userName": "ISSUER_TOOL_AGENCY_USER_NAME",
+    "key": "ISSUER_TOOL_AGENCY_KEY",
+    "serverAddress": "ISSUER_TOOL_SERVER_ADDRESS",
+    "certPath": "ISSUER_TOOL_SERVER_CERT_PATH"
   }
-
 }

@@ -1,10 +1,9 @@
-import config from 'config';
 import jwt from 'jsonwebtoken';
 
 import github from './github';
 import dev from './dev';
 
-export default (storage) => {
+export default (storage, config) => {
   const { addOrUpdateUser } = storage;
 
   const createToken = async (name, email) => {
@@ -15,7 +14,7 @@ export default (storage) => {
   };
 
   return {
-    ...github(createToken),
-    ...dev(createToken),
+    ...github(createToken, config),
+    ...dev(createToken, config),
   };
 };

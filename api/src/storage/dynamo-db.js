@@ -1,9 +1,8 @@
-import config from 'config';
 import AWS from 'aws-sdk';
 
 import log from '../log';
 
-export default async () => {
+export default async (config) => {
   const allLimit = 200;
   const types = {
     CONNECTION: 'connection',
@@ -20,7 +19,7 @@ export default async () => {
 
   const docClient = new AWS.DynamoDB.DocumentClient();
 
-  const tableName = 'findyIssuerData';
+  const tableName = 'issuerToolData';
 
   const putData = async (type, id, data) => {
     try {

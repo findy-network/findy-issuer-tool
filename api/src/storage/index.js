@@ -1,7 +1,7 @@
 import dynamodb from './dynamo-db';
 
-export default async () => {
-  const storageInterface = await dynamodb();
+export default async (config) => {
+  const storageInterface = await dynamodb(config);
   return {
     ...storageInterface,
   };
