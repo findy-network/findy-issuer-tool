@@ -16,6 +16,15 @@ import {
   FETCH_CONNECTIONS_FULFILLED,
   SAVE_SCHEMA_REJECTED,
   SAVE_CRED_DEF_REJECTED,
+  SEND_BASIC_MESSAGE_FULFILLED,
+  SEND_BASIC_MESSAGE,
+  SEND_BASIC_MESSAGE_REJECTED,
+  SEND_CREDENTIAL,
+  SEND_CREDENTIAL_FULFILLED,
+  SEND_CREDENTIAL_REJECTED,
+  SEND_PROOF_REQUEST,
+  SEND_PROOF_REQUEST_FULFILLED,
+  SEND_PROOF_REQUEST_REJECTED,
 } from '../actions';
 import initialState from './initial-state';
 
@@ -79,6 +88,36 @@ export const result = (state = initialState.result, action) => {
     }
     case SAVE_CRED_DEF_REJECTED: {
       return { ...state, sendingCredDef: false };
+    }
+
+    case SEND_BASIC_MESSAGE: {
+      return { ...state, sendingBasicMessage: true };
+    }
+    case SEND_BASIC_MESSAGE_FULFILLED: {
+      return { ...state, sendingBasicMessage: false };
+    }
+    case SEND_BASIC_MESSAGE_REJECTED: {
+      return { ...state, sendingBasicMessage: false };
+    }
+
+    case SEND_CREDENTIAL: {
+      return { ...state, sendingCredential: true };
+    }
+    case SEND_CREDENTIAL_FULFILLED: {
+      return { ...state, sendingCredential: false };
+    }
+    case SEND_CREDENTIAL_REJECTED: {
+      return { ...state, sendingCredential: false };
+    }
+
+    case SEND_PROOF_REQUEST: {
+      return { ...state, sendingProofRequest: true };
+    }
+    case SEND_PROOF_REQUEST_FULFILLED: {
+      return { ...state, sendingProofRequest: false };
+    }
+    case SEND_PROOF_REQUEST_REJECTED: {
+      return { ...state, sendingProofRequest: false };
     }
 
     default:

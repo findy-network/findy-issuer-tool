@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import PairwiseForm from '../pairwise-form';
+import CredEditor from '../cred-editor';
 import PairwiseEditor from '../pairwise-editor';
 
 const RequestProof = ({
@@ -9,6 +9,7 @@ const RequestProof = ({
   credDefs,
   onSendProofRequest,
   defaultValues,
+  sending,
 }) => {
   const [pairwiseName, setPairwiseName] = useState('');
   return (
@@ -19,16 +20,17 @@ const RequestProof = ({
       title="Request proof"
       description="Request proof from pairwise connection"
     >
-      <PairwiseForm
+      <CredEditor
         credDefs={credDefs}
         defaultValues={defaultValues}
         onSend={(values, credDefId) =>
           onSendProofRequest({
-            name: pairwiseName,
-            values,
+            connectionId: pairwiseName,
+            attributes: values,
             credDefId,
           })
         }
+        sending={sending}
       />
     </PairwiseEditor>
   );
@@ -39,6 +41,7 @@ RequestProof.propTypes = {
   credDefs: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSendProofRequest: PropTypes.func.isRequired,
   defaultValues: PropTypes.object.isRequired,
+  sending: PropTypes.bool.isRequired,
 };
 
 export default RequestProof;

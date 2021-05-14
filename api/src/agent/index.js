@@ -119,13 +119,14 @@ export default async (storage) => {
             question.toObject(),
           )}, valid: ${!invalid}`,
         );
+        const valid = !invalid;
 
         await storage.addProofRequest(
           notification.getProtocolid(),
           request.credDefId,
           request.values,
           true,
-          invalid,
+          !valid,
         );
 
         const msg = new agencyv1.Answer();

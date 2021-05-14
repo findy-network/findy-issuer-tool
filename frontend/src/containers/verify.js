@@ -10,12 +10,14 @@ const Verify = ({
   credDefs,
   doSendProofRequest,
   defaultValues,
+  sendingProofRequest,
 }) => (
   <RequestProof
     connections={connections}
     credDefs={credDefs}
     defaultValues={defaultValues}
     onSendProofRequest={doSendProofRequest}
+    sending={sendingProofRequest}
   />
 );
 
@@ -24,12 +26,18 @@ Verify.propTypes = {
   credDefs: PropTypes.arrayOf(PropTypes.string).isRequired,
   doSendProofRequest: PropTypes.func.isRequired,
   defaultValues: PropTypes.object.isRequired,
+  sendingProofRequest: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({ ledger, connections }) => ({
+const mapStateToProps = ({
+  ledger,
+  connections,
+  result: { sendingProofRequest },
+}) => ({
   connections: connections || [],
   credDefs: ledger ? ledger.credDefs : [],
   defaultValues: ledger ? ledger.credDefsWithDefaults : {},
+  sendingProofRequest,
 });
 
 const mapDispatchToProps = (dispatch) => ({

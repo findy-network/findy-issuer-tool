@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import PairwiseForm from '../pairwise-form';
-import IssueEditor from '../issue-editor';
+import CredEditor from '../cred-editor';
 import PairwiseEditor from '../pairwise-editor';
 
 const IssueCred = ({
@@ -10,6 +9,7 @@ const IssueCred = ({
   credDefs,
   onSendCredential,
   defaultValues,
+  sending,
 }) => {
   const [pairwiseName, setPairwiseName] = useState('');
   return (
@@ -20,7 +20,7 @@ const IssueCred = ({
       title="Send credential"
       description="Send credential to pairwise connection"
     >
-      <IssueEditor
+      <CredEditor
         credDefs={credDefs}
         defaultValues={defaultValues}
         onSend={(values, credDefId) =>
@@ -30,6 +30,7 @@ const IssueCred = ({
             credDefId,
           })
         }
+        sending={sending}
       />
     </PairwiseEditor>
   );
@@ -40,6 +41,7 @@ IssueCred.propTypes = {
   credDefs: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSendCredential: PropTypes.func.isRequired,
   defaultValues: PropTypes.object.isRequired,
+  sending: PropTypes.bool.isRequired,
 };
 
 export default IssueCred;

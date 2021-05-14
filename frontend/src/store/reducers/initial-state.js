@@ -6,6 +6,11 @@ export default {
     pairwiseInvitation: null,
     schemaId: null,
     credDefId: null,
+    sendingSchema: false,
+    sendingCredDef: false,
+    sendingBasicMessage: false,
+    sendingCredential: false,
+    sendingProofRequest: false,
   },
   events: {
     log: [],
