@@ -46,7 +46,6 @@ const CredEditor = ({ credDefs, onSend, defaultValues, sending }) => {
       setAttributes(defaultAttributes);
     }
   };
-  // TODO: add values with button
   const attrValue = (index, item) => (
     <RowContainer key={`${index + 1}. attribute`}>
       <TextField
