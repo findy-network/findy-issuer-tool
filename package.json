@@ -7,9 +7,12 @@
     "licenses:report": "node ./tools/check-licenses.js report",
     "licenses:check": "node ./tools/check-licenses.js ",
     "release:patch": "./tools/release.sh patch",
+    "install": "npm --prefix ./api/ install && npm --prefix ./frontend/ install",
     "start:api": "cd api && npm install && npm run db && npm start",
     "start:frontend": "cd frontend && npm install && npm start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm install && npm run test:api && npm run test:frontend",
+    "test:api": "npm --prefix ./api/ test",
+    "test:frontend": "npm --prefix ./frontend/ test"
   },
   "repository": {
     "type": "git",
