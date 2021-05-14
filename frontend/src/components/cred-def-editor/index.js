@@ -58,12 +58,6 @@ const CredDefEditor = ({
   return (
     <Container>
       <div>
-        {result && (
-          <Typography variant="subtitle2">
-            {`Successfully saved ${title} with id`}
-            <LedgerLink value={result} txnType={txnType} />
-          </Typography>
-        )}
         <FormContainer>
           <Header>{title}</Header>
           {description && <Description>{description}</Description>}
@@ -78,13 +72,14 @@ const CredDefEditor = ({
           />
           <TextField
             rows="1"
-            label="Tag e.g. Passport"
+            label="Tag e.g. issuer-tool"
             onChange={(tag) => setValue({ ...value, tag })}
             value={value.tag}
           />
 
           <EditorButtons
             canReset={
+              !sending &&
               value.schemaId !== defaultValue.schemaId &&
               value.tag !== defaultValue.tag
             }
@@ -92,18 +87,24 @@ const CredDefEditor = ({
             canSave={!sending && value.schemaId !== '' && value.tag !== ''}
             onSave={() => doSaveEditorItem(value)}
           />
+          {result && (
+            <Typography variant="subtitle2">
+              {`Successfully saved ${title} with id`}
+              <LedgerLink value={result} txnType={txnType} />
+            </Typography>
+          )}
+          {items.length > 0 && (
+            <div>
+              <ItemsHeader>{title}s created by us:</ItemsHeader>
+              {items.map((item) => (
+                <ItemContainer key={item}>
+                  <LedgerLink value={item} txnType={txnType} />
+                </ItemContainer>
+              ))}
+            </div>
+          )}
         </FormContainer>
       </div>
-      {items.length > 0 && (
-        <div>
-          <ItemsHeader>{title}s created by us:</ItemsHeader>
-          {items.map((item) => (
-            <ItemContainer key={item}>
-              <LedgerLink value={item} txnType={txnType} />
-            </ItemContainer>
-          ))}
-        </div>
-      )}
     </Container>
   );
 };

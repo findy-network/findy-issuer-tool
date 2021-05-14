@@ -159,7 +159,7 @@ export default async (storage) => {
     const schemaId = res.getId();
     log.info(`Schema created with id ${schemaId}`);
 
-    storage.saveSchema({ ...body, id: schemaId });
+    await storage.saveSchema({ ...body, id: schemaId });
     return schemaId;
   };
 
@@ -175,7 +175,7 @@ export default async (storage) => {
     const credDefId = res.getId();
     log.info(`Cred def created with id ${credDefId}`);
 
-    storage.saveCredDef(body.schemaId, credDefId);
+    await storage.saveCredDef(body.schemaId, credDefId);
     return credDefId;
   };
 

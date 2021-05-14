@@ -4,7 +4,7 @@ import AWS from 'aws-sdk';
 import log from '../log';
 
 export default async () => {
-  const allLimit = 20;
+  const allLimit = 200;
   const types = {
     CONNECTION: 'connection',
     EVENT: 'event',

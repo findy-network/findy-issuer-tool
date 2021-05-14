@@ -26,19 +26,6 @@ const Header = styled(Typography)`
   margin: 0.5rem;
 `;
 
-const itemContent = (payload) => {
-  switch (payload.type) {
-    case 'urn:indy:sov:agent_api:message_type:findy.fi/notify/1.0/status': {
-      return `${payload.message.body.type} - ${payload.message.body.status}: ${payload.message.body.name}`;
-    }
-    case 'urn:indy:sov:service_agent_api:message_type:findy.fi/present_proof/1.0/accept_values': {
-      return `${payload.message.nonce}`;
-    }
-    default:
-      return JSON.stringify(payload.message);
-  }
-};
-
 const EventLog = ({ events }) => (
   <div>
     {events.length === 0 ? (
@@ -51,16 +38,9 @@ const EventLog = ({ events }) => (
       .map((item) => (
         <Paper key={item.timestamp}>
           <Cell>{new Date(item.timestamp).toLocaleString()}</Cell>
-          <Cell>
-            {item.payload &&
-              item.payload.type
-                .replace('urn:indy:sov:agent_api:message_type:findy.fi/', 'CA ')
-                .replace(
-                  'urn:indy:sov:service_agent_api:message_type:findy.fi/',
-                  'SA '
-                )}
-          </Cell>
-          <Cell>{item.payload && itemContent(item.payload)}</Cell>
+          <Cell>{item.payload.type}</Cell>
+          <Cell>{item.payload.protocol}</Cell>
+          <Cell>{item.payload.status}</Cell>
         </Paper>
       ))}
   </div>

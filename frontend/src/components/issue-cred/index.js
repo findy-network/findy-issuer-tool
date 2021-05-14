@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import PairwiseForm from '../pairwise-form';
+import IssueEditor from '../issue-editor';
 import PairwiseEditor from '../pairwise-editor';
 
 const IssueCred = ({
@@ -19,12 +20,12 @@ const IssueCred = ({
       title="Send credential"
       description="Send credential to pairwise connection"
     >
-      <PairwiseForm
+      <IssueEditor
         credDefs={credDefs}
         defaultValues={defaultValues}
         onSend={(values, credDefId) =>
           onSendCredential({
-            name: pairwiseName,
+            connectionId: pairwiseName,
             values,
             credDefId,
           })

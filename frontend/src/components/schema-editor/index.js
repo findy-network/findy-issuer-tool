@@ -11,6 +11,7 @@ import EditorButtons from '../editor-buttons';
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 2rem;
 `;
 
 const ItemContainer = styled.div`
@@ -62,12 +63,6 @@ const SchemaEditor = ({
   return (
     <Container>
       <div>
-        {result && (
-          <Typography variant="subtitle2">
-            {`Successfully saved ${title} with id`}
-            <LedgerLink value={result} txnType={txnType} />
-          </Typography>
-        )}
         <FormContainer>
           <Header>{title}</Header>
           {description && <Description>{description}</Description>}
@@ -133,18 +128,24 @@ const SchemaEditor = ({
             }
             onSave={() => doSaveEditorItem(trimSchema(value))}
           />
+          {result && (
+            <Typography variant="subtitle2">
+              {`Successfully saved ${title} with id`}
+              <LedgerLink value={result} txnType={txnType} />
+            </Typography>
+          )}
+          {items.length > 0 && (
+            <div>
+              <ItemsHeader>{title}s created by us:</ItemsHeader>
+              {items.map((item) => (
+                <ItemContainer key={item}>
+                  <LedgerLink value={item} txnType={txnType} />
+                </ItemContainer>
+              ))}
+            </div>
+          )}
         </FormContainer>
       </div>
-      {items.length > 0 && (
-        <div>
-          <ItemsHeader>{title}s created by us:</ItemsHeader>
-          {items.map((item) => (
-            <ItemContainer key={item}>
-              <LedgerLink value={item} txnType={txnType} />
-            </ItemContainer>
-          ))}
-        </div>
-      )}
     </Container>
   );
 };
