@@ -4,8 +4,8 @@
   "description": "Utility (UI) tool and sample project for issuing and verifying",
   "main": "index.js",
   "scripts": {
-
-    "licenses:check": "node ./tools/check-licenses.js",
+    "licenses:report": "node ./tools/check-licenses.js report",
+    "licenses:check": "node ./tools/check-licenses.js ",
     "start:api": "cd api && npm install && npm run db && npm start",
     "start:frontend": "cd frontend && npm install && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"

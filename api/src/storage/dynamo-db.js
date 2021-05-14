@@ -4,7 +4,7 @@ import AWS from 'aws-sdk';
 import log from '../log';
 
 export default async () => {
-  const allLimit = 20;
+  const allLimit = 200;
   const types = {
     CONNECTION: 'connection',
     EVENT: 'event',
@@ -104,7 +104,7 @@ export default async () => {
   };
 
   // Create table when in dev environment
-  if (config.storage.devMode) {
+  if (config.devMode) {
     log.info('Creating dynamodb storage');
     const params = {
       TableName: tableName,

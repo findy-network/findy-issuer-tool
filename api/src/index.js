@@ -17,13 +17,40 @@ class Stream {
   }
 }
 
+const validateConfig = () => {
+  if (!config.auth.jwtSharedSecret) {
+    log.error(`JWT secret missing`);
+    process.exit(1);
+  }
+  if (!config.agency.authUrl) {
+    log.error(`Authentication server URL missing`);
+    process.exit(1);
+  }
+  if (!config.agency.userName) {
+    log.error(`Unique agent name missing`);
+    process.exit(1);
+  }
+  if (!config.agency.key) {
+    log.error(`Authenticator key missing`);
+    process.exit(1);
+  }
+  if (!config.agency.serverAddress) {
+    log.error(`API server address missing`);
+    process.exit(1);
+  }
+  if (!config.agency.serverPort) {
+    log.error(`API server port missing`);
+    process.exit(1);
+  }
+};
+
 const init = async () => {
   const { validate } = new Validator();
   const jwtMw = jwt({
     secret: config.auth.jwtSharedSecret,
     algorithms: ['HS256'],
   }).unless({
-    path: [/\/auth/i, '/issuer'],
+    path: [/\/auth/i],
   });
   const appStorage = await storage();
   const appAgent = await agent(appStorage);
@@ -33,13 +60,15 @@ const init = async () => {
 
   const { port } = config;
 
-  if (config.storage.devMode) {
+  if (config.devMode) {
+    log.info('Running in dev mode');
     app.use(cors());
   }
   app.use(jwtMw);
   app.use(morgan('combined', { stream: new Stream() }));
   app.use(express.json());
 
+  app.get('/auth/dev', appRoutes.devLogin);
   app.get('/auth/callback/findy-issuer-app', appRoutes.githubLoginIssuer);
 
   app.get('/user', (req, res) => res.json(req.user));
@@ -72,5 +101,6 @@ const init = async () => {
 };
 
 (async () => {
+  validateConfig();
   await init();
 })();

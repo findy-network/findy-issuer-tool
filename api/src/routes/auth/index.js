@@ -2,6 +2,7 @@ import config from 'config';
 import jwt from 'jsonwebtoken';
 
 import github from './github';
+import dev from './dev';
 
 export default (storage) => {
   const { addOrUpdateUser } = storage;
@@ -15,5 +16,6 @@ export default (storage) => {
 
   return {
     ...github(createToken),
+    ...dev(createToken),
   };
 };

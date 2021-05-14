@@ -21,7 +21,7 @@ const runCheck = async (path, verbose) => {
   return licenses;
 };
 
-const scan = async (packageJsonPath, report) => {
+const scan = async (packageJsonPath, reportPath) => {
   const path = '.temp';
 
   if (!existsSync(path)) {
@@ -31,7 +31,7 @@ const scan = async (packageJsonPath, report) => {
   copyFileSync(packageJsonPath, `${path}/package.json`);
 
   // Report mode - list all licenses in report file
-  if (report) {
+  if (reportPath) {
     writeFileSync(
       `${path}/js-green-licenses.json`,
       JSON.stringify({ greenLicenses: [] })
@@ -39,7 +39,6 @@ const scan = async (packageJsonPath, report) => {
 
     try {
       const licenses = await runCheck(path);
-      const reportPath = process.argv[3];
       writeFileSync(
         reportPath,
         licenses.reduce(
@@ -81,5 +80,5 @@ const scan = async (packageJsonPath, report) => {
 
 (async () => {
   await scan('./api/package.json')
-  //await scan('./frontend/package.json', true)
+  await scan('./frontend/package.json', process.argv[2] === 'report' && './frontend/build/licenses.txt')
 })()
