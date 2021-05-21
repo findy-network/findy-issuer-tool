@@ -32,7 +32,7 @@ if [ -z "$(git status --porcelain)" ]; then
   git push origin dev --tags
 
   cd ./api && npm --no-git-tag-version version $SEMVER
-  cd ../frontend && npm --no-git-tag-version version $SEMVER && cd..
+  cd ../frontend && npm --no-git-tag-version version $SEMVER && cd ..
   npm --no-git-tag-version version $SEMVER
   NEW_VERSION=$($CURRENT_DIR/version.sh)
   git commit -a -m "Start dev for v$NEW_VERSION."
