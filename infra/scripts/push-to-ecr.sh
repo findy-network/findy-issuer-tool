@@ -29,7 +29,7 @@ fi
 FULL_NAME="$ISSUER_TOOL_ECR_ROOT_URL/$ISSUER_TOOL_ECR_IMAGE_NAME"
 CURRENT_DIR=$(dirname "$BASH_SOURCE")
 
-VERSION=$($CURRENT_DIR/version.sh $CURRENT_DIR/../api)
+VERSION=$($CURRENT_DIR/version.sh $CURRENT_DIR/../../api)
 
 echo "Checking if $VERSION is already built..."
 
