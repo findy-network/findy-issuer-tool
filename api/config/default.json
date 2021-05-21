@@ -1,7 +1,7 @@
 {
   "port": 3001,
   "ourName": "issuer-tool",
-  "devMode": "true",
+  "devMode": true,
   "storage": {
     "type": "DYNAMODB",
     "host": "http://localhost:8000",

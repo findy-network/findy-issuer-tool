@@ -1,6 +1,4 @@
-import config from 'config';
-
-export default (createToken) => {
+export default (createToken, config) => {
   const devLogin = async (req, res) => {
     if (config.devMode) {
       const token = await createToken('dev', 'dev@localhost');

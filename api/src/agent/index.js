@@ -1,4 +1,3 @@
-import config from 'config';
 import {
   createAcator,
   openGRPCConnection,
@@ -8,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import log from '../log';
 
-export default async (storage) => {
+export default async (storage, config) => {
   const acatorProps = {
     authUrl: config.agency.authUrl,
     userName: config.agency.userName,

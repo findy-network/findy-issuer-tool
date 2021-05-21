@@ -1,7 +1,10 @@
-import config from 'config';
 import jwt from 'jsonwebtoken';
 
-const printToken = () => {
+import conf from '../src/config';
+
+const printToken = async () => {
+  const { config } = await conf();
+
   const token = jwt.sign(
     { name: 'Tiina Tester', email: 'tiina.tester@example.com' },
     config.auth.jwtSharedSecret,

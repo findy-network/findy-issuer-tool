@@ -4,9 +4,8 @@
   "description": "Sample service app for issuing credentials via Findy Network.",
   "main": "src/index.js",
   "scripts": {
-    "build": "rimraf build/* && export NODE_ENV=production && webpack --config ./webpack/prod.js",
-    "build:demo": "rimraf build/* && export NODE_ENV=demo && webpack --config ./webpack/prod.js",
-    "build:docker": "docker build -t findy-issuer-app-builder . && docker run -it --rm -v $PWD/build:/app/build -e GITHUB_CLIENT_ID=$GITHUB_CLIENT_ID findy-issuer-app-builder",
+    "build": "rimraf build/* && export NODE_ENV=production && webpack --config ./webpack/prod.js && npm run build:version",
+    "build:version": "echo v$(./tools/version.sh) > build/version.txt",
     "release": "npm version minor && git push --tags",
     "start": "webpack serve --port 8081 --open \"Google Chrome\" --config ./webpack/dev.js",
     "test": "npm run test:lint && npm run test:unit",
@@ -94,7 +93,6 @@
     "webpack": "^5.36.2",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
-    "webpack-merge": "^5.7.3",
-    "webpack-version-file": "0.1.6"
+    "webpack-merge": "^5.7.3"
   }
 }

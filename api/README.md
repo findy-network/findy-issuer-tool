@@ -2,7 +2,6 @@
 
 Simple service agent sample for Findy agency
 
-
 ## GitHub authentication
 
 1. [Register GitHub OAuth app](https://github.com/settings/applications/new) to gain Github client ID and secret. Enter following details:
@@ -14,8 +13,7 @@ Simple service agent sample for Findy agency
    Define following environment variables.
 
    ```
-   export FINDY_ISSUER_API_GITHUB_USERNAME=<your_gh_username>
-   export FINDY_ISSUER_API_GITHUB_CLIENT_ID=<client_id_from_gh_app>
-   export FINDY_ISSUER_API_GITHUB_CLIENT_SECRET=<client_secret_from_gh_app>
+   export ISSUER_TOOL_GITHUB_USERNAME=<your_gh_username>
+   export ISSUER_TOOL_GITHUB_CLIENT_ID=<client_id_from_gh_app>
+   export ISSUER_TOOL_GITHUB_CLIENT_SECRET=<client_secret_from_gh_app>
    ```
-
