@@ -1,11 +1,9 @@
+import config from 'config';
 import AWS from 'aws-sdk';
 
 import dynamodb from './dynamo-db';
-import conf from '../config';
 
-describe('Storage', async () => {
-  const { config } = await conf();
-
+describe('Storage', () => {
   const awsConfig = {
     region: config.storage.region,
     endpoint: config.storage.host,
@@ -21,10 +19,10 @@ describe('Storage', async () => {
     return awsDb.deleteTable(params).promise();
   });
   it('should create dynamodb', async () => {
-    expect(await dynamodb()).toBeDefined();
+    expect(await dynamodb(config)).toBeDefined();
   });
   it('should add user', async () => {
-    const db = await dynamodb();
+    const db = await dynamodb(config);
     const user = { email: 'test', name: 'test-name' };
     await db.addOrUpdateUser(user);
     const result = await db.getUser('test');
@@ -32,7 +30,7 @@ describe('Storage', async () => {
     expect(result.name).toEqual(user.name);
   });
   it('should add schema', async () => {
-    const db = await dynamodb();
+    const db = await dynamodb(config);
     const schema = { id: 'id' };
     await db.saveSchema(schema);
     const result = await db.getLedger();
@@ -40,7 +38,7 @@ describe('Storage', async () => {
     expect(result.credDefs).toEqual([]);
   });
   it('should add credDef', async () => {
-    const db = await dynamodb();
+    const db = await dynamodb(config);
     const schema = { id: 'id' };
     const credDef = 'cred-def-id';
     await db.saveSchema(schema);
@@ -50,7 +48,7 @@ describe('Storage', async () => {
     expect(result.credDefs).toEqual([credDef]);
   });
   it('should fetch events', async () => {
-    const db = await dynamodb();
+    const db = await dynamodb(config);
     await db.saveEvent('event-id', { description: 'event-description' });
     await db.saveEvent('event-id2', { description: 'event-description2' });
     const result = await db.getAllEvents();
