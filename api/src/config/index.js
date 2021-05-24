@@ -40,6 +40,7 @@ export default async () => {
           serverAddress: secrets['server-address'],
         };
 
+        log.info(`Default config cert path ${defaultConfig.agency.certPath}`);
         const certPath = await (async () => {
           if (defaultConfig.agency.certPath.startsWith('s3://')) {
             const s3Client = new AWS.S3();

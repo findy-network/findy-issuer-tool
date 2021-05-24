@@ -51,6 +51,7 @@ export class IssuerToolInfraStack extends cdk.Stack {
     });
     new IssuerToolPipelineStack(this, id, {
       frontendBucket: frontendStack.bucket,
+      confBucket: confStack.bucket,
       ...props,
       ecrURL: props.ecrURL,
       envName: backendStack.envName,
