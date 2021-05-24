@@ -39,59 +39,9 @@ export interface IssuerToolPipelineStackProps extends cdk.StackProps {
   walletDomainName: string;
   githubClientId: string;
   frontendBucket: IBucket;
+  confBucket: IBucket;
   envName: string;
   appName: string;
-}
-
-interface ElasticBeanstalkDeployActionProps {
-  id: string;
-  ebsApplicationName: string;
-  ebsEnvironmentName: string;
-  //input: Artifact;
-  role?: IRole;
-}
-
-class ElasticBeanstalkDeployAction implements IAction {
-  readonly actionProperties: ActionProperties;
-  private readonly props: ElasticBeanstalkDeployActionProps;
-
-  constructor(props: ElasticBeanstalkDeployActionProps) {
-    this.actionProperties = {
-      ...props,
-      category: ActionCategory.DEPLOY,
-      actionName: `${props.id}-elasticbeanstalk-deploy-action`,
-      owner: "AWS",
-      provider: "ElasticBeanstalk",
-
-      artifactBounds: {
-        //minInputs: 1,
-        //maxInputs: 1,
-        minInputs: 0,
-        maxInputs: 0,
-        minOutputs: 0,
-        maxOutputs: 0,
-      },
-      //inputs: [props.input],
-    };
-    this.props = props;
-  }
-  bind(
-    scope: Construct,
-    stage: IStage,
-    options: ActionBindOptions
-  ): ActionConfig {
-    options.bucket.grantRead(options.role);
-    return {
-      configuration: {
-        ApplicationName: this.props.ebsApplicationName,
-        EnvironmentName: this.props.ebsEnvironmentName,
-      },
-    };
-  }
-
-  onStateChange(name: string, target?: IRuleTarget, options?: RuleProps): Rule {
-    throw new Error("not supported");
-  }
 }
 
 export class IssuerToolPipelineStack extends cdk.Stack {
@@ -109,6 +59,7 @@ export class IssuerToolPipelineStack extends cdk.Stack {
       walletDomainName,
       githubClientId,
       frontendBucket,
+      confBucket,
       envName,
       appName,
     } = props;
@@ -241,7 +192,7 @@ export class IssuerToolPipelineStack extends cdk.Stack {
       })
     );
 
-    const deployRole = new Role(this, `issuer-tool-deploy-role`, {
+    const deployRole = new Role(this, `${id}-deploy-role`, {
       assumedBy: new ServicePrincipal("codebuild.amazonaws.com"),
     });
     const policyStatement = new PolicyStatement();
@@ -254,38 +205,77 @@ export class IssuerToolPipelineStack extends cdk.Stack {
     deployRole.addToPolicy(policyStatement);
 
     const ebPolicy = new PolicyStatement();
-    ebPolicy.addActions("elasticbeanstalk:*");
+    ebPolicy.addActions(
+      "elasticbeanstalk:*",
+      "ec2:*",
+      "ecr:*",
+      "autoscaling:*",
+      "cloudformation:*",
+      "logs:*",
+      "iam:PutRolePolicy",
+      "s3:PutObject",
+      "s3:PutObjectAcl",
+      "s3:ListBucket",
+      "s3:DeleteObject",
+      "s3:Get*",
+      "s3:CreateBucket"
+    );
     ebPolicy.addResources("*");
     deployRole.addToPolicy(ebPolicy);
 
-    new ElasticBeanstalkDeployAction({
-      id: "issuer-tool",
-      ebsEnvironmentName: envName,
-      ebsApplicationName: appName,
-      //input: build_output_artifact,
-      role: deployRole,
-    }),
-      deployStage.addAction(
-        new CodeBuildAction({
-          actionName: `${id}-copy-front`,
-          project: new PipelineProject(this, `issuer-tool-copy-front`, {
-            projectName: `${id}-copy-front`,
-            role: deployRole,
-            buildSpec: BuildSpec.fromObject({
-              version: "0.2",
-              phases: {
-                build: {
-                  commands: [
-                    `V1=$(curl https://${domainName}/version.txt)`,
-                    `V2=$(cat ./build/version.txt)`,
-                    `if [ "$V1" != "$V2" ]; then aws s3 sync --delete ./build s3://${frontendBucket.bucketName}; fi`,
-                  ],
-                },
+    const confPolicy = new PolicyStatement();
+    confPolicy.addActions(...["s3:Get*"]);
+    confPolicy.addResources(...[`${confBucket.bucketArn}/*`]);
+    deployRole.addToPolicy(confPolicy);
+
+    deployStage.addAction(
+      new CodeBuildAction({
+        actionName: `${id}-update-eb`,
+        project: new PipelineProject(this, `${id}-update-app`, {
+          projectName: `${id}-update-eb`,
+          role: deployRole,
+          buildSpec: BuildSpec.fromObject({
+            version: "0.2",
+            phases: {
+              build: {
+                commands: [
+                  `VERSION=$(./infra/scripts/version.sh ./api)`,
+                  `aws elasticbeanstalk create-application-version --application-name ${appName} --version-label $VERSION --source-bundle S3Bucket=${confBucket.bucketName},S3Key=Dockerrun.zip`,
+                  `aws elasticbeanstalk update-environment --environment-name ${envName} --version-label $VERSION`,
+                ],
               },
-            }),
+            },
           }),
-          input: frontendArtifact,
-        })
-      );
+          environmentVariables: {
+            ISSUER_TOOL_APP_NAME: {
+              value: id,
+            },
+          },
+        }),
+        input: sources,
+      })
+    );
+    deployStage.addAction(
+      new CodeBuildAction({
+        actionName: `${id}-copy-front`,
+        project: new PipelineProject(this, `${id}-copy-front`, {
+          projectName: `${id}-copy-front`,
+          role: deployRole,
+          buildSpec: BuildSpec.fromObject({
+            version: "0.2",
+            phases: {
+              build: {
+                commands: [
+                  `V1=$(curl https://${domainName}/version.txt)`,
+                  `V2=$(cat ./frontend/build/version.txt)`,
+                  `if [ "$V1" != "$V2" ]; then aws s3 sync --delete ./frontend/build s3://${frontendBucket.bucketName}; fi`,
+                ],
+              },
+            },
+          }),
+        }),
+        input: frontendArtifact,
+      })
+    );
   }
 }
