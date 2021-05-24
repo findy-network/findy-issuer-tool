@@ -63,6 +63,6 @@ $AWS_CMD ecr get-login-password \
 
 docker tag findy-issuer-tool:latest $FULL_NAME:latest
 docker tag findy-issuer-tool:latest $FULL_NAME:$VERSION
-docker push --all-tags $FULL_NAME
+echo "$FULL_NAME:latest" "$FULL_NAME:$VERSION" | xargs -n 1 docker push
 
 docker logout $ISSUER_TOOL_ECR_ROOT_URL

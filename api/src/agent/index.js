@@ -16,11 +16,16 @@ export default async (storage, config) => {
 
   const authenticator = createAcator(acatorProps);
 
+  const { serverAddress, serverPort, certPath, verifyServerIdentity } =
+    config.agency;
+  log.info(
+    `Connecting to agency address ${serverAddress}, port ${serverPort}, cert ${certPath}, verifyServer ${verifyServerIdentity}`,
+  );
   const grpcProps = {
-    serverAddress: config.agency.serverAddress,
-    serverPort: config.agency.serverPort,
-    certPath: config.agency.certPath,
-    verifyServerIdentity: config.agency.verifyServerIdentity,
+    serverAddress,
+    serverPort,
+    certPath,
+    verifyServerIdentity,
   };
 
   const connection = await openGRPCConnection(grpcProps, authenticator);
