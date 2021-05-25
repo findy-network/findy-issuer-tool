@@ -2,7 +2,6 @@
 FROM node:14.16.0-alpine3.13
 
 ARG GITHUB_TOKEN
-ARG ISSUER_TOOL_SERVER_CERT_PATH
 
 WORKDIR /usr/src/app
 
@@ -29,6 +28,7 @@ COPY .npmrc ./
 
 ENV NODE_ENV production
 ENV FINDY_CTS_LOG_LEVEL debug
+ENV ISSUER_TOOL_SERVER_CERT_PATH ${ISSUER_TOOL_SERVER_CERT_PATH}
 
 RUN npm ci --only=production
 
