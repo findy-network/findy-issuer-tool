@@ -98,7 +98,7 @@ export class IssuerToolPipelineStack extends cdk.Stack {
         repo: "findy-issuer-tool",
         oauthToken: tokenSecret,
         trigger: GitHubTrigger.WEBHOOK,
-        branch: "dev",
+        branch: "master",
         actionName: `${id}-checkout`,
         output: sources,
       })
