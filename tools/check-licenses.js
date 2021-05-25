@@ -1,5 +1,5 @@
-const jsgl = require('js-green-licenses');
-const { mkdirSync, existsSync, writeFileSync, copyFileSync } = require('fs');
+const jsgl = require("js-green-licenses");
+const { mkdirSync, existsSync, writeFileSync, copyFileSync } = require("fs");
 
 // TODO: move to own module
 const runCheck = async (path, verbose) => {
@@ -8,13 +8,13 @@ const runCheck = async (path, verbose) => {
     checker.setDefaultHandlers();
   }
   const licenses = [];
-  checker.on('non-green-license', (arg) => {
+  checker.on("non-green-license", (arg) => {
     licenses.push(arg);
   });
-  checker.on('package.json', (arg) => {
+  checker.on("package.json", (arg) => {
     console.log(`Scanning ${arg}`);
   });
-  checker.on('error', (err) => {
+  checker.on("error", (err) => {
     throw err;
   });
   await checker.checkLocalDirectory(path);
@@ -22,7 +22,7 @@ const runCheck = async (path, verbose) => {
 };
 
 const scan = async (packageJsonPath, reportPath) => {
-  const path = '.temp';
+  const path = ".temp";
 
   if (!existsSync(path)) {
     mkdirSync(path);
@@ -44,13 +44,13 @@ const scan = async (packageJsonPath, reportPath) => {
         licenses.reduce(
           (result, { packageName, version, licenseName }) =>
             `${result}\n${packageName}@${version} ${licenseName}`,
-          ''
+          ""
         )
       );
       console.log(`Licenses listed to ${reportPath}`);
     } catch (err) {
-      console.log(err)
-      process.exit(1); 
+      console.log(err);
+      process.exit(1);
     }
   }
 
@@ -66,19 +66,26 @@ const scan = async (packageJsonPath, reportPath) => {
           `Found invalid license for ${packageName}@${version}: ${licenseName}`
         )
       );
-      console.log('Check license terms for invalid licenses! Either');
-      console.log('1) remove incompatible package');
-      console.log('2) add license to greenLicenses');
-      console.log('3) add package to exception list (packageAllowList)');
+      console.log("Check license terms for invalid licenses! Either");
+      console.log("1) remove incompatible package");
+      console.log("2) add license to greenLicenses");
+      console.log("3) add package to exception list (packageAllowList)");
       process.exit(1);
-    }  
+    }
   } catch (err) {
-    console.log(err)
-    process.exit(1); 
+    console.log(err);
+    process.exit(1);
   }
 };
 
 (async () => {
-  await scan('./api/package.json')
-  await scan('./frontend/package.json', process.argv[2] === 'report' && './frontend/build/licenses.txt')
-})()
+  if (process.argv[2] === "report") {
+    await scan(
+      "./frontend/package.json",
+      process.argv[2] === "report" && "./frontend/build/licenses.txt"
+    );
+  } else {
+    await scan("./api/package.json");
+    await scan("./frontend/package.json");
+  }
+})();
