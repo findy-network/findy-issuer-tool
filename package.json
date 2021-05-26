@@ -24,9 +24,7 @@
     "url": "https://github.com/findy-network/findy-issuer-tool/issues"
   },
   "homepage": "https://github.com/findy-network/findy-issuer-tool#readme",
-  "dependencies": {
-    "@findy-network/findy-common-ts": "0.0.18"
-  },
+  "dependencies": {},
   "devDependencies": {
     "js-green-licenses": "^3.0.1"
   }
