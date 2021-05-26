@@ -29,7 +29,7 @@ const init = async (config) => {
   const appAgent = await agent(appStorage, config);
 
   const app = express();
-  const appRoutes = routes(appStorage, appAgent);
+  const appRoutes = routes(appStorage, appAgent, config);
 
   const { port } = config;
 
