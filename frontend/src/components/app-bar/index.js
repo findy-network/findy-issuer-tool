@@ -8,7 +8,7 @@ const AppBar = () => (
   <AppBarComponent position="relative">
     <Toolbar>
       <Typography variant="h6" noWrap>
-        Findy Issuer App
+        Issuer Tool
       </Typography>
     </Toolbar>
   </AppBarComponent>
