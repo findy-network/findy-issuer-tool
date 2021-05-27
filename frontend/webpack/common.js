@@ -38,7 +38,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Findy Issuer App',
+      title: 'Issuer Tool',
       template: './webpack/template.html',
     }),
     new webpack.DefinePlugin({ CONFIG: JSON.stringify(require('config')) }),
