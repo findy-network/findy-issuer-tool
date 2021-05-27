@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Button from '@material-ui/core/Button';
+import BaseButton from '@material-ui/core/Button';
 
 const ButtonContainer = styled.div`
   margin-bottom: 1rem;
   text-align: right;
+`;
+
+const Button = styled(BaseButton)`
+  ${(props) => !props.disabled && `display: inline-block;`}
 `;
 
 const EditorButtons = ({ canReset, onReset, canSave, onSave, okLabel }) => (
