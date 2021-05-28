@@ -59,11 +59,13 @@ Note! "<>" indicates example value, and shouldn't be included in values you defi
 
    ```bash
    # full ECR url from previous step
-   export ISSUER_TOOL_ECR_URL=<123456789.dkr.ecr.region.amazonaws.com/imagename>
+   export ISSUER_TOOL_ECR_URL="<123456789.dkr.ecr.region.amazonaws.com/imagename>"
    # ECR root url
-   export ISSUER_TOOL_ECR_ROOT_URL=<123456789.dkr.ecr.region.amazonaws.com>
+   export ISSUER_TOOL_ECR_ROOT_URL="<123456789.dkr.ecr.region.amazonaws.com>"
    # ECR image name
-   export ISSUER_TOOL_ECR_IMAGE_NAME="imagename"
+   export ISSUER_TOOL_ECR_IMAGE_NAME="<imagename>"
+   # S3 cert path or empty, depending on agency certificate type
+   export ISSUER_TOOL_SERVER_CERT_PATH="<s3://somebucket>"
    ```
 
 1. Build and push the api service image
