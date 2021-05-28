@@ -32,6 +32,6 @@
     "serverAddress": "",
     "serverPort": 50051,
     "certPath": "./tools/server.crt",
-    "verifyServerIdentity": false
+    "verifyServerIdentity": true
   }
 }
