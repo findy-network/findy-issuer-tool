@@ -7,8 +7,7 @@ AWS_CMD="aws"
 $AWS_CMD --version
 
 if [ -z "$ISSUER_TOOL_SERVER_CERT_PATH" ]; then
-  echo "ERROR: Define env variable ISSUER_TOOL_SERVER_CERT_PATH"
-  exit 1
+  echo "WARNING: Env variable ISSUER_TOOL_SERVER_CERT_PATH is empty"
 fi
 
 if [ -z "$GITHUB_TOKEN" ]; then
