@@ -6,8 +6,8 @@ AWS_CMD="aws"
 
 $AWS_CMD --version
 
-if [ -z "$ISSUER_TOOL_APP_NAME" ]; then
-  echo "ERROR: Define env variable ISSUER_TOOL_APP_NAME"
+if [ -z "$ISSUER_TOOL_SERVER_CERT_PATH" ]; then
+  echo "ERROR: Define env variable ISSUER_TOOL_SERVER_CERT_PATH"
   exit 1
 fi
 
@@ -52,7 +52,7 @@ docker rmi findy-issuer-tool || echo 'no local images to clean'
 docker rmi $FULL_NAME  || echo 'no aws images to clean'
 docker build \
     --build-arg GITHUB_TOKEN="$GITHUB_TOKEN" \
-    --build-arg ISSUER_TOOL_SERVER_CERT_PATH="s3://$ISSUER_TOOL_APP_NAME-conf-bucket" \
+    --build-arg ISSUER_TOOL_SERVER_CERT_PATH="$ISSUER_TOOL_SERVER_CERT_PATH" \
     -t findy-issuer-tool .
 
 $AWS_CMD ecr get-login-password \

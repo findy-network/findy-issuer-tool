@@ -122,8 +122,8 @@ export class IssuerToolPipelineStack extends cdk.Stack {
             },
           }),
           environmentVariables: {
-            ISSUER_TOOL_APP_NAME: {
-              value: id,
+            ISSUER_TOOL_SERVER_CERT_PATH: {
+              value: "",
             },
             GITHUB_TOKEN: {
               value: tokenName,
