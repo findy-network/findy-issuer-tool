@@ -30,6 +30,7 @@ const NavMenu = (props) => (
       <LinkItem path="/issue" label="Issue" {...props} />
       <LinkItem path="/verify" label="Verify" {...props} />
       <LinkItem path="/tools" label="Tools" {...props} />
+      <LinkItem path="/me" label="My creds" {...props} />
     </List>
   </Paper>
 );
