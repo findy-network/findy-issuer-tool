@@ -44,7 +44,10 @@ const init = async (config) => {
   app.get('/auth/dev', appRoutes.devLogin);
   app.get('/auth/callback/findy-issuer-app', appRoutes.githubLoginIssuer);
 
-  app.get('/user', (req, res) => res.json(req.user));
+  app.get('/user', async (req, res) => {
+    const user = await appStorage.getUser(req.user.email);
+    return res.json(user);
+  });
   app.get('/ledger', async (req, res) =>
     res.json(await appStorage.getLedger()),
   );

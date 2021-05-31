@@ -15,6 +15,7 @@ import Login from './login';
 import Verify from './verify';
 import Message from './message';
 import Tools from './tools';
+import Me from './me';
 
 const App = ({ user, activePath }) => (
   <div>
@@ -32,6 +33,7 @@ const App = ({ user, activePath }) => (
                 <Route exact path="/verify" component={Verify} />
                 <Route exact path="/message" component={Message} />
                 <Route path="/tools" component={Tools} />
+                <Route path="/me" component={Me} />
                 <Route component={NoMatch} />
               </Switch>
             </AppContainer>
