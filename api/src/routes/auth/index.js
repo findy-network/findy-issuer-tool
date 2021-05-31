@@ -6,8 +6,8 @@ import dev from './dev';
 export default (storage, config) => {
   const { addOrUpdateUser } = storage;
 
-  const createToken = async (name, email) => {
-    await addOrUpdateUser({ name, email });
+  const createToken = async (name, email, id) => {
+    await addOrUpdateUser({ name, email, id });
     return jwt.sign({ name, email }, config.auth.jwtSharedSecret, {
       expiresIn: '24h',
     });

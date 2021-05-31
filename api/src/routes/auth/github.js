@@ -4,6 +4,7 @@ import log from '../../log';
 export default (createToken, config) => {
   const githubLogin = async (ghAuth, redirectUrl, { query: { code } }, res) => {
     log.info(`Received github auth callback with code ${code}`);
+
     const payload = {
       client_id: ghAuth.clientId,
       client_secret: ghAuth.clientSecret,
@@ -26,6 +27,8 @@ export default (createToken, config) => {
       `https://${ghAuth.username}:${accessToken}@api.github.com/user`,
     );
 
+    const name = userResponse.data.name || userResponse.data.login;
+
     const userEmailsResponse = await axios.get(
       `https://${ghAuth.username}:${accessToken}@api.github.com/user/emails`,
     );
@@ -39,7 +42,7 @@ export default (createToken, config) => {
       index > -1 &&
       config.auth.allowedDomains.includes(primaryEmail.substring(index + 1))
     ) {
-      const token = await createToken(userResponse.data.name, primaryEmail);
+      const token = await createToken(name, primaryEmail, userResponse.data.id);
       return res.redirect(`${redirectUrl}?token=${token}`);
     }
     return res.redirect(`${redirectUrl}`);
