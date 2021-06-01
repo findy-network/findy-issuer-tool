@@ -1,5 +1,6 @@
 {
   "port": 3001,
+  "ourHost": "http://localhost:3001",
   "ourName": "issuer-tool",
   "devMode": true,
   "storage": {
@@ -15,6 +16,10 @@
           "username": "",
           "clientId": "",
           "clientSecret": ""
+        },
+        "isb": {
+          "clientId": "saippuakauppias",
+          "host": "https://isb-test.op.fi/"
         },
         "redirectUrl": "http://localhost:8081"
       }
@@ -33,7 +38,7 @@
     "key": "15308490f1e4026284594dd08d31291bc8ef2aeac730d0daf6ff87bb92d4336c",
     "serverAddress": "localhost",
     "serverPort": 50052,
-    "certPath": "../tools/local-cert",
+    "certPath": "",
     "verifyServerIdentity": true
   }
 }

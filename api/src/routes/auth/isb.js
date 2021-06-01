@@ -1,0 +1,138 @@
+import axios from 'axios';
+import fs from 'fs';
+import jose from 'node-jose';
+import { Issuer, generators } from 'openid-client';
+import { v4 as uuidv4 } from 'uuid';
+
+import log from '../../log';
+
+// Sample implementation for credential generation from OIDC based authentication
+// Note: this is a PoC, not production ready
+// implementation is missing security considerations like error handling
+export default async (sendCredential, config) => {
+  const { clientId } = config.auth.apps['findy-issuer-app'].isb;
+  const isbHost = config.auth.apps['findy-issuer-app'].isb.host;
+  const urlGenPath = '/creds/isb-url';
+  const signAlg = 'RS256';
+  const { ourHost } = config;
+
+  const issuer = await Issuer.discover(isbHost);
+  log.info(
+    `Discovered ISB ${issuer.issuer} docs: ${issuer.metadata.service_documentation}`,
+  );
+
+  const keys = {
+    encyptionKey: fs
+      .readFileSync('./tools/isb/sandbox-sp-encryption-key.pem')
+      .toString(),
+    signingKey: fs.readFileSync('./tools/isb/sp-signing-key.pem').toString(),
+  };
+
+  const isbSigningKey = await (async () => {
+    const response = await axios.get(`${isbHost}jwks/broker`);
+    return jose.JWK.asKeyStore(response.data);
+  })();
+
+  const makeClientAssertion = async () => {
+    const payload = {
+      iss: clientId,
+      sub: clientId,
+      aud: `${isbHost}/oauth/token`,
+      jti: uuidv4().toString(),
+      exp: Math.floor(Date.now() / 1000) + 10 * 60,
+    };
+    const payloadJSON = JSON.stringify(payload);
+    const signingKey = await jose.JWK.asKey(keys.signingKey, 'pem');
+    return jose.JWS.createSign({ format: 'compact' }, signingKey).final(
+      payloadJSON,
+      'utf-8',
+    );
+  };
+
+  const decryptToken = async (token) => {
+    const privKey = await jose.JWK.asKey(keys.encyptionKey, 'pem');
+    const decrypted = (
+      await jose.JWE.createDecrypt(privKey).decrypt(token)
+    ).plaintext.toString();
+    const verificationResult = await jose.JWS.createVerify(
+      isbSigningKey,
+    ).verify(decrypted);
+    return verificationResult.payload.toString();
+  };
+
+  const keyStore = jose.JWK.createKeyStore();
+  await keyStore.add(keys.signingKey, 'pem', { use: 'sig' });
+  await keyStore.add(keys.encyptionKey, 'pem', { use: 'enc' });
+
+  const isbCallback = async (req, res) => {
+    const payload = {
+      client_id: clientId,
+      grant_type: 'authorization_code',
+      code: req.query.code,
+      redirect_uri: `${ourHost}/auth/isb`,
+      client_assertion_type:
+        'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
+      client_assertion: await makeClientAssertion(),
+    };
+    const params = Object.keys(payload).reduce((result, item) => {
+      result.append(item, payload[item]);
+      return result;
+    }, new URLSearchParams());
+
+    const url = `${isbHost}oauth/token`;
+    const conf = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
+
+    const tokenResponse = await axios.post(url, params, conf);
+    const profile = await decryptToken(tokenResponse.data.id_token);
+    const nonceValid = profile.nonce === req.session.nonce;
+    if (nonceValid) {
+      log.info(`Sending ISB credential to pairwise ${req.query.state}`);
+      // TODO: store the cred def id, send credential and show success text on frontend
+    } else {
+      log.warn(`Nonce mismatch ${profile.nonce}, ${req.session.nonce}`);
+    }
+    return res.redirect(
+      `${config.auth.apps['findy-issuer-app'].redirectUrl}/me?cred_sent=${nonceValid}`,
+    );
+  };
+
+  const getUrl = () => urlGenPath;
+
+  const getUrlForPairwise = async (req, res) => {
+    const pwId = req.query.pw;
+    const nonce = generators.nonce();
+    req.session.nonce = nonce;
+    log.info(`Generating ISB auth url to pairwise ${pwId}`);
+    const content = {
+      client_id: clientId,
+      response_type: 'code',
+      redirect_uri: `${ourHost}/auth/isb`,
+      state: pwId,
+      nonce,
+      scope: 'openid profile personal_identity_code',
+    };
+    const client = new issuer.Client(
+      {
+        ...content,
+        token_endpoint_auth_method: 'private_key_jwt',
+        token_endpoint_auth_signing_alg: signAlg,
+        request_object_signing_alg: signAlg,
+      },
+      keyStore.toJSON(true),
+    );
+
+    const request = await client.requestObject(content);
+    res.json({
+      path: urlGenPath,
+      url: client.authorizationUrl({
+        request,
+      }),
+    });
+  };
+
+  return { isbCallback, getUrl, getUrlForPairwise };
+};

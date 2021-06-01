@@ -48,10 +48,14 @@ export default (createToken, config) => {
     return res.redirect(`${redirectUrl}`);
   };
 
+  const appConfig = config.auth.apps['findy-issuer-app'];
+
   const githubLoginIssuer = (req, res) => {
-    const app = config.auth.apps['findy-issuer-app'];
-    return githubLogin(app.github, app.redirectUrl, req, res);
+    return githubLogin(appConfig.github, appConfig.redirectUrl, req, res);
   };
 
-  return { githubLoginIssuer };
+  const getUrl = () =>
+    `https://github.com/login/oauth/authorize?scope=user:email&amp;client_id=${appConfig.github.clientId}`;
+
+  return { githubLoginIssuer, getUrl };
 };

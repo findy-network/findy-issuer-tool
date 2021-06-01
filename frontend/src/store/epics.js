@@ -41,6 +41,12 @@ import {
   SEND_CREDENTIAL,
   sendCredentialFulfilled,
   sendCredentialRejected,
+  fetchConfig,
+  FETCH_CONFIG,
+  fetchConfigFulfilled,
+  FETCH_URL,
+  fetchUrlFulfilled,
+  fetchUrlRejected,
 } from './actions';
 
 const post = (state$, path, payload) =>
@@ -78,6 +84,13 @@ const initUserFetchEpic = (action$, state$) =>
       }
       return of(fetchUser());
     })
+  );
+
+const initConfigFetchEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(LOCATION_CHANGE),
+    filter(() => !state$.value.config),
+    switchMap(() => of(fetchConfig()))
   );
 
 const initLedgerFetchEpic = (action$, state$) =>
@@ -145,6 +158,16 @@ const fetchUserEpic = (action$, state$) =>
     )
   );
 
+const fetchConfigEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(FETCH_CONFIG),
+    mergeMap(() =>
+      get(state$, '/auth/config').pipe(
+        map(({ response }) => fetchConfigFulfilled(response))
+      )
+    )
+  );
+
 const createEpic =
   (actionType, httpVerb, path, reqPayload, fulfilled, rejected) =>
   (action$, state$) =>
@@ -160,12 +183,14 @@ const createEpic =
 
 export default combineEpics(
   initUserFetchEpic,
+  initConfigFetchEpic,
   initLedgerFetchEpic,
   fetchLedgerEpic,
   initConnectionsFetchEpic,
   fetchConnectionsEpic,
   useTokenEpic,
   fetchUserEpic,
+  fetchConfigEpic,
   createEpic(
     FETCH_PAIRWISE_INVITATION,
     post,
@@ -221,5 +246,13 @@ export default combineEpics(
     (payload) => payload,
     sendCredentialFulfilled,
     sendCredentialRejected
+  ),
+  createEpic(
+    FETCH_URL,
+    get,
+    (payload) => `${payload.url}?pw=${payload.pairwiseName}`,
+    () => {},
+    fetchUrlFulfilled,
+    fetchUrlRejected
   )
 );

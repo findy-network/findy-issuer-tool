@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import DevLogin from '../dev-login';
@@ -11,13 +12,17 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const Login = () => (
+const Login = ({ config }) => (
   <div>
     <Container>
-      {CONFIG.auth.dev && <DevLogin />}
-      <GitHubLogin />
+      {CONFIG.auth.dev && <DevLogin conf={config.dev} />}
+      <GitHubLogin conf={config.github} />
     </Container>
   </div>
 );
+
+Login.propTypes = {
+  config: PropTypes.object.isRequired,
+};
 
 export default Login;

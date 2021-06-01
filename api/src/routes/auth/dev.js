@@ -9,5 +9,7 @@ export default (createToken, config) => {
     return res.status(404);
   };
 
-  return { devLogin };
+  const getUrl = () => '/auth/dev';
+
+  return { devLogin, getUrl };
 };

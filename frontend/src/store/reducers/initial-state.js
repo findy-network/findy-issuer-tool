@@ -1,4 +1,5 @@
 export default {
+  config: null,
   user: null,
   ledger: null,
   token: localStorage.getItem('token'),
@@ -11,6 +12,7 @@ export default {
     sendingBasicMessage: false,
     sendingCredential: false,
     sendingProofRequest: false,
+    url: {},
   },
   events: {
     log: [],

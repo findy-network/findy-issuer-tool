@@ -1,8 +1,5 @@
 {
   "auth": {
-    "github": {
-      "clientId": ""
-    },
     "dev": true
   },
   "api": {

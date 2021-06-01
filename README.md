@@ -48,7 +48,7 @@ App authenticates to [agency](https://github.com/findy-network/findy-agent) usin
       export ISSUER_TOOL_AGENCY_KEY=<authenticator key e.g. 15308490f1e4026284594dd08d31291bc8ef2aeac730d0daf6ff87bb92d4336c>
       export ISSUER_TOOL_SERVER_ADDRESS=<agency core service address e.g. agency-api.example.com>
       export ISSUER_TOOL_SERVER_PORT=<agency core service port e.g. 50051>
-      export ISSUER_TOOL_SERVER_CERT_PATH=<path containing the grpc API cert in case untrusted issuer e.g. ./cert, otherwise empty>
+      export ISSUER_TOOL_SERVER_CERT_PATH=<path containing the grpc API cert in case untrusted issuer e.g. ../tools/local-cert, otherwise empty>
       ```
 
       [By default](./api/config/default.json), the service tries to connect the local agency:

@@ -20,7 +20,6 @@ export interface IssuerToolInfraStackProps extends StackProps {
   domainRoot: string;
   tokenName: string;
   walletDomainName: string;
-  githubClientId: string;
 }
 
 export class IssuerToolInfraStack extends cdk.Stack {

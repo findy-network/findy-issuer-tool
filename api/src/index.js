@@ -3,6 +3,8 @@ import express from 'express';
 import morgan from 'morgan';
 import jwt from 'express-jwt';
 import { Validator } from 'express-json-validator-middleware';
+import session from 'express-session';
+import crypto from 'crypto';
 
 import log from './log';
 import agent from './agent';
@@ -29,7 +31,7 @@ const init = async (config) => {
   const appAgent = await agent(appStorage, config);
 
   const app = express();
-  const appRoutes = routes(appStorage, appAgent, config);
+  const appRoutes = await routes(appStorage, appAgent, config);
 
   const { port } = config;
 
@@ -38,11 +40,23 @@ const init = async (config) => {
     app.use(cors());
   }
   app.use(jwtMw);
+  app.use(
+    session({
+      secret: crypto.randomBytes(20).toString('hex'),
+      saveUninitialized: true,
+      resave: false,
+      cookie: { maxAge: 1000 * 60 * 60 },
+    }),
+  );
   app.use(morgan('combined', { stream: new Stream() }));
   app.use(express.json());
 
-  app.get('/auth/dev', appRoutes.devLogin);
-  app.get('/auth/callback/findy-issuer-app', appRoutes.githubLoginIssuer);
+  app.get('/auth/config', (req, res) =>
+    res.json(appRoutes.getIntegrationConfig()),
+  );
+  app.get('/auth/dev', appRoutes.devModeLogin);
+  app.get('/auth/callback/findy-issuer-app', appRoutes.githubLogin);
+  app.get('/auth/isb', appRoutes.isbSendCred);
 
   app.get('/user', async (req, res) => {
     const user = await appStorage.getUser(req.user.email);
@@ -72,6 +86,7 @@ const init = async (config) => {
     '/pairwise/credential',
     ...appRoutes.pairwiseSendCredentialRoute(validate),
   );
+  app.get('/creds/isb-url', appRoutes.isbGetUrlForPairwise);
 
   app.listen(port, () => log.info(`Issuer tool listening on port ${port}!`));
 };

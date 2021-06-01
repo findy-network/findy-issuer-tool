@@ -3,19 +3,9 @@ import {
   ServicePrincipal,
   ManagedPolicy,
   PolicyStatement,
-  IRole,
 } from "@aws-cdk/aws-iam";
 import * as cdk from "@aws-cdk/core";
-import {
-  ActionBindOptions,
-  ActionCategory,
-  ActionConfig,
-  ActionProperties,
-  Artifact,
-  IAction,
-  IStage,
-  Pipeline,
-} from "@aws-cdk/aws-codepipeline";
+import { Artifact, Pipeline } from "@aws-cdk/aws-codepipeline";
 import {
   BuildSpec,
   PipelineProject,
@@ -29,15 +19,12 @@ import {
 } from "@aws-cdk/aws-codepipeline-actions";
 
 import { IBucket } from "@aws-cdk/aws-s3";
-import { Construct } from "@aws-cdk/core";
-import { IRuleTarget, Rule, RuleProps } from "@aws-cdk/aws-events";
 
 export interface IssuerToolPipelineStackProps extends cdk.StackProps {
   ecrURL: string;
   tokenName: string;
   domainName: string;
   walletDomainName: string;
-  githubClientId: string;
   frontendBucket: IBucket;
   confBucket: IBucket;
   envName: string;
@@ -57,7 +44,6 @@ export class IssuerToolPipelineStack extends cdk.Stack {
       tokenName,
       domainName,
       walletDomainName,
-      githubClientId,
       frontendBucket,
       confBucket,
       envName,
@@ -178,9 +164,6 @@ export class IssuerToolPipelineStack extends cdk.Stack {
           environmentVariables: {
             API_URL: {
               value: `https://${domainName}`,
-            },
-            GITHUB_CLIENT_ID: {
-              value: githubClientId,
             },
             DEFAULT_WEB_WALLET_LABEL: {
               value: "Findy Web Wallet",
