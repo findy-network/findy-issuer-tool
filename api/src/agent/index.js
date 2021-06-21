@@ -10,6 +10,7 @@ import log from '../log';
 export default async (storage, config) => {
   const acatorProps = {
     authUrl: config.agency.authUrl,
+    authOrigin: config.agency.authOrigin,
     userName: config.agency.userName,
     key: config.agency.key,
   };

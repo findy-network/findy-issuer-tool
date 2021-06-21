@@ -1,6 +1,6 @@
 # findy-issuer-tool
 
-Utility (UI) tool and sample project for issuing and verifying
+Utility (UI) Node.js tool and sample project for issuing and verifying with Findy agency.
 
 ## Development
 
@@ -29,21 +29,29 @@ Utility (UI) tool and sample project for issuing and verifying
       export ISSUER_TOOL_SERVER_ADDRESS=<agency core service address>
       ```
 
-      for local environment:
+      Example for local environment:
 
       ```sh
       export ISSUER_TOOL_AGENCY_AUTH_URL="http://localhost:8088"
+      export ISSUER_TOOL_AGENCY_AUTH_ORIGIN="http://localhost:3000"
       export ISSUER_TOOL_AGENCY_USER_NAME="my-issuer-tool"
       export ISSUER_TOOL_AGENCY_KEY="15308490f1e4026284594dd08d31291bc8ef2aeac730d0daf6ff87bb92d4336c"
-      export ISSUER_TOOL_SERVER_ADDRESS="localhost:50052"
+      export ISSUER_TOOL_SERVER_ADDRESS="localhost"
+      export ISSUER_TOOL_SERVER_PORT="50052"
       export ISSUER_TOOL_SERVER_CERT_PATH="../tools/local-cert"
       ```
+
+      Note:
+
+      - the key value is your agency authenticator master key and should be kept secret in production environment.
+      - the auth origin is usually needed only in development setup where wallet app and authentication service resides in different domains
 
    1. Start database service in local container: `npm run db`
 
    1. Run server: `npm start`
 
 1. Start frontend server
+
    1. Open new terminal
 
    1. Run
