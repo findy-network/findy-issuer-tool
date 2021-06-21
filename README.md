@@ -6,7 +6,9 @@ The tool works as a helper UI for
 * create schemas and credential definitions to ledger
 * test different Aries protocols (connecting, issuing, verifying, message sending) through Findy agency.
 
-The project demonstrates how to implement JS-based issuer/verifier application with Findy agency. Check details [in the source code](./api/src/agent/index.js). In addition to the protocol starters, the agent module has functionality for the cloud agent listening. That means the app gets notified of all the cloud agent events. It also shows how to handle the verification requests through the agency question/answer interface.
+The project demonstrates how to implement JS-based issuer/verifier application with Findy agency. Check details [in the source code](./api/src/agent/index.js). In addition to the protocol starters, the agent module has functionality for listening the cloud agent. That means the app gets notified of all the cloud agent events. It also shows how to handle the verification requests through the agency question/answer interface.
+
+This project's main purpose is to work as example code for JS applications and ease the playing around with verified data for non-technical folks. If you need an agent manipulation tool with more extensive feature set, please install [findy-agent-cli](https://github.com/findy-network/findy-agent-cli).
 
 ## Setup environment
 
