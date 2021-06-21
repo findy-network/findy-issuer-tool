@@ -78,4 +78,4 @@ joined=$(printf ",%s" "${params[@]}")
 SECRET_STRING={${joined:1}}
 
 echo $SECRET_STRING
-#aws secretsmanager create-secret --name issuer-tool --secret-string $SECRET_STRING
+aws secretsmanager create-secret --name issuer-tool --secret-string $SECRET_STRING

@@ -2,6 +2,12 @@
 
 Utility (UI) Node.js tool and sample project for issuing and verifying with Findy agency.
 
+The tool works as a helper UI for
+* create schemas and credential definitions to ledger
+* test different Aries protocols (connecting, issuing, verifying, message sending) through Findy agency.
+
+The project demonstrates how to implement JS-based issuer/verifier application with Findy agency. Check details [in the source code](./api/src/agent/index.js). In addition to the protocol starters, the agent module has functionality for the cloud agent listening. That means the app gets notified of all the cloud agent events. It also shows how to handle the verification requests through the agency question/answer interface.
+
 ## Setup environment
 
 1. This app utilises Findy agency for issuing and verifying credentials. You can either connect to a cloud installation of Findy agency or [launch agency locally](https://github.com/findy-network/findy-wallet-pwa/blob/master/tools/env/README.md).
@@ -74,14 +80,41 @@ Utility (UI) Node.js tool and sample project for issuing and verifying with Find
 ### Create schema and credential definition
 
 1. Create schema
+
+   Define schema name, version and attributes and click "Save".
+
+   ![Create schema](./docs/usage-01.gif)
+
 1. Create credential definition
+
+   Define schema id, credential definition tag and click "Save".
+
+   ![Create cred def](./docs/usage-02.gif)
 
 ### Send chat message
 
 1. Make pairwise connection
+
+   Copy invitation json, paste it to wallet and add connection.
+
+   ![Make connection](./docs/usage-03.gif)
+
 1. Send message to new connection
+
+   Select connection, type message and click send.
+
+   ![Make connection](./docs/usage-04.gif)
 
 ### Issue and verify credentials
 
 1. Issue credential
+
+   Select connection and credential definition, define attributes and click send. Accept credential in wallet application.
+
+   ![Make connection](./docs/usage-05.gif)
+
 1. Verify credential
+
+   Select connection and credential definition, define attributes and click send. Accept proof request in wallet application. Proof succeeds if the credential values sent from the wallet match the proof attributes you defined when sending the request.
+
+   ![Make connection](./docs/usage-06.gif)
