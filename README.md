@@ -2,11 +2,11 @@
 
 Utility (UI) Node.js tool and sample project for issuing and verifying with Findy agency.
 
-## Development
+## Setup environment
 
 1. This app utilises Findy agency for issuing and verifying credentials. You can either connect to a cloud installation of Findy agency or [launch agency locally](https://github.com/findy-network/findy-wallet-pwa/blob/master/tools/env/README.md).
 
-1. Start backend server
+1. **Start backend server**
 
    1. [Setup](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token) GitHub package registry authentication
 
@@ -29,16 +29,19 @@ Utility (UI) Node.js tool and sample project for issuing and verifying with Find
       export ISSUER_TOOL_SERVER_ADDRESS=<agency core service address>
       ```
 
-      Example for local environment:
+      [By default](./api/config/default.json), the service tries to connect the local agency:
 
-      ```sh
-      export ISSUER_TOOL_AGENCY_AUTH_URL="http://localhost:8088"
-      export ISSUER_TOOL_AGENCY_AUTH_ORIGIN="http://localhost:3000"
-      export ISSUER_TOOL_AGENCY_USER_NAME="my-issuer-tool"
-      export ISSUER_TOOL_AGENCY_KEY="15308490f1e4026284594dd08d31291bc8ef2aeac730d0daf6ff87bb92d4336c"
-      export ISSUER_TOOL_SERVER_ADDRESS="localhost"
-      export ISSUER_TOOL_SERVER_PORT="50052"
-      export ISSUER_TOOL_SERVER_CERT_PATH="../tools/local-cert"
+      ```json
+      "agency": {
+         "authUrl": "http://localhost:8088",
+         "authOrigin": "http://localhost:3000",
+         "userName": "my-issuer-tool",
+         "key": "15308490f1e4026284594dd08d31291bc8ef2aeac730d0daf6ff87bb92d4336c",
+         "serverAddress": "localhost",
+         "serverPort": 50052,
+         "certPath": "../tools/local-cert",
+         "verifyServerIdentity": true
+      }
       ```
 
       Note:
@@ -50,7 +53,7 @@ Utility (UI) Node.js tool and sample project for issuing and verifying with Find
 
    1. Run server: `npm start`
 
-1. Start frontend server
+1. **Start frontend server**
 
    1. Open new terminal
 
@@ -60,3 +63,25 @@ Utility (UI) Node.js tool and sample project for issuing and verifying with Find
       npm install
       npm start
       ```
+
+## Usage
+
+### Login
+
+1. Open browser at http://localhost:8081
+1. Login using "Dev login"-button. Optionally you can configure [GitHub login](./api/README.md#github_authentication)
+
+### Create schema and credential definition
+
+1. Create schema
+1. Create credential definition
+
+### Send chat message
+
+1. Make pairwise connection
+1. Send message to new connection
+
+### Issue and verify credentials
+
+1. Issue credential
+1. Verify credential
