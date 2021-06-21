@@ -27,6 +27,7 @@
   },
   "agency": {
     "authUrl": "",
+    "authOrigin": "",
     "userName": "",
     "key": "",
     "serverAddress": "",

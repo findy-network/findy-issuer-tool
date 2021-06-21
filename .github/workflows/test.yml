@@ -6,22 +6,17 @@ jobs:
     defaults:
       run:
         working-directory: ./api
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@findy-network'
+          node-version: "14.x"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@findy-network"
       - name: install deps
-        run: npm ci
-        env: # TODO: remove when public - not secure to expose to all scripts
-          NODE_AUTH_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
+        run: npm ci --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: build
         run: npm run build
       - name: test
@@ -39,18 +34,31 @@ jobs:
     defaults:
       run:
         working-directory: ./frontend
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "14.x"
       - name: install deps
         run: npm ci
       - name: build
         run: npm run build
       - name: test
         run: npm test
+  license-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14.x"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@findy-network"
+      - name: install deps
+        run: npm ci
+      - name: run check
+        run: |
+          cp ${NPM_CONFIG_USERCONFIG} .
+          npm run licenses:check
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
