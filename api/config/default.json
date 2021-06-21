@@ -26,13 +26,13 @@
     "level": "debug"
   },
   "agency": {
-    "authUrl": "",
-    "authOrigin": "",
-    "userName": "",
-    "key": "",
-    "serverAddress": "",
-    "serverPort": 50051,
-    "certPath": "./tools/server.crt",
+    "authUrl": "http://localhost:8088",
+    "authOrigin": "http://localhost:3000",
+    "userName": "my-issuer-tool",
+    "key": "15308490f1e4026284594dd08d31291bc8ef2aeac730d0daf6ff87bb92d4336c",
+    "serverAddress": "localhost",
+    "serverPort": 50052,
+    "certPath": "../tools/local-cert",
     "verifyServerIdentity": true
   }
 }
