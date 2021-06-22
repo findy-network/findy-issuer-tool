@@ -10,6 +10,14 @@ The project demonstrates how to implement JS-based issuer/verifier application w
 
 This project's main purpose is to work as example code for JS applications and ease the playing around with verified data for non-technical folks. If you need an agent manipulation tool with more extensive feature set, please install [findy-agent-cli](https://github.com/findy-network/findy-agent-cli).
 
+## Environment overview
+
+![Architecture](./docs/arch.png)
+
+App authenticates to [agency](https://github.com/findy-network/findy-agent) using [authentication service](https://github.com/findy-network/findy-agent-auth). Protocols and agent data is handled through [agency's GRPC API](https://github.com/findy-network/findy-agent-api). API handlers and authentication are implemented using [findy-common-ts helper library](https://github.com/findy-network/findy-common-ts).
+
+[Findy web wallet](https://github.com/findy-network/findy-wallet-pwa) can be used as the other agent when testing the pairwise capabilities.
+
 ## Setup environment
 
 1. This app utilises Findy agency for issuing and verifying credentials. You can either connect to a cloud installation of Findy agency or [launch agency locally](https://github.com/findy-network/findy-wallet-pwa/blob/master/tools/env/README.md).
