@@ -2,5 +2,10 @@
   "devMode": false,
   "log": {
     "colorize": false
+  },
+  "agency": {
+    "authOrigin": "",
+    "serverPort": 50051,
+    "verifyServerIdentity": true
   }
 }

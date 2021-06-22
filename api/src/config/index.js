@@ -34,6 +34,7 @@ export default async () => {
           allowedDomains: secrets['auth-allowed-domains'],
         };
         configFromAWS.agency = {
+          ...defaultConfig.agency,
           authUrl: secrets['agency-auth-url'],
           userName: secrets['agency-user-name'],
           key: secrets['agency-key'],
