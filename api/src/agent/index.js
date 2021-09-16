@@ -3,7 +3,6 @@ import {
   openGRPCConnection,
   agencyv1,
 } from '@findy-network/findy-common-ts';
-import { v4 as uuidv4 } from 'uuid';
 
 import log from '../log';
 
@@ -258,12 +257,10 @@ export default async (storage, config) => {
   };
 
   const createPairwiseInvitation = async () => {
-    const newId = uuidv4();
-    log.info(`Creating invitation for ${config.ourName} - ${newId}`);
+    log.info(`Creating invitation for ${config.ourName}`);
 
     const msg = new agencyv1.InvitationBase();
     msg.setLabel(config.ourName);
-    msg.setId(newId);
 
     const res = await agentClient.createInvitation(msg);
 
