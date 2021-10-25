@@ -3,8 +3,9 @@
 Utility (UI) Node.js tool and sample project for issuing and verifying with Findy agency.
 
 The tool works as a helper UI for
-* create schemas and credential definitions to ledger
-* test different Aries protocols (connecting, issuing, verifying, message sending) through Findy agency.
+
+- create schemas and credential definitions to ledger
+- test different Aries protocols (connecting, issuing, verifying, message sending) through Findy agency.
 
 The project demonstrates how to implement JS-based issuer/verifier application with Findy agency. Check details [in the source code](./api/src/agent/index.js). In addition to the protocol starters, the agent module has functionality for listening the cloud agent. That means the app gets notified of all the cloud agent events. It also shows how to handle the verification requests through the agency question/answer interface.
 
@@ -39,10 +40,13 @@ App authenticates to [agency](https://github.com/findy-network/findy-agent) usin
       Following settings are mandatory for successful agency connection:
 
       ```sh
-      export ISSUER_TOOL_AGENCY_AUTH_URL=<agency auth service URL>
-      export ISSUER_TOOL_AGENCY_USER_NAME=<unique agent name>
-      export ISSUER_TOOL_AGENCY_KEY=<authenticator key>
-      export ISSUER_TOOL_SERVER_ADDRESS=<agency core service address>
+      export ISSUER_TOOL_AGENCY_AUTH_URL=<agency auth service URL e.g. https://agency.example.com>
+      export ISSUER_TOOL_AGENCY_AUTH_ORIGIN=<agency auth service URL e.g. https://agency.example.com>
+      export ISSUER_TOOL_AGENCY_USER_NAME=<unique agent name e.g. local-issuer-tool>
+      export ISSUER_TOOL_AGENCY_KEY=<authenticator key e.g. 15308490f1e4026284594dd08d31291bc8ef2aeac730d0daf6ff87bb92d4336c>
+      export ISSUER_TOOL_SERVER_ADDRESS=<agency core service address e.g. agency-api.example.com>
+      export ISSUER_TOOL_SERVER_PORT=<agency core service port e.g. 50051>
+      export ISSUER_TOOL_SERVER_CERT_PATH=<path containing the grpc API cert in case untrusted issuer e.g. ./cert, otherwise empty>
       ```
 
       [By default](./api/config/default.json), the service tries to connect the local agency:
@@ -64,8 +68,20 @@ App authenticates to [agency](https://github.com/findy-network/findy-agent) usin
 
       - the key value is your agency authenticator master key and should be kept secret in production environment.
       - the auth origin is usually needed only in development setup where wallet app and authentication service resides in different domains
+      - more info for GRPC errors can be revealed setting following env variables:
+        ```shell
+        export GRPC_VERBOSITY=debug
+        export GRPC_TRACE=all
+        ```
 
    1. Start database service in local container: `npm run db`
+
+   1. Define _dummy_ AWS access keys (needed for local dynamo-db access):
+
+      ```bash
+      export AWS_ACCESS_KEY_ID="foo"
+      export AWS_SECRET_ACCESS_KEY="bar"
+      ```
 
    1. Run server: `npm start`
 

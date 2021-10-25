@@ -5,7 +5,7 @@ const common = require('./common.js');
 module.exports = merge(common, {
   mode: 'development',
   devServer: {
-    contentBase: common.output.path,
+    static: common.output.path,
     historyApiFallback: true,
     headers: {
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
