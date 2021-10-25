@@ -16,8 +16,8 @@
     "start": "npm run build && node ./build/index.js",
     "start:production": "node ./build/index.js",
     "test": "npm run test:lint && npm run test:unit",
-    "test:lint": "eslint ./src --format codeframe",
-    "test:lint:fix": "eslint ./src --format codeframe --fix",
+    "test:lint": "eslint ./src",
+    "test:lint:fix": "eslint ./src --fix",
     "test:unit": "jest ./src --coverage",
     "tools:token": "babel-node ./tools/create-jwt.js"
   },
