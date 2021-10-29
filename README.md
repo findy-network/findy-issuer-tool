@@ -1,5 +1,7 @@
 # findy-issuer-tool
 
+[![test](https://github.com/findy-network/findy-issuer-tool/actions/workflows/test.yml/badge.svg?branch=dev)](https://github.com/findy-network/findy-issuer-tool/actions/workflows/test.yml)
+
 Utility (UI) Node.js tool and sample project for issuing and verifying with Findy agency.
 
 The tool works as a helper UI for
