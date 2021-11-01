@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "licenses:report": "node ./tools/check-licenses.js report",
-    "licenses:check": "node ./tools/check-licenses.js ",
-    "release:patch": "./tools/release.sh patch"
+    "licenses:check": "node ./tools/check-licenses.js "
   },
   "repository": {
     "type": "git",
