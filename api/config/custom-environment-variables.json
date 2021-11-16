@@ -25,6 +25,7 @@
     "authUrl": "ISSUER_TOOL_AGENCY_AUTH_URL",
     "authOrigin": "ISSUER_TOOL_AGENCY_AUTH_ORIGIN",
     "userName": "ISSUER_TOOL_AGENCY_USER_NAME",
+    "userSeed": "ISSUER_TOOL_AGENCY_SEED",
     "key": "ISSUER_TOOL_AGENCY_KEY",
     "serverAddress": "ISSUER_TOOL_SERVER_ADDRESS",
     "serverPort": "ISSUER_TOOL_SERVER_PORT",

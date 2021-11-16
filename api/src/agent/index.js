@@ -11,6 +11,7 @@ export default async (storage, config) => {
     authUrl: config.agency.authUrl,
     authOrigin: config.agency.authOrigin,
     userName: config.agency.userName,
+    seed: config.agency.userSeed,
     key: config.agency.key,
   };
 
