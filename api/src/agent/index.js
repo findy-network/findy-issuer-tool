@@ -5,6 +5,7 @@ import {
 } from '@findy-network/findy-common-ts';
 
 import log from '../log';
+import listen from './listen';
 
 export default async (storage, config) => {
   const acatorProps = {
@@ -29,128 +30,14 @@ export default async (storage, config) => {
     verifyServerIdentity,
   };
 
+  // Authenticate and open GRPC connection to agency
   const connection = await openGRPCConnection(grpcProps, authenticator);
   const { createAgentClient, createProtocolClient } = connection;
   const agentClient = await createAgentClient();
   const protocolClient = await createProtocolClient();
 
-  const getValueName = (obj, code) =>
-    Object.keys(obj).find((item) => obj[item] === code);
-
-  // infinite listener
-  await agentClient.startListening(
-    async (status) => {
-      const notification = status.agent.getNotification();
-      const protocolStatus = status.protocol;
-      const state = protocolStatus.getState().getState();
-
-      const typeName = getValueName(
-        agencyv1.Notification.Type,
-        notification.getTypeid(),
-      );
-      const protocolName = getValueName(
-        agencyv1.Protocol.Type,
-        notification.getProtocolType(),
-      );
-      const statusName = getValueName(agencyv1.ProtocolState.State, state);
-      log.debug(`Received ${typeName} for ${protocolName} - ${statusName}`);
-
-      await storage.saveEvent(Date.now(), {
-        type: typeName,
-        protocol: protocolName,
-        id: notification.getProtocolid(),
-        status: statusName,
-      });
-      if (
-        notification.getTypeid() === agencyv1.Notification.Type.STATUS_UPDATE &&
-        notification.getProtocolType() === agencyv1.Protocol.Type.DIDEXCHANGE &&
-        state === agencyv1.ProtocolState.State.OK
-      ) {
-        log.debug(
-          `Saving connection with id ${protocolStatus
-            .getDidExchange()
-            .getId()}`,
-        );
-        await storage.saveConnection(
-          protocolStatus.getDidExchange().getId(),
-          protocolStatus.getDidExchange().toObject(),
-        );
-      }
-    },
-    {
-      protocolClient,
-      retryOnError: true,
-      autoRelease: true,
-      autoProtocolStatus: true,
-      filterKeepalive: true,
-    },
-  );
-
-  await agentClient.startWaiting(async (question) => {
-    const notification = question.getStatus().getNotification();
-    const event = {
-      type: getValueName(agencyv1.Question.Type, question.getTypeid()),
-      protocol: getValueName(
-        agencyv1.Protocol.Type,
-        notification.getProtocolType(),
-      ),
-      id: notification.getProtocolid(),
-    };
-    switch (question.getTypeid()) {
-      case agencyv1.Question.Type.PROOF_VERIFY_WAITS: {
-        log.info(
-          `Proof request verification request with id ${notification.getProtocolid()}`,
-        );
-
-        const request = await storage.getProofRequest(
-          notification.getProtocolid(),
-        );
-        const attributes = question.getProofVerify().getAttributesList();
-        // the proof is invalid if
-        // 1) values do not match
-        // 2) cred def id do not match or
-        // 3) attribute count do not match
-        const invalid =
-          request.deleted ||
-          attributes.find(
-            (item) =>
-              item.getValue() !== request.values[item.getName()] ||
-              item.getCredDefid() !== request.credDefId,
-          ) ||
-          attributes.length !== Object.keys(request.values).length;
-
-        log.debug(
-          `Verify proof request with data ${JSON.stringify(
-            question.toObject(),
-          )}, valid: ${!invalid}`,
-        );
-        const valid = !invalid;
-
-        await storage.addProofRequest(
-          notification.getProtocolid(),
-          request.credDefId,
-          request.values,
-          true,
-          !valid,
-        );
-
-        const msg = new agencyv1.Answer();
-        msg.setId(notification.getId());
-        msg.setClientid(question.getStatus().getClientid());
-        msg.setAck(!invalid);
-        await agentClient.give(msg);
-
-        break;
-      }
-      default:
-        log.warn(
-          `Received unknown message ${JSON.stringify(question.toObject())}`,
-        );
-        break;
-    }
-
-    await storage.saveEvent(Date.now(), event);
-  });
+  // start listening for status events
+  await listen(agentClient, protocolClient, storage);
 
   const createSchema = async (body) => {
     log.info(`Creating schema ${JSON.stringify(body)}`);
