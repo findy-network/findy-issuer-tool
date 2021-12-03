@@ -152,7 +152,10 @@ export default async (storage, config) => {
 
     const res = await agentClient.createInvitation(msg);
 
-    return res.getJson();
+    return {
+      url: res.getUrl(),
+      raw: res.getJson(),
+    };
   };
 
   return {

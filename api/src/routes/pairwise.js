@@ -4,8 +4,8 @@ import log from '../log';
 export default (agent) => {
   const pairwiseInvitation = async (req, res) => {
     try {
-      const invitationStr = await agent.createPairwiseInvitation();
-      res.json(JSON.parse(invitationStr));
+      const invitation = await agent.createPairwiseInvitation();
+      res.json({ url: invitation.url });
     } catch (err) {
       log.error(`Invitation creation failed: ${err}`);
       res.status(500).json({
