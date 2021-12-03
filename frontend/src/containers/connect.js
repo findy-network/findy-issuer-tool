@@ -18,8 +18,9 @@ const Connect = ({ doFetchPairwiseInvitation, pairwiseInvitation }) => {
     }
   });
 
-  const pairwiseInvitationStr =
-    pairwiseInvitation && JSON.stringify(pairwiseInvitation);
+  const pairwiseInvitationStr = pairwiseInvitation
+    ? pairwiseInvitation.url
+    : '';
   return (
     <div>
       {pairwiseInvitationStr && (
