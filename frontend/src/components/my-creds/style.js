@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { Typography, Button as BaseButton } from '@material-ui/core';
 
 export const Header = styled(Typography)`
-  margin: 1rem 0;
+  margin: 1rem 0 !important;
   font-weight: bold !important;
-  font-size: 1.3rem;
+  font-size: 1.3rem !important;
 `;
 
 export const ButtonContainer = styled.div`

@@ -2,18 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import PairwiseEditor from '../pairwise-editor';
-import { Header, ButtonContainer, Button, Section } from './style';
+import { Header, Button, Section } from './style';
 
-const IsbCred = ({
-  connections,
-  credDefs,
-  onSendCredential,
-  onFetchUrl,
-  user,
-  sending,
-  config,
-  urls,
-}) => {
+const IsbCred = ({ connections, credDefs, onFetchUrl, config, urls }) => {
   const [isbPairwiseName, setIsbPairwiseName] = useState('');
   const credDefId = credDefs.find((item) => item.toLowerCase().includes('isb'));
   const onPwChange = (name) => {
@@ -57,10 +48,9 @@ const IsbCred = ({
 IsbCred.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,
   credDefs: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onSendCredential: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
-  sending: PropTypes.bool.isRequired,
+  onFetchUrl: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
+  urls: PropTypes.object.isRequired,
 };
 
 export default IsbCred;

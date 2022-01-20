@@ -18,5 +18,7 @@ export default {
     log: [],
   },
   connections: null,
-  alert: null,
+  alert: {
+    description: 'plaa',
+  },
 };

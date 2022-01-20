@@ -71,19 +71,19 @@ const get = (state$, path) =>
     withCredentials: true,
   });
 
+const getQueryParams = (state$) =>
+  new URLSearchParams(state$.value.router.location.search);
+
 const initUserFetchEpic = (action$, state$) =>
   action$.pipe(
     ofType(LOCATION_CHANGE),
     filter(() => !state$.value.user),
     switchMap(() => {
-      const query = state$.value.router.location.search;
+      const query = getQueryParams(state$);
       if (query) {
-        const params = new URLSearchParams(query);
-        if (params) {
-          const token = params.get('token');
-          if (token) {
-            return of(setToken(token));
-          }
+        const token = query.get('token');
+        if (token) {
+          return of(setToken(token));
         }
       }
       return of(fetchUser());
@@ -102,6 +102,24 @@ const initLedgerFetchEpic = (action$, state$) =>
     ofType(LOCATION_CHANGE),
     filter(() => !state$.value.ledger),
     switchMap(() => of(fetchLedger()))
+  );
+
+const initAlertEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(LOCATION_CHANGE),
+    filter(() => {
+      const query = getQueryParams(state$);
+      if (query) {
+        return query && query.get('cred_sent');
+      }
+      return false;
+    }),
+    switchMap(() => {
+      const sent = getQueryParams(state$).get('cred_sent');
+      return sent === 'true'
+        ? of(sendCredentialFulfilled())
+        : of(sendCredentialRejected());
+    })
   );
 
 const fetchLedgerEpic = (action$, state$) =>
@@ -195,6 +213,7 @@ export default combineEpics(
   initLedgerFetchEpic,
   fetchLedgerEpic,
   initConnectionsFetchEpic,
+  initAlertEpic,
   fetchConnectionsEpic,
   useTokenEpic,
   fetchUserEpic,
