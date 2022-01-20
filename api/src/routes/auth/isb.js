@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { createECDH } from 'crypto';
 import fs from 'fs';
 import jose from 'node-jose';
 import { Issuer, generators } from 'openid-client';
@@ -57,7 +58,7 @@ export default async (sendCredential, config) => {
     const verificationResult = await jose.JWS.createVerify(
       isbSigningKey,
     ).verify(decrypted);
-    return verificationResult.payload.toString();
+    return JSON.parse(verificationResult.payload.toString());
   };
 
   const keyStore = jose.JWK.createKeyStore();
@@ -90,8 +91,30 @@ export default async (sendCredential, config) => {
     const profile = await decryptToken(tokenResponse.data.id_token);
     const nonceValid = profile.nonce === req.session.nonce;
     if (nonceValid) {
-      log.info(`Sending ISB credential to pairwise ${req.query.state}`);
-      // TODO: store the cred def id, send credential and show success text on frontend
+      const { connectionId, credDefId } = req.session;
+      const values = {
+        name: profile.name,
+        given_name: profile.given_name,
+        family_name: profile.family_name,
+        birthdate: profile.birthdate,
+        personal_identity_code: profile.personal_identity_code,
+        auth_time: profile.auth_time.toString(),
+      };
+      log.info(
+        `Sending ISB credential to pairwise ${connectionId}: ${JSON.stringify(
+          values,
+        )}`,
+      );
+
+      await sendCredential({
+        connectionId,
+        credDefId,
+        values,
+      });
+
+      req.session.nonce = null;
+      req.session.connectionId = null;
+      req.session.credDefId = null;
     } else {
       log.warn(`Nonce mismatch ${profile.nonce}, ${req.session.nonce}`);
     }
@@ -103,15 +126,16 @@ export default async (sendCredential, config) => {
   const getUrl = () => urlGenPath;
 
   const getUrlForPairwise = async (req, res) => {
-    const pwId = req.query.pw;
+    const { connectionId, credDefId } = req.query;
     const nonce = generators.nonce();
     req.session.nonce = nonce;
-    log.info(`Generating ISB auth url to pairwise ${pwId}`);
+    req.session.connectionId = connectionId;
+    req.session.credDefId = credDefId;
+    log.info(`Generating ISB auth url to pairwise ${connectionId}`);
     const content = {
       client_id: clientId,
       response_type: 'code',
       redirect_uri: `${ourHost}/auth/isb`,
-      state: pwId,
       nonce,
       scope: 'openid profile personal_identity_code',
     };

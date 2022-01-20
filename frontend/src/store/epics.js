@@ -58,6 +58,7 @@ const post = (state$, path, payload) =>
       'Content-Type': 'application/json',
     },
     body: payload,
+    withCredentials: true,
   });
 
 const get = (state$, path) =>
@@ -67,6 +68,7 @@ const get = (state$, path) =>
     headers: {
       Authorization: `Bearer ${state$.value.token}`,
     },
+    withCredentials: true,
   });
 
 const initUserFetchEpic = (action$, state$) =>
@@ -79,7 +81,9 @@ const initUserFetchEpic = (action$, state$) =>
         const params = new URLSearchParams(query);
         if (params) {
           const token = params.get('token');
-          return of(setToken(token));
+          if (token) {
+            return of(setToken(token));
+          }
         }
       }
       return of(fetchUser());
@@ -138,6 +142,10 @@ const fetchConnectionsEpic = (action$, state$) =>
 const useTokenEpic = (action$) =>
   action$.pipe(
     ofType(SET_TOKEN),
+    filter(() => {
+      const currentToken = localStorage.getItem('token');
+      return !currentToken || currentToken === 'null';
+    }),
     switchMap((action) => {
       localStorage.setItem('token', action.payload);
       return of(replace('/'));
@@ -250,7 +258,8 @@ export default combineEpics(
   createEpic(
     FETCH_URL,
     get,
-    (payload) => `${payload.url}?pw=${payload.pairwiseName}`,
+    ({ url, connectionId, credDefId }) =>
+      `${url}?connectionId=${connectionId}&credDefId=${credDefId}`,
     () => {},
     fetchUrlFulfilled,
     fetchUrlRejected

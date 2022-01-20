@@ -37,20 +37,26 @@ const init = async (config) => {
 
   if (config.devMode) {
     log.info('Running in dev mode');
-    app.use(cors());
+    app.use(
+      cors({
+        origin: config.auth.apps['findy-issuer-app'].redirectUrl,
+        credentials: true, // for session cookie
+      }),
+    );
   }
   app.use(jwtMw);
-  app.use(
-    session({
-      secret: crypto.randomBytes(20).toString('hex'),
-      saveUninitialized: true,
-      resave: false,
-      cookie: { maxAge: 1000 * 60 * 60 },
-    }),
-  );
   app.use(morgan('combined', { stream: new Stream() }));
   app.use(express.json());
 
+  app.use(
+    // stored in memory - note: not for production use
+    session({
+      secret: crypto.randomBytes(20).toString('hex'),
+      saveUninitialized: true,
+      resave: true,
+      cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 24 hours
+    }),
+  );
   app.get('/auth/config', (req, res) =>
     res.json(appRoutes.getIntegrationConfig()),
   );

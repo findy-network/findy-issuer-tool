@@ -71,7 +71,7 @@ export const connections = (state = initialState.connections, action) => {
 export const token = (state = initialState.token, action) => {
   switch (action.type) {
     case SET_TOKEN:
-      return action.payload;
+      return action.payload || state;
     default:
       return state;
   }
