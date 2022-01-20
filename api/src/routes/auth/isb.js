@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { createECDH } from 'crypto';
 import fs from 'fs';
 import jose from 'node-jose';
 import { Issuer, generators } from 'openid-client';
