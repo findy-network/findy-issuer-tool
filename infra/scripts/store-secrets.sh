@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -z "$ISSUER_TOOL_OUR_HOST" ]; then
+  echo "ERROR: Define env variable ISSUER_TOOL_OUR_HOST"
+  exit 1
+fi
+
 if [ -z "$ISSUER_TOOL_STORAGE_HOST" ]; then
   echo "ERROR: Define env variable ISSUER_TOOL_STORAGE_HOST"
   exit 1
@@ -61,6 +66,7 @@ if [ -z "$ISSUER_TOOL_SERVER_ADDRESS" ]; then
 fi
 
 params=(
+  "\"our-host\":\"$ISSUER_TOOL_OUR_HOST\""
   "\"storage-host\":\"$ISSUER_TOOL_STORAGE_HOST\""
   "\"storage-region\":\"$ISSUER_TOOL_STORAGE_REGION\""
   "\"github-username\":\"$ISSUER_TOOL_GITHUB_USERNAME\""

@@ -1,4 +1,5 @@
 {
+  "ourHost": "ISSUER_TOOL_OUR_HOST",
   "storage": {
     "host": "ISSUER_TOOL_STORAGE_HOST",
     "region": "ISSUER_TOOL_STORAGE_REGION"

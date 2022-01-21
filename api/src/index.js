@@ -49,12 +49,15 @@ const init = async (config) => {
   app.use(express.json());
 
   app.use(
-    // stored in memory - note: not for production use
+    // sessions stored in memory - note: not for production use
     session({
       secret: crypto.randomBytes(20).toString('hex'),
       saveUninitialized: true,
       resave: true,
-      cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 24 hours
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24, // 24 hours
+        secure: !config.devMode,
+      },
     }),
   );
   app.get('/auth/config', (req, res) =>

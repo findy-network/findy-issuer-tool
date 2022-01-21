@@ -36,6 +36,7 @@ RUN rm .npmrc
 
 COPY --from=0 /usr/src/app/build /usr/src/app/build
 COPY --from=0 /usr/src/app/config /usr/src/app/config
+COPY --from=0 /usr/src/app/tools /usr/src/app/tools
 
 EXPOSE 3001
 

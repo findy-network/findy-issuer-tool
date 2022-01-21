@@ -15,6 +15,7 @@ export default async () => {
           .getSecretValue({ SecretId: 'issuer-tool' })
           .promise();
         const secrets = JSON.parse(res.SecretString);
+        configFromAWS.ourHost = secrets['our-host'];
         configFromAWS.storage = {
           host: secrets['storage-host'],
           region: secrets['storage-region'],
