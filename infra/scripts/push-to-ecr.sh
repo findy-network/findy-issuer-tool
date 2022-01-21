@@ -47,6 +47,7 @@ echo "Releasing issuer-tool version $VERSION"
 
 cd $CURRENT_DIR/../../api
 
+./tools/isb/download-keys.sh
 docker rmi findy-issuer-tool || echo 'no local images to clean'
 docker rmi $FULL_NAME  || echo 'no aws images to clean'
 docker build \

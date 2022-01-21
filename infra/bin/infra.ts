@@ -35,10 +35,6 @@ if (!process.env.ISSUER_TOOL_WALLET_DOMAIN_NAME) {
   console.log("WARNING: ISSUER_TOOL_WALLET_DOMAIN_NAME not configured");
 }
 
-if (!process.env.ISSUER_TOOL_GITHUB_CLIENT_ID) {
-  console.log("WARNING: ISSUER_TOOL_GITHUB_CLIENT_ID not configured");
-}
-
 ["./.secrets/server.crt"].map((item) => {
   if (!existsSync(item)) {
     console.log(`${item} missing`);
@@ -52,7 +48,6 @@ const domainName = `${process.env.ISSUER_TOOL_SUBDOMAIN}.${domainRoot}`;
 const ecrURL = `${process.env.ISSUER_TOOL_ECR_URL}`;
 const tokenName = `${process.env.ISSUER_TOOL_TOKEN_SECRET_NAME}`;
 const walletDomainName = `${process.env.ISSUER_TOOL_WALLET_DOMAIN_NAME}`;
-const githubClientId = `${process.env.ISSUER_TOOL_GITHUB_CLIENT_ID}`;
 
 new IssuerToolInfraStack(app, process.env.ISSUER_TOOL_APP_NAME, {
   env: {
@@ -76,5 +71,4 @@ new IssuerToolInfraStack(app, process.env.ISSUER_TOOL_APP_NAME, {
   ecrURL,
   tokenName,
   walletDomainName,
-  githubClientId,
 });

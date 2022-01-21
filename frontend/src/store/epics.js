@@ -41,6 +41,12 @@ import {
   SEND_CREDENTIAL,
   sendCredentialFulfilled,
   sendCredentialRejected,
+  fetchConfig,
+  FETCH_CONFIG,
+  fetchConfigFulfilled,
+  FETCH_URL,
+  fetchUrlFulfilled,
+  fetchUrlRejected,
 } from './actions';
 
 const post = (state$, path, payload) =>
@@ -52,6 +58,7 @@ const post = (state$, path, payload) =>
       'Content-Type': 'application/json',
     },
     body: payload,
+    withCredentials: true,
   });
 
 const get = (state$, path) =>
@@ -61,18 +68,21 @@ const get = (state$, path) =>
     headers: {
       Authorization: `Bearer ${state$.value.token}`,
     },
+    withCredentials: true,
   });
+
+const getQueryParams = (state$) =>
+  new URLSearchParams(state$.value.router.location.search);
 
 const initUserFetchEpic = (action$, state$) =>
   action$.pipe(
     ofType(LOCATION_CHANGE),
     filter(() => !state$.value.user),
     switchMap(() => {
-      const query = state$.value.router.location.search;
+      const query = getQueryParams(state$);
       if (query) {
-        const params = new URLSearchParams(query);
-        if (params) {
-          const token = params.get('token');
+        const token = query.get('token');
+        if (token) {
           return of(setToken(token));
         }
       }
@@ -80,11 +90,36 @@ const initUserFetchEpic = (action$, state$) =>
     })
   );
 
+const initConfigFetchEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(LOCATION_CHANGE),
+    filter(() => !state$.value.config),
+    switchMap(() => of(fetchConfig()))
+  );
+
 const initLedgerFetchEpic = (action$, state$) =>
   action$.pipe(
     ofType(LOCATION_CHANGE),
     filter(() => !state$.value.ledger),
     switchMap(() => of(fetchLedger()))
+  );
+
+const initAlertEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(LOCATION_CHANGE),
+    filter(() => {
+      const query = getQueryParams(state$);
+      if (query) {
+        return query && query.get('cred_sent');
+      }
+      return false;
+    }),
+    switchMap(() => {
+      const sent = getQueryParams(state$).get('cred_sent');
+      return sent === 'true'
+        ? of(sendCredentialFulfilled())
+        : of(sendCredentialRejected());
+    })
   );
 
 const fetchLedgerEpic = (action$, state$) =>
@@ -125,6 +160,10 @@ const fetchConnectionsEpic = (action$, state$) =>
 const useTokenEpic = (action$) =>
   action$.pipe(
     ofType(SET_TOKEN),
+    filter(() => {
+      const currentToken = localStorage.getItem('token');
+      return !currentToken || currentToken === 'null';
+    }),
     switchMap((action) => {
       localStorage.setItem('token', action.payload);
       return of(replace('/'));
@@ -145,6 +184,16 @@ const fetchUserEpic = (action$, state$) =>
     )
   );
 
+const fetchConfigEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(FETCH_CONFIG),
+    mergeMap(() =>
+      get(state$, '/auth/config').pipe(
+        map(({ response }) => fetchConfigFulfilled(response))
+      )
+    )
+  );
+
 const createEpic =
   (actionType, httpVerb, path, reqPayload, fulfilled, rejected) =>
   (action$, state$) =>
@@ -160,12 +209,15 @@ const createEpic =
 
 export default combineEpics(
   initUserFetchEpic,
+  initConfigFetchEpic,
   initLedgerFetchEpic,
   fetchLedgerEpic,
   initConnectionsFetchEpic,
+  initAlertEpic,
   fetchConnectionsEpic,
   useTokenEpic,
   fetchUserEpic,
+  fetchConfigEpic,
   createEpic(
     FETCH_PAIRWISE_INVITATION,
     post,
@@ -221,5 +273,14 @@ export default combineEpics(
     (payload) => payload,
     sendCredentialFulfilled,
     sendCredentialRejected
+  ),
+  createEpic(
+    FETCH_URL,
+    get,
+    ({ url, connectionId, credDefId }) =>
+      `${url}?connectionId=${connectionId}&credDefId=${credDefId}`,
+    () => {},
+    fetchUrlFulfilled,
+    fetchUrlRejected
   )
 );

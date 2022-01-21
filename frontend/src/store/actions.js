@@ -206,3 +206,37 @@ export const sendCredentialRejected = (payload) => ({
   type: SEND_CREDENTIAL_REJECTED,
   payload,
 });
+
+export const FETCH_URL = 'FETCH_URL';
+
+export const fetchUrl = (payload) => ({
+  type: FETCH_URL,
+  payload,
+});
+
+export const FETCH_URL_FULFILLED = 'FETCH_URL_FULFILLED';
+
+export const fetchUrlFulfilled = (payload) => ({
+  type: FETCH_URL_FULFILLED,
+  payload,
+});
+
+export const FETCH_URL_REJECTED = 'FETCH_URL_REJECTED';
+
+export const fetchUrlRejected = (payload) => ({
+  type: FETCH_URL_REJECTED,
+  payload,
+});
+
+export const FETCH_CONFIG = 'FETCH_CONFIG';
+
+export const fetchConfig = () => ({
+  type: FETCH_CONFIG,
+});
+
+export const FETCH_CONFIG_FULFILLED = 'FETCH_CONFIG_FULFILLED';
+
+export const fetchConfigFulfilled = (payload) => ({
+  type: FETCH_CONFIG_FULFILLED,
+  payload,
+});

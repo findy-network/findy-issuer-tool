@@ -25,6 +25,8 @@ import {
   SEND_PROOF_REQUEST,
   SEND_PROOF_REQUEST_FULFILLED,
   SEND_PROOF_REQUEST_REJECTED,
+  FETCH_CONFIG_FULFILLED,
+  FETCH_URL_FULFILLED,
 } from '../actions';
 import initialState from './initial-state';
 
@@ -33,6 +35,15 @@ export const user = (state = initialState.user, action) => {
     case SET_TOKEN:
       return null;
     case FETCH_USER_FULFILLED:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export const config = (state = initialState.config, action) => {
+  switch (action.type) {
+    case FETCH_CONFIG_FULFILLED:
       return action.payload;
     default:
       return state;
@@ -60,7 +71,7 @@ export const connections = (state = initialState.connections, action) => {
 export const token = (state = initialState.token, action) => {
   switch (action.type) {
     case SET_TOKEN:
-      return action.payload;
+      return action.payload || state;
     default:
       return state;
   }
@@ -120,6 +131,13 @@ export const result = (state = initialState.result, action) => {
       return { ...state, sendingProofRequest: false };
     }
 
+    case FETCH_URL_FULFILLED: {
+      return {
+        ...state,
+        url: { ...state.url, [action.payload.path]: action.payload.url },
+      };
+    }
+
     default:
       return state;
   }
@@ -139,6 +157,7 @@ export default (history) =>
   combineReducers({
     router: connectRouter(history),
     user,
+    config,
     ledger,
     connections,
     token,

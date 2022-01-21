@@ -1,9 +1,4 @@
 {
-  "auth": {
-    "github": {
-      "clientId": "GITHUB_CLIENT_ID"
-    }
-  },
   "api": {
     "url": "API_URL"
   },
