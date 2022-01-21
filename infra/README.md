@@ -79,8 +79,8 @@ Note! "<>" indicates example value, and shouldn't be included in values you defi
    Define following variables:
 
    ```bash
-    # Dynamo DB connection
     export ISSUER_TOOL_OUR_HOST="<https://issuer-tool.example.com>"
+    # Dynamo DB connection
     export ISSUER_TOOL_STORAGE_HOST="<https://dynamodb.<region>.amazonaws.com>"
     export ISSUER_TOOL_STORAGE_REGION="<region>"
     # Github authentication integration
