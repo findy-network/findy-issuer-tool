@@ -64,6 +64,7 @@ export default async () => {
         log.info(`Using cert path ${configFromAWS.agency.certPath}`);
         return {
           ...defaultConfig,
+          ...configFromAWS,
           storage: { ...defaultConfig.storage, ...configFromAWS.storage },
           auth: {
             ...defaultConfig.auth,
