@@ -150,7 +150,7 @@ export class IssuerToolBackendStack extends cdk.Stack {
       versionLabel: version.ref,
       cnamePrefix: "issuer-tool",
       solutionStackName:
-        "64bit Amazon Linux 2018.03 v2.16.7 running Docker 19.03.13-ce",
+        "64bit Amazon Linux 2018.03 v2.17.3 running Docker 20.10.7",
       optionSettings: [
         {
           namespace: "aws:autoscaling:launchconfiguration",
