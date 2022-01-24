@@ -48,18 +48,20 @@ const init = async (config) => {
   app.use(morgan('combined', { stream: new Stream() }));
   app.use(express.json());
 
-  app.use(
-    // sessions stored in memory - note: not for production use
-    session({
-      secret: crypto.randomBytes(20).toString('hex'),
-      saveUninitialized: true,
-      resave: true,
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 24, // 24 hours
-        secure: !config.devMode,
-      },
-    }),
-  );
+  // sessions stored in memory - note: not for production use
+  const sess = session({
+    secret: crypto.randomBytes(20).toString('hex'),
+    saveUninitialized: true,
+    resave: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 24 hours
+    },
+  });
+  if (!config.devMode) {
+    app.set('trust proxy', 1); // trust first proxy
+    sess.cookie.secure = true;
+  }
+  app.use(sess);
   app.get('/auth/config', (req, res) =>
     res.json(appRoutes.getIntegrationConfig()),
   );
