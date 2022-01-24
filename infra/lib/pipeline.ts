@@ -139,7 +139,7 @@ export class IssuerToolPipelineStack extends cdk.Stack {
           projectName: `${projectName}-front`,
           environment: {
             buildImage: LinuxBuildImage.fromDockerRegistry(
-              "node:14.16.0-alpine3.13"
+              "node:16.13.2-alpine3.14"
             ),
           },
           buildSpec: BuildSpec.fromObject({
