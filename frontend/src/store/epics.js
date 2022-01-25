@@ -160,10 +160,6 @@ const fetchConnectionsEpic = (action$, state$) =>
 const useTokenEpic = (action$) =>
   action$.pipe(
     ofType(SET_TOKEN),
-    filter(() => {
-      const currentToken = localStorage.getItem('token');
-      return !currentToken || currentToken === 'null';
-    }),
     switchMap((action) => {
       localStorage.setItem('token', action.payload);
       return of(replace('/'));
