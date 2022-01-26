@@ -1,6 +1,6 @@
 {
   "name": "findy-issuer-tool",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "description": "Utility (UI) tool and sample project for issuing and verifying",
   "main": "index.js",
   "scripts": {
