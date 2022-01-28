@@ -41,7 +41,7 @@
   "dependencies": {
     "@babel/runtime": "^7.16.7",
     "@findy-network/findy-common-ts": "^0.1.5",
-    "aws-sdk": "^2.1058.0",
+    "aws-sdk": "^2.1065.0",
     "axios": "^0.25.0",
     "config": "^3.3.7",
     "cors": "^2.8.5",
@@ -54,15 +54,15 @@
     "node-jose": "^2.0.0",
     "openid-client": "^5.1.2",
     "uuid": "^8.3.2",
-    "winston": "^3.4.0"
+    "winston": "^3.5.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.8",
-    "@babel/core": "^7.16.7",
+    "@babel/core": "^7.16.12",
     "@babel/node": "^7.16.8",
     "@babel/plugin-proposal-object-rest-spread": "^7.16.7",
-    "@babel/plugin-transform-runtime": "^7.16.8",
-    "@babel/preset-env": "^7.16.8",
+    "@babel/plugin-transform-runtime": "^7.16.10",
+    "@babel/preset-env": "^7.16.11",
     "babel-core": "^7.0.0-bridge.0",
     "eslint": "^8.7.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -70,7 +70,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.4.7",
-    "npm-outdated-to-latest": "^1.0.3",
+    "npm-outdated-to-latest": "^1.0.6",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2"
   }

@@ -4,6 +4,7 @@ coverage/
 .vscode
 .secrets
 .docker
+.build
 .temp
 
 .DS_Store
