@@ -52,7 +52,6 @@ cd tools/isb && ./download-keys.sh && cd ../..
 docker rmi findy-issuer-tool || echo 'no local images to clean'
 docker rmi $FULL_NAME  || echo 'no aws images to clean'
 docker build \
-    --build-arg GITHUB_TOKEN="$GITHUB_TOKEN" \
     --build-arg ISSUER_TOOL_SERVER_CERT_PATH="$ISSUER_TOOL_SERVER_CERT_PATH" \
     -t findy-issuer-tool .
 
