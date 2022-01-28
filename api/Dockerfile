@@ -1,14 +1,12 @@
 
-FROM node:16.13.2-alpine3.14
-
-ARG GITHUB_TOKEN
+FROM node:16.13.2-alpine3.15
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 COPY .npmrc ./
 
-RUN npm install
+RUN npm ci --legacy-peer-deps
 
 COPY . .
 
@@ -16,9 +14,8 @@ ENV NODE_ENV production
 
 RUN npm run build:production
 
-FROM node:16.13.2-alpine3.14
+FROM node:16.13.2-alpine3.15
 
-ARG GITHUB_TOKEN
 ARG ISSUER_TOOL_SERVER_CERT_PATH
 
 WORKDIR /usr/src/app
@@ -30,7 +27,7 @@ ENV NODE_ENV production
 ENV FINDY_CTS_LOG_LEVEL debug
 ENV ISSUER_TOOL_SERVER_CERT_PATH ${ISSUER_TOOL_SERVER_CERT_PATH}
 
-RUN npm ci --only=production
+RUN npm ci --only=production --legacy-peer-deps
 
 RUN rm .npmrc
 
