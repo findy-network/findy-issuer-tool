@@ -69,10 +69,15 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "16.x"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@findy-network"
       - name: install deps
         run: |
           npm ci
-          cd api && npm ci
-          cd ../frontend && npm ci
+          cd api && npm ci --ignore-scripts
+          cd ../frontend && npm ci --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: run e2e
         run: npm run test:e2e
