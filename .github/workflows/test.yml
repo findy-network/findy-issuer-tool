@@ -93,6 +93,7 @@ jobs:
           npm start &
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUER_TOOL_SERVER_CERT_PATH: ${GITHUB_WORKSPACE}/e2e/.build/findy-wallet-pwa/tools/env/config/cert
 
       - name: run frontend
         run: |
@@ -102,3 +103,16 @@ jobs:
 
       - name: run e2e
         run: npm run test:e2e
+
+      - name: collect docker logs
+        if: ${{ failure() }}
+        uses: jwalton/gh-docker-logs@v2.0.2
+        with:
+          dest: "./tests_output/docker-logs"
+
+      - name: archive logs
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: tests_output
+          path: tests_output
