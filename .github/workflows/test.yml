@@ -93,7 +93,7 @@ jobs:
           cd api
           npm run db
           npm ci --legacy-peer-deps
-          npm start &
+          nohup npm start > /dev/null 2>../tests_output/backend.log &
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

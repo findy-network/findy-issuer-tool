@@ -24,13 +24,33 @@ LinkItem.propTypes = {
 const NavMenu = (props) => (
   <Paper>
     <List>
-      <LinkItem path="/" label="Events" {...props} />
-      <LinkItem path="/connect" label="Connect" {...props} />
-      <LinkItem path="/message" label="Message" {...props} />
-      <LinkItem path="/issue" label="Issue" {...props} />
-      <LinkItem path="/verify" label="Verify" {...props} />
-      <LinkItem path="/tools" label="Tools" {...props} />
-      <LinkItem path="/me" label="My creds" {...props} />
+      <LinkItem id="events-link-item" path="/" label="Events" {...props} />
+      <LinkItem
+        id="connect-link-item"
+        path="/connect"
+        label="Connect"
+        {...props}
+      />
+      <LinkItem
+        id="message-link-item"
+        path="/message"
+        label="Message"
+        {...props}
+      />
+      <LinkItem id="issue-link-item" path="/issue" label="Issue" {...props} />
+      <LinkItem
+        id="verify-link-item"
+        path="/verify"
+        label="Verify"
+        {...props}
+      />
+      <LinkItem id="tools-link-item" path="/tools" label="Tools" {...props} />
+      <LinkItem
+        id="my-creds-link-item"
+        path="/me"
+        label="My creds"
+        {...props}
+      />
     </List>
   </Paper>
 );
