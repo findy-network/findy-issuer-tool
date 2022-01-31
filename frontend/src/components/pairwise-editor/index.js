@@ -35,6 +35,7 @@ const PairwiseEditor = ({
     <Header>{title}</Header>
     <Description>{description}</Description>
     <DropDown
+      id="connection-selection"
       value={name}
       values={connections.map((item) => ({
         id: item.id,
@@ -43,7 +44,9 @@ const PairwiseEditor = ({
       onValueChange={onSetName}
       label={name ? 'Connection' : 'Select connection'}
     />
-    <Content visible={name}>{children}</Content>
+    <Content id="pairwise-content" visible={name}>
+      {children}
+    </Content>
   </Container>
 );
 

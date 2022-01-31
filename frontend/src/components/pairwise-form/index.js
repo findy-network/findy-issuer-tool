@@ -33,6 +33,7 @@ const PairwiseForm = ({ credDefs, onSend, defaultValues }) => {
   return (
     <Container>
       <DropDown
+        id="cred-def-selection"
         value={credDefId}
         values={credDefs.map((item) => ({ id: item, title: item }))}
         onValueChange={handleCredDef}
