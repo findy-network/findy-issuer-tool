@@ -6,7 +6,7 @@
   "scripts": {
     "licenses:report": "node ./tools/check-licenses.js report",
     "licenses:check": "node ./tools/check-licenses.js ",
-    "test:e2e": "./e2e/init.sh && nightwatch ./e2e"
+    "test:e2e": "nightwatch ./e2e/test.js"
   },
   "repository": {
     "type": "git",
@@ -18,11 +18,9 @@
     "url": "https://github.com/findy-network/findy-issuer-tool/issues"
   },
   "homepage": "https://github.com/findy-network/findy-issuer-tool#readme",
-  "dependencies": {
-    "chromedriver": "^97.0.2",
-    "nightwatch": "^2.0.1"
-  },
   "devDependencies": {
-    "js-green-licenses": "^3.0.1"
+    "chromedriver": "^97.0.2",
+    "js-green-licenses": "^3.0.1",
+    "nightwatch": "^2.0.2"
   }
 }

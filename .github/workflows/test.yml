@@ -62,6 +62,7 @@ jobs:
           npm run licenses:check
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   e2e:
     runs-on: ubuntu-latest
     steps:
@@ -71,13 +72,33 @@ jobs:
           node-version: "16.x"
           registry-url: "https://npm.pkg.github.com"
           scope: "@findy-network"
+
       - name: install deps
+        run: npm ci
+
+      - name: install cli
         run: |
-          npm ci
-          cd api && npm ci --legacy-peer-deps
-          cd ../frontend && npm ci --ignore-scripts
+          curl https://raw.githubusercontent.com/findy-network/findy-agent-cli/HEAD/install.sh > install.sh
+          chmod a+x install.sh
+          sudo ./install.sh -b /bin
+
+      - name: init env
+        run: ./e2e/init.sh
+
+      - name: run backend
+        run: |
+          cd api
+          npm run db
+          npm ci --legacy-peer-deps
+          npm start &
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: run frontend
+        run: |
+          cd frontend
+          npm ci
+          npm start &
 
       - name: run e2e
         run: npm run test:e2e

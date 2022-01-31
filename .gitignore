@@ -16,3 +16,5 @@ cdk.out
 cdk.context.json
 
 *.pem
+logs/
+tests_output/
