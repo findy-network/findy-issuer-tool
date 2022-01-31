@@ -18,3 +18,4 @@ cdk.context.json
 *.pem
 logs/
 tests_output/
+e2e/e2e.user.json

@@ -7,8 +7,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { Link, ListItem } from './style';
 
-const LinkItem = ({ path, activePath, label }) => (
-  <Link to={path}>
+const LinkItem = ({ path, activePath, label, id }) => (
+  <Link to={path} id={id}>
     <ListItem button activeItem={path === activePath}>
       <ListItemText primary={label} />
     </ListItem>
@@ -19,6 +19,7 @@ LinkItem.propTypes = {
   path: PropTypes.string.isRequired,
   activePath: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 const NavMenu = (props) => (

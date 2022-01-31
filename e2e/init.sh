@@ -4,6 +4,7 @@ set -e
 
 CURRENT_DIR=$(dirname "$BASH_SOURCE")
 cd $CURRENT_DIR
+CURRENT_DIR=$PWD
 
 mkdir -p .build
 git clone https://github.com/findy-network/findy-wallet-pwa.git .build/findy-wallet-pwa || echo "Already cloned"
@@ -36,4 +37,4 @@ jwt=$(findy-agent-cli authn login \
     --origin $auth_origin \
     --key $default_key)
 
-echo {\"jwt\": \"$jwt\", \"user\": \"$user\"} > ./e2e.user.json
+echo {\"jwt\": \"$jwt\", \"user\": \"$user\"} > $CURRENT_DIR/e2e.user.json
