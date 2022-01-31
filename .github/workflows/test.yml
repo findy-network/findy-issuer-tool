@@ -85,6 +85,9 @@ jobs:
       - name: init env
         run: ./e2e/init.sh
 
+      - name: set env
+        run: echo "ISSUER_TOOL_SERVER_CERT_PATH=$GITHUB_WORKSPACE/e2e/.build/findy-wallet-pwa/tools/env/config/cert" >> $GITHUB_ENV
+
       - name: run backend
         run: |
           cd api
@@ -93,7 +96,6 @@ jobs:
           npm start &
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUER_TOOL_SERVER_CERT_PATH: ${GITHUB_WORKSPACE}/e2e/.build/findy-wallet-pwa/tools/env/config/cert
 
       - name: run frontend
         run: |
