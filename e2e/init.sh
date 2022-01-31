@@ -36,4 +36,4 @@ jwt=$(findy-agent-cli authn login \
     --origin $auth_origin \
     --key $default_key)
 
-echo {\"jwt\": \"$jwt\", \"user\": \"$user\"} > ./e2e/e2e.user.json
+echo {\"jwt\": \"$jwt\", \"user\": \"$user\"} > ./e2e.user.json
