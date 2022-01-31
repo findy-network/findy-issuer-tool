@@ -27,7 +27,7 @@ const CodeContainer = styled.div`
 const QRInfo = ({ value, title }) => (
   <div>
     <Typography>{title}</Typography>
-    <TextContainer>{value}</TextContainer>
+    <TextContainer id="invitation-raw">{value}</TextContainer>
     {Object.keys(CONFIG.wallets).map((key) => {
       const item = CONFIG.wallets[key];
       return (

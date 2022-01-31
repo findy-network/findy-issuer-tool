@@ -13,12 +13,12 @@ const Button = styled(BaseButton)`
   ${(props) => !props.disabled && `display: inline-block;`}
 `;
 
-const EditorButtons = ({ canReset, onReset, canSave, onSave, okLabel }) => (
+const EditorButtons = ({ canReset, onReset, canSave, onSave, okLabel, id }) => (
   <ButtonContainer>
     <Button disabled={!canReset} onClick={onReset}>
       Reset
     </Button>
-    <Button disabled={!canSave} onClick={onSave}>
+    <Button disabled={!canSave} onClick={onSave} id={`${id}-save-button`}>
       {okLabel || 'Save'}
     </Button>
   </ButtonContainer>
@@ -30,6 +30,7 @@ EditorButtons.propTypes = {
   onReset: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   okLabel: PropTypes.string,
+  id: PropTypes.string.isRequired,
 };
 
 EditorButtons.defaultProps = {
