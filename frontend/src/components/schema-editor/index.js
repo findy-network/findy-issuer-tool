@@ -142,8 +142,8 @@ const SchemaEditor = ({
           {items.length > 0 && (
             <div>
               <ItemsHeader>{title}s created by us:</ItemsHeader>
-              {items.map((item) => (
-                <ItemContainer key={item}>
+              {items.map((item, index) => (
+                <ItemContainer key={item} id={`${title}-item-${index}`}>
                   <LedgerLink value={item} txnType={txnType} />
                 </ItemContainer>
               ))}

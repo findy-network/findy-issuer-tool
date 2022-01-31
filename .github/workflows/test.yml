@@ -97,6 +97,8 @@ jobs:
           nohup npm start > /dev/null 2>../tests_output/backend.log &
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AWS_ACCESS_KEY_ID: "foo"
+          AWS_SECRET_ACCESS_KEY: "bar"
 
       - name: run frontend
         run: |
