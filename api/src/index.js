@@ -49,19 +49,19 @@ const init = async (config) => {
   app.use(express.json());
 
   // sessions stored in memory - note: not for production use
-  const sess = session({
+  const sessionProps = {
     secret: crypto.randomBytes(20).toString('hex'),
     saveUninitialized: true,
     resave: true,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24, // 24 hours
     },
-  });
+  };
   if (!config.devMode) {
     app.set('trust proxy', 1); // trust first proxy
-    sess.cookie.secure = true;
+    sessionProps.cookie.secure = true;
   }
-  app.use(sess);
+  app.use(session(sessionProps));
   app.get('/auth/config', (req, res) =>
     res.json(appRoutes.getIntegrationConfig()),
   );
