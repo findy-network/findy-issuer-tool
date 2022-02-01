@@ -17,6 +17,7 @@ import {
   SEND_BASIC_MESSAGE_FULFILLED,
   SEND_PROOF_REQUEST,
   SEND_CREDENTIAL,
+  SEND_PROOF_REQUEST_FULFILLED,
 } from '../actions';
 
 import initialState from './initial-state';
@@ -31,6 +32,11 @@ export default (state = initialState.alert, action) => {
     case SEND_BASIC_MESSAGE_FULFILLED:
       return {
         description: 'Message sent successfully',
+        severity: 'success',
+      };
+    case SEND_PROOF_REQUEST_FULFILLED:
+      return {
+        description: 'Proof request sent successfully',
         severity: 'success',
       };
     case SEND_CREDENTIAL_REJECTED:

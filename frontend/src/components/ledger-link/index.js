@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const LedgerLink = ({ value, txnType }) => (
+const LedgerLink = ({ value, txnType, id }) => (
   <a
+    id={id}
     href={`${
       CONFIG.ledger.browserUrl
     }/browse/domain?page=1&query=${encodeURIComponent(
@@ -18,6 +19,7 @@ const LedgerLink = ({ value, txnType }) => (
 LedgerLink.propTypes = {
   value: PropTypes.string.isRequired,
   txnType: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default LedgerLink;

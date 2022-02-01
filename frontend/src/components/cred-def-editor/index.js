@@ -62,6 +62,7 @@ const CredDefEditor = ({
           <Header>{title}</Header>
           {description && <Description>{description}</Description>}
           <DropDown
+            id="cred-def-schema-selection"
             value={value.schemaId}
             values={schemas.map((item) => ({
               id: item,
@@ -71,6 +72,7 @@ const CredDefEditor = ({
             label={value.schemaId ? 'Schema' : 'Select schema'}
           />
           <TextField
+            id="cred-def-tag"
             rows="1"
             label="Tag e.g. issuer-tool"
             onChange={(tag) => setValue({ ...value, tag })}
@@ -78,6 +80,7 @@ const CredDefEditor = ({
           />
 
           <EditorButtons
+            id="cred-def"
             canReset={
               !sending &&
               value.schemaId !== defaultValue.schemaId &&
@@ -90,14 +93,14 @@ const CredDefEditor = ({
           {result && (
             <Typography variant="subtitle2">
               {`Successfully saved ${title} with id`}
-              <LedgerLink value={result} txnType={txnType} />
+              <LedgerLink id="cred-def-link" value={result} txnType={txnType} />
             </Typography>
           )}
           {items.length > 0 && (
             <div>
               <ItemsHeader>{title}s created by us:</ItemsHeader>
-              {items.map((item) => (
-                <ItemContainer key={item}>
+              {items.map((item, index) => (
+                <ItemContainer key={item} id={`cred-def-item-${index}`}>
                   <LedgerLink value={item} txnType={txnType} />
                 </ItemContainer>
               ))}

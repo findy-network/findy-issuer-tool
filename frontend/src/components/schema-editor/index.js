@@ -67,12 +67,14 @@ const SchemaEditor = ({
           <Header>{title}</Header>
           {description && <Description>{description}</Description>}
           <TextField
+            id="schema-name"
             rows="1"
             label="Name e.g. Email"
             onChange={(name) => setValue({ ...value, name })}
             value={value.name}
           />
           <TextField
+            id="schema-version"
             rows="1"
             label="Version e.g. 1.0"
             onChange={(version) => setValue({ ...value, version })}
@@ -80,6 +82,7 @@ const SchemaEditor = ({
           />
           {value.attrs.map((item, index) => (
             <TextField
+              id={`schema-${index}-attribute`}
               key={`${index + 1}. attribute`}
               rows="1"
               label={`${index + 1}. attribute`}
@@ -95,12 +98,14 @@ const SchemaEditor = ({
             />
           ))}
           <Button
+            id="add-attribute-button"
             onClick={() => setValue({ ...value, attrs: [...value.attrs, ''] })}
           >
             Add attribute
           </Button>
 
           <EditorButtons
+            id="schema"
             canReset={
               (() => {
                 const schema = trimSchema(value);
@@ -137,8 +142,8 @@ const SchemaEditor = ({
           {items.length > 0 && (
             <div>
               <ItemsHeader>{title}s created by us:</ItemsHeader>
-              {items.map((item) => (
-                <ItemContainer key={item}>
+              {items.map((item, index) => (
+                <ItemContainer key={item} id={`${title}-item-${index}`}>
                   <LedgerLink value={item} txnType={txnType} />
                 </ItemContainer>
               ))}

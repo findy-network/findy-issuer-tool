@@ -49,6 +49,7 @@ const CredEditor = ({ credDefs, onSend, defaultValues, sending }) => {
   const attrValue = (index, item) => (
     <RowContainer key={`${index + 1}. attribute`}>
       <TextField
+        id={`attribute-${index}-name`}
         rows="1"
         label="Name"
         value={item.key}
@@ -61,6 +62,7 @@ const CredEditor = ({ credDefs, onSend, defaultValues, sending }) => {
         }
       />
       <TextField
+        id={`attribute-${index}-value`}
         rows="1"
         label="Value"
         value={item.value}
@@ -89,6 +91,7 @@ const CredEditor = ({ credDefs, onSend, defaultValues, sending }) => {
   return (
     <Container>
       <DropDown
+        id="cred-def-selection"
         value={credDefId}
         values={credDefs.map((item) => ({ id: item, title: item }))}
         onValueChange={handleCredDef}
@@ -97,6 +100,7 @@ const CredEditor = ({ credDefs, onSend, defaultValues, sending }) => {
       {attributes.length > 0 && <p>Attributes</p>}
       {attributes.map((item, index) => attrValue(index, item))}
       <Button
+        id="add-attribute-button"
         disabled={!credDefId}
         onClick={() => setAttributes([...attributes, { key: '', value: '' }])}
       >
@@ -104,6 +108,7 @@ const CredEditor = ({ credDefs, onSend, defaultValues, sending }) => {
       </Button>
 
       <EditorButtons
+        id="send-cred"
         canReset={canReset}
         onReset={handleReset}
         canSave={canSave}

@@ -7,8 +7,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { Link, ListItem } from './style';
 
-const LinkItem = ({ path, activePath, label }) => (
-  <Link to={path}>
+const LinkItem = ({ path, activePath, label, id }) => (
+  <Link to={path} id={id}>
     <ListItem button activeItem={path === activePath}>
       <ListItemText primary={label} />
     </ListItem>
@@ -19,18 +19,39 @@ LinkItem.propTypes = {
   path: PropTypes.string.isRequired,
   activePath: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 const NavMenu = (props) => (
   <Paper>
     <List>
-      <LinkItem path="/" label="Events" {...props} />
-      <LinkItem path="/connect" label="Connect" {...props} />
-      <LinkItem path="/message" label="Message" {...props} />
-      <LinkItem path="/issue" label="Issue" {...props} />
-      <LinkItem path="/verify" label="Verify" {...props} />
-      <LinkItem path="/tools" label="Tools" {...props} />
-      <LinkItem path="/me" label="My creds" {...props} />
+      <LinkItem id="events-link-item" path="/" label="Events" {...props} />
+      <LinkItem
+        id="connect-link-item"
+        path="/connect"
+        label="Connect"
+        {...props}
+      />
+      <LinkItem
+        id="message-link-item"
+        path="/message"
+        label="Message"
+        {...props}
+      />
+      <LinkItem id="issue-link-item" path="/issue" label="Issue" {...props} />
+      <LinkItem
+        id="verify-link-item"
+        path="/verify"
+        label="Verify"
+        {...props}
+      />
+      <LinkItem id="tools-link-item" path="/tools" label="Tools" {...props} />
+      <LinkItem
+        id="my-creds-link-item"
+        path="/me"
+        label="My creds"
+        {...props}
+      />
     </List>
   </Paper>
 );

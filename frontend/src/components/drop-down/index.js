@@ -11,7 +11,7 @@ const FormControl = styled(FormControlComponent)`
   width: 100%;
 `;
 
-const DropDown = ({ label, value, onValueChange, values }) => {
+const DropDown = ({ label, value, onValueChange, values, id }) => {
   const selectValues = values.map((item) =>
     item.id ? item : { id: item, title: item }
   );
@@ -19,8 +19,9 @@ const DropDown = ({ label, value, onValueChange, values }) => {
   return (
     <div>
       <FormControl variant="outlined">
-        <InputLabel htmlFor="outlined-age-native-simple">{label}</InputLabel>
+        <InputLabel htmlFor={id}>{label}</InputLabel>
         <Select
+          id={id}
           native
           value={value}
           label={label}
@@ -29,13 +30,13 @@ const DropDown = ({ label, value, onValueChange, values }) => {
           }
           inputProps={{
             name: 'age',
-            id: 'outlined-age-native-simple',
+            id,
           }}
         >
           {/* eslint-disable-next-line */}
           <option key="0" value="" />
-          {selectValues.map(({ id, title }) => (
-            <option key={id} value={id}>
+          {selectValues.map(({ id: valueId, title }) => (
+            <option id={valueId} key={valueId} value={valueId}>
               {title}
             </option>
           ))}
@@ -50,6 +51,7 @@ DropDown.propTypes = {
   onValueChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   values: PropTypes.arrayOf(PropTypes.object).isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 DropDown.defaultProps = {

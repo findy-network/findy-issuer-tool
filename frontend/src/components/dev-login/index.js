@@ -13,7 +13,13 @@ export const LoginButton = styled(Button)`
 const Login = ({ conf }) => (
   <Container maxWidth="sm">
     <a href={`${CONFIG.api.url}${conf.url}`}>
-      <LoginButton type="button" fullWidth variant="contained" color="primary">
+      <LoginButton
+        id="dev-login-button"
+        type="button"
+        fullWidth
+        variant="contained"
+        color="primary"
+      >
         Dev login
       </LoginButton>
     </a>

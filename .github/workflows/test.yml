@@ -62,3 +62,62 @@ jobs:
           npm run licenses:check
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@findy-network"
+
+      - name: install deps
+        run: npm ci
+
+      - name: install cli
+        run: |
+          curl https://raw.githubusercontent.com/findy-network/findy-agent-cli/HEAD/install.sh > install.sh
+          chmod a+x install.sh
+          sudo ./install.sh -b /bin
+
+      - name: init env
+        run: ./e2e/init.sh
+
+      - name: set env
+        run: echo "ISSUER_TOOL_SERVER_CERT_PATH=$GITHUB_WORKSPACE/e2e/.build/findy-wallet-pwa/tools/env/config/cert" >> $GITHUB_ENV
+
+      - name: run backend
+        run: |
+          cd api
+          npm run db
+          npm ci --legacy-peer-deps
+          mkdir -p ../tests_output
+          nohup npm start > /dev/null 2>../tests_output/backend.log &
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AWS_ACCESS_KEY_ID: "foo"
+          AWS_SECRET_ACCESS_KEY: "bar"
+
+      - name: run frontend
+        run: |
+          cd frontend
+          npm ci
+          npm start &
+
+      - name: run e2e
+        run: npm run test:e2e
+
+      - name: collect docker logs
+        if: ${{ failure() }}
+        uses: jwalton/gh-docker-logs@v2.0.2
+        with:
+          dest: "./tests_output/docker-logs"
+
+      - name: archive logs
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: tests_output
+          path: tests_output

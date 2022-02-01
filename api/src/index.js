@@ -55,12 +55,8 @@ const init = async (config) => {
     resave: true,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24, // 24 hours
-    },
+    }, // TODO: secure for production
   };
-  if (!config.devMode) {
-    app.set('trust proxy', 1); // trust first proxy
-    sessionProps.cookie.secure = true;
-  }
   app.use(session(sessionProps));
   app.get('/auth/config', (req, res) =>
     res.json(appRoutes.getIntegrationConfig()),

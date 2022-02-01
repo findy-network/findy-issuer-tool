@@ -28,10 +28,10 @@ export default async (sendCredential, config) => {
     signingKey: fs.readFileSync('./tools/isb/sp-signing-key.pem').toString(),
   };
 
-  const isbSigningKey = await (async () => {
+  const getIsbSigningKey = async () => {
     const response = await axios.get(`${isbHost}jwks/broker`);
     return jose.JWK.asKeyStore(response.data);
-  })();
+  };
 
   const makeClientAssertion = async () => {
     const payload = {
@@ -54,6 +54,10 @@ export default async (sendCredential, config) => {
     const decrypted = (
       await jose.JWE.createDecrypt(privKey).decrypt(token)
     ).plaintext.toString();
+    const isbSigningKey = await getIsbSigningKey(); // TODO: cache for 1 hour
+    log.info(
+      `Decrypting token with isb signing key ${JSON.stringify(isbSigningKey)}`,
+    );
     const verificationResult = await jose.JWS.createVerify(
       isbSigningKey,
     ).verify(decrypted);
@@ -87,6 +91,8 @@ export default async (sendCredential, config) => {
     };
 
     const tokenResponse = await axios.post(url, params, conf);
+    log.info(`Token response received ${JSON.stringify(tokenResponse.data)}`);
+
     const profile = await decryptToken(tokenResponse.data.id_token);
     const nonceValid = profile.nonce === req.session.nonce;
     if (nonceValid) {
