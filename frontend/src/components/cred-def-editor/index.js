@@ -93,7 +93,7 @@ const CredDefEditor = ({
           {result && (
             <Typography variant="subtitle2">
               {`Successfully saved ${title} with id`}
-              <LedgerLink value={result} txnType={txnType} />
+              <LedgerLink id="cred-def-link" value={result} txnType={txnType} />
             </Typography>
           )}
           {items.length > 0 && (

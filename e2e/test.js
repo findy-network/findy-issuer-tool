@@ -75,7 +75,7 @@ describe("Issuer Tool", function () {
           .useCss()
           .setValue("#cred-def-tag", "issuer-tool")
           .click("#cred-def-save-button")
-          // .verify.elementPresent("cred-def-item-0") TODO: verify cred def exists!
+          .waitForElementVisible("#cred-def-link", 60000)
           .end();
       });
   });
