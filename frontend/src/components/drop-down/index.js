@@ -35,7 +35,7 @@ const DropDown = ({ label, value, onValueChange, values, id }) => {
         >
           {/* eslint-disable-next-line */}
           <option key="0" value="" />
-          {selectValues.map(({ valueId, title }) => (
+          {selectValues.map(({ id: valueId, title }) => (
             <option id={valueId} key={valueId} value={valueId}>
               {title}
             </option>
