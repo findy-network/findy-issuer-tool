@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/findy-network/findy-issuer-tool#readme",
   "devDependencies": {
-    "chromedriver": "^97.0.2",
+    "chromedriver": "^97.0.4",
     "js-green-licenses": "^3.0.1",
     "nightwatch": "^2.0.2"
   }
