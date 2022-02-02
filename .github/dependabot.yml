@@ -5,3 +5,13 @@ updates:
     schedule:
       interval: "monthly"
     target-branch: "dev"
+  - package-ecosystem: npm
+    directory: "/api"
+    schedule:
+      interval: "monthly"
+    target-branch: "dev"
+  - package-ecosystem: npm
+    directory: "/frontend"
+    schedule:
+      interval: "monthly"
+    target-branch: "dev"
