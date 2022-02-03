@@ -54,7 +54,7 @@
     "node-jose": "^2.0.0",
     "openid-client": "^5.1.2",
     "uuid": "^8.3.2",
-    "winston": "^3.5.0"
+    "winston": "^3.5.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.0",
