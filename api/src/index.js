@@ -59,11 +59,12 @@ const init = async (config) => {
   };
   app.use(session(sessionProps));
   app.get('/auth/config', (req, res) =>
-    res.json(appRoutes.getIntegrationConfig()),
+    res.json(appRoutes.getIntegrationConfig(req)),
   );
   app.get('/auth/dev', appRoutes.devModeLogin);
   app.get('/auth/callback/findy-issuer-app', appRoutes.githubLogin);
   app.get('/auth/isb', appRoutes.isbSendCred);
+  app.get('/auth/findy', appRoutes.findyLogin);
 
   app.get('/user', async (req, res) => {
     const user = await appStorage.getUser(req.user.email);

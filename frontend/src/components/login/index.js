@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import DevLogin from '../dev-login';
+import LoginComponent from '../gen-login';
 import GitHubLogin from '../github-login';
 
 const Container = styled.div`
@@ -15,8 +15,16 @@ const Container = styled.div`
 const Login = ({ config }) => (
   <div>
     <Container>
-      {CONFIG.auth.dev && <DevLogin conf={config.dev} />}
+      {CONFIG.auth.dev && config.dev && (
+        <LoginComponent
+          url={`${CONFIG.api.url}${config.dev.url}`}
+          label="Dev login"
+        />
+      )}
       <GitHubLogin conf={config.github} />
+      {config.findy && (
+        <LoginComponent url={config.findy.url} label="Findy login" />
+      )}
     </Container>
   </div>
 );
