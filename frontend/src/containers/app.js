@@ -24,7 +24,7 @@ const App = ({ user, activePath }) => (
         {user.email ? (
           <div>
             <CssBaseline />
-            <AppBar />
+            <AppBar userName={user.name} />
             <AppContainer activePath={activePath}>
               <Switch>
                 <Route exact path="/" component={Events} />
