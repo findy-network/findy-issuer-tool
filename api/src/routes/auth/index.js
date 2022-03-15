@@ -4,7 +4,7 @@ import github from './github';
 import dev from './dev';
 import isb from './isb';
 
-export default async (storage, config, sendCredential) => {
+export default async (storage, config) => {
   const { addOrUpdateUser } = storage;
 
   const createToken = async (name, email, id) => {
@@ -16,7 +16,7 @@ export default async (storage, config, sendCredential) => {
 
   const ghLogin = github(createToken, config);
   const devLogin = dev(createToken, config);
-  const isbCred = await isb(sendCredential, config);
+  const isbCred = await isb(addOrUpdateUser, config);
 
   const getConfig = () => {
     const conf = {
@@ -34,7 +34,7 @@ export default async (storage, config, sendCredential) => {
     getIntegrationConfig: getConfig,
     githubLogin: ghLogin.githubLoginIssuer,
     devModeLogin: devLogin.devLogin,
-    isbGetUrlForPairwise: isbCred.getUrlForPairwise,
+    isbGetUrlForEmail: isbCred.getUrlForEmail,
     isbSendCred: isbCred.isbCallback,
   };
 };

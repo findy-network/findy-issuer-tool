@@ -9,7 +9,7 @@ import log from '../../log';
 // Sample implementation for credential generation from OIDC based authentication
 // Note: this is a PoC, not production ready
 // implementation is missing security considerations like error handling
-export default async (sendCredential, config) => {
+export default async (addOrUpdateUser, config) => {
   const { clientId } = config.auth.apps['findy-issuer-app'].isb;
   const isbHost = config.auth.apps['findy-issuer-app'].isb.host;
   const urlGenPath = '/creds/isb-url';
@@ -96,7 +96,7 @@ export default async (sendCredential, config) => {
     const profile = await decryptToken(tokenResponse.data.id_token);
     const nonceValid = profile.nonce === req.session.nonce;
     if (nonceValid) {
-      const { connectionId, credDefId } = req.session;
+      const { email } = req.session;
       const values = {
         name: profile.name,
         given_name: profile.given_name,
@@ -106,20 +106,13 @@ export default async (sendCredential, config) => {
         auth_time: profile.auth_time.toString(),
       };
       log.info(
-        `Sending ISB credential to pairwise ${connectionId}: ${JSON.stringify(
-          values,
-        )}`,
+        `Saving ISB credential to user ${email}: ${JSON.stringify(values)}`,
       );
 
-      await sendCredential({
-        connectionId,
-        credDefId,
-        values,
-      });
+      await addOrUpdateUser({ email, creds: [{ id: 'isb', values }] });
 
       req.session.nonce = null;
-      req.session.connectionId = null;
-      req.session.credDefId = null;
+      req.session.email = null;
     } else {
       log.warn(`Nonce mismatch ${profile.nonce}, ${req.session.nonce}`);
     }
@@ -130,13 +123,11 @@ export default async (sendCredential, config) => {
 
   const getUrl = () => urlGenPath;
 
-  const getUrlForPairwise = async (req, res) => {
-    const { connectionId, credDefId } = req.query;
+  const getUrlForEmail = async (req, res) => {
     const nonce = generators.nonce();
     req.session.nonce = nonce;
-    req.session.connectionId = connectionId;
-    req.session.credDefId = credDefId;
-    log.info(`Generating ISB auth url to pairwise ${connectionId}`);
+    req.session.email = req.user.email;
+    log.info(`Generating ISB auth url to user ${req.user.email}`);
     const content = {
       client_id: clientId,
       response_type: 'code',
@@ -163,5 +154,5 @@ export default async (sendCredential, config) => {
     });
   };
 
-  return { isbCallback, getUrl, getUrlForPairwise };
+  return { isbCallback, getUrl, getUrlForEmail };
 };

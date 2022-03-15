@@ -93,7 +93,7 @@ const init = async (config) => {
     '/pairwise/credential',
     ...appRoutes.pairwiseSendCredentialRoute(validate),
   );
-  app.get('/creds/isb-url', appRoutes.isbGetUrlForPairwise);
+  app.get('/creds/isb-url', appRoutes.isbGetUrlForEmail);
 
   app.listen(port, () => log.info(`Issuer tool listening on port ${port}!`));
 };

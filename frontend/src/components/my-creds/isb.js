@@ -1,38 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import PairwiseEditor from '../pairwise-editor';
 import { Header, Button, Section } from './style';
 
-const IsbCred = ({ connections, credDefs, onFetchUrl, config, urls }) => {
+const IsbCred = ({
+  connections,
+  credDefs,
+  onFetchUrl,
+  config,
+  urls,
+  user,
+  sendCredential,
+}) => {
   const [isbPairwiseName, setIsbPairwiseName] = useState('');
+  const [urlFetched, setUrlFetched] = useState(false);
   const credDefId = credDefs.find((item) => item.toLowerCase().includes('isb'));
-  const onPwChange = (name) => {
-    if (isbPairwiseName !== name) {
-      onFetchUrl({ url: config.creds.isb.url, connectionId: name, credDefId });
+  useEffect(() => {
+    if (config.creds && config.creds.isb.url && !urlFetched) {
+      onFetchUrl({ url: config.creds.isb.url });
+      setUrlFetched(true);
     }
-    setIsbPairwiseName(name);
-  };
+  });
+
+  // TODO: fetch url on load
   const authUrl = config.creds ? urls[config.creds.isb.url] : '';
+  const isbCred = user.creds.find((item) => item.id === 'isb');
+  const authenticateStr = isbCred ? 'Reauthenticate' : 'Authenticate';
   return (
     <Section>
       <Header>ISB cred</Header>
       {credDefId ? (
-        <PairwiseEditor
-          name={isbPairwiseName}
-          onSetName={onPwChange}
-          connections={connections}
-          title="Send ISB credential"
-          description="Send ISB credential to pairwise connection"
-        >
+        <div>
+          <p>{authenticateStr} via ISB:</p>
           {authUrl ? (
             <a href={authUrl}>
-              <Button>Authenticate</Button>
+              <Button>{authenticateStr}</Button>
             </a>
           ) : (
             <div />
           )}
-        </PairwiseEditor>
+
+          <div>
+            <h3>ISB credential values</h3>
+            {Object.keys(isbCred.values).map((key) => (
+              <div key={key}>
+                {key}: {isbCred.values[key]}
+              </div>
+            ))}
+          </div>
+          {isbCred && (
+            <div>
+              <PairwiseEditor
+                name={isbPairwiseName}
+                onSetName={setIsbPairwiseName}
+                connections={connections}
+                title="Send ISB credential"
+                description="Send ISB credential to pairwise connection"
+              >
+                <Button
+                  onClick={() =>
+                    sendCredential({
+                      connectionId: isbPairwiseName,
+                      values: isbCred.values,
+                      credDefId,
+                    })
+                  }
+                >
+                  Send credential
+                </Button>
+              </PairwiseEditor>
+            </div>
+          )}
+        </div>
       ) : (
         <div>
           Create cred def tagged &quot;ISB&quot; with schema attributes
