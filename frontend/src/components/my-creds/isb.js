@@ -23,7 +23,6 @@ const IsbCred = ({
     }
   });
 
-  // TODO: fetch url on load
   const authUrl = config.creds ? urls[config.creds.isb.url] : '';
   const isbCred = user.creds.find((item) => item.id === 'isb');
   const authenticateStr = isbCred ? 'Reauthenticate' : 'Authenticate';
@@ -91,6 +90,8 @@ IsbCred.propTypes = {
   onFetchUrl: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
   urls: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  sendCredential: PropTypes.func.isRequired,
 };
 
 export default IsbCred;
