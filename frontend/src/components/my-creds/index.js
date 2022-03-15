@@ -34,13 +34,14 @@ const MyCreds = (props) => {
             <ButtonContainer>
               <Button
                 disabled={sending}
-                onClick={() =>
+                onClick={() => {
                   onSendCredential({
                     connectionId: pairwiseName,
                     values: { name, id, email },
                     credDefId,
-                  })
-                }
+                  });
+                  setPairwiseName('');
+                }}
               >
                 Send
               </Button>
@@ -53,7 +54,8 @@ const MyCreds = (props) => {
           </div>
         )}
       </Section>
-      <IsbCred {...props} />
+
+      <IsbCred {...props} sendCredential={onSendCredential} />
     </div>
   );
 };

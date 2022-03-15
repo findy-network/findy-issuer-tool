@@ -5,7 +5,7 @@ import pairwise from './pairwise';
 import events from './events';
 
 export default async (storage, agent, config) => ({
-  ...(await auth(storage, config, agent.pairwiseSendCredential)),
+  ...(await auth(storage, config)),
   ...create(agent, config),
   ...pairwise(agent, config),
   ...events(storage, config),
