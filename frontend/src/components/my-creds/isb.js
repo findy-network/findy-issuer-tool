@@ -40,16 +40,16 @@ const IsbCred = ({
             <div />
           )}
 
-          <div>
-            <h3>ISB credential values</h3>
-            {Object.keys(isbCred.values).map((key) => (
-              <div key={key}>
-                {key}: {isbCred.values[key]}
-              </div>
-            ))}
-          </div>
           {isbCred && (
             <div>
+              <div>
+                <h3>ISB credential values</h3>
+                {Object.keys(isbCred.values).map((key) => (
+                  <div key={key}>
+                    {key}: {isbCred.values[key]}
+                  </div>
+                ))}
+              </div>
               <PairwiseEditor
                 name={isbPairwiseName}
                 onSetName={setIsbPairwiseName}
