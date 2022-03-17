@@ -29,6 +29,11 @@ export default async () => {
                 clientId: secrets['github-client-id'],
                 clientSecret: secrets['github-client-secret'],
               },
+              findy: {
+                clientId: secrets['findy-client-id'],
+                clientSecret: secrets['findy-client-secret'],
+                host: secrets['findy-host'],
+              },
               redirectUrl: secrets['redirect-url'],
             },
           },
