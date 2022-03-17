@@ -47,6 +47,8 @@ import {
   FETCH_URL,
   fetchUrlFulfilled,
   fetchUrlRejected,
+  fetchCredentialFulfilled,
+  fetchCredentialRejected,
 } from './actions';
 
 const post = (state$, path, payload) =>
@@ -110,15 +112,15 @@ const initAlertEpic = (action$, state$) =>
     filter(() => {
       const query = getQueryParams(state$);
       if (query) {
-        return query && query.get('cred_sent');
+        return query && query.get('cred_ready');
       }
       return false;
     }),
     switchMap(() => {
-      const sent = getQueryParams(state$).get('cred_sent');
+      const sent = getQueryParams(state$).get('cred_ready');
       return sent === 'true'
-        ? of(sendCredentialFulfilled())
-        : of(sendCredentialRejected());
+        ? of(fetchCredentialFulfilled())
+        : of(fetchCredentialRejected());
     })
   );
 

@@ -4,15 +4,17 @@ import styled from 'styled-components';
 import MUIContainer from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
-export const Container = styled(MUIContainer)``;
+export const Container = styled(MUIContainer)`
+  margin-top: 3rem;
+`;
 
 export const LoginButton = styled(Button)`
   min-height: 3.5rem;
 `;
 
-const Login = ({ conf }) => (
+const Login = ({ url, label }) => (
   <Container maxWidth="sm">
-    <a href={`${CONFIG.api.url}${conf.url}`}>
+    <a href={url}>
       <LoginButton
         id="dev-login-button"
         type="button"
@@ -20,18 +22,19 @@ const Login = ({ conf }) => (
         variant="contained"
         color="primary"
       >
-        Dev login
+        {label}
       </LoginButton>
     </a>
   </Container>
 );
 
 Login.propTypes = {
-  conf: PropTypes.object,
+  url: PropTypes.string,
+  label: PropTypes.string.isRequired,
 };
 
 Login.defaultProps = {
-  conf: {},
+  url: '',
 };
 
 export default Login;

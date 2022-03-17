@@ -117,7 +117,7 @@ export default async (addOrUpdateUser, config) => {
       log.warn(`Nonce mismatch ${profile.nonce}, ${req.session.nonce}`);
     }
     return res.redirect(
-      `${config.auth.apps['findy-issuer-app'].redirectUrl}/me?cred_sent=${nonceValid}`,
+      `${config.auth.apps['findy-issuer-app'].redirectUrl}/me?cred_ready=${nonceValid}`,
     );
   };
 

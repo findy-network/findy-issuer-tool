@@ -6,6 +6,8 @@ import {
   SAVE_CRED_DEF,
   FETCH_PAIRWISE_INVITATION_REJECTED,
   SEND_BASIC_MESSAGE_REJECTED,
+  FETCH_CREDENTIAL_FULFILLED,
+  FETCH_CREDENTIAL_REJECTED,
   SEND_CREDENTIAL_FULFILLED,
   SEND_CREDENTIAL_REJECTED,
   FETCH_USER,
@@ -24,6 +26,11 @@ import initialState from './initial-state';
 
 export default (state = initialState.alert, action) => {
   switch (action.type) {
+    case FETCH_CREDENTIAL_FULFILLED:
+      return {
+        description: 'Credential fetched successfully',
+        severity: 'success',
+      };
     case SEND_CREDENTIAL_FULFILLED:
       return {
         description: 'Credential sent successfully',
@@ -38,6 +45,12 @@ export default (state = initialState.alert, action) => {
       return {
         description: 'Proof request sent successfully',
         severity: 'success',
+      };
+    case FETCH_CREDENTIAL_REJECTED:
+      return {
+        description: 'Failed to fetch credential.',
+        reason: action.payload,
+        severity: 'error',
       };
     case SEND_CREDENTIAL_REJECTED:
       return {

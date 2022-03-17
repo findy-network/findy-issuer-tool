@@ -21,6 +21,11 @@
           "clientId": "saippuakauppias",
           "host": "https://isb-test.op.fi/"
         },
+        "findy": {
+          "clientId": "issuer-tool",
+          "clientSecret": "superSecretKeyLol",
+          "host": "http://localhost:3000/"
+        },
         "redirectUrl": "http://localhost:8081"
       }
     },
