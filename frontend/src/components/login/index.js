@@ -23,7 +23,7 @@ const Login = ({ config }) => (
       )}
       <GitHubLogin conf={config.github} />
       {config.findy && (
-        <LoginComponent url={config.findy.url} label="Findy login" />
+        <LoginComponent url={config.findy.url} label="Login via credential" />
       )}
     </Container>
   </div>

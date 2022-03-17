@@ -23,6 +23,7 @@
         },
         "findy": {
           "clientId": "issuer-tool",
+          "clientSecret": "superSecretKeyLol",
           "host": "http://localhost:3000/"
         },
         "redirectUrl": "http://localhost:8081"

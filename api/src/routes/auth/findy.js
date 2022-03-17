@@ -3,7 +3,7 @@ import { Issuer, generators } from 'openid-client';
 import log from '../../log';
 
 export default async (createToken, config) => {
-  const { clientId } = config.auth.apps['findy-issuer-app'].findy;
+  const { clientId, clientSecret } = config.auth.apps['findy-issuer-app'].findy;
   const findyOIDCHost = config.auth.apps['findy-issuer-app'].findy.host;
   const { ourHost } = config;
 
@@ -14,7 +14,7 @@ export default async (createToken, config) => {
 
   const content = {
     client_id: clientId,
-    client_secret: 'superSecretKeyLol',
+    client_secret: clientSecret,
     response_type: 'code',
     redirect_uri: `${ourHost}/auth/findy`,
   };
