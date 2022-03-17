@@ -12,6 +12,10 @@
           "clientId": "ISSUER_TOOL_GITHUB_CLIENT_ID",
           "clientSecret": "ISSUER_TOOL_GITHUB_CLIENT_SECRET"
         },
+        "findy": {
+          "clientId": "ISSUER_TOOL_FINDY_LOGIN_CLIENT_ID",
+          "host": "ISSUER_TOOL_FINDY_LOGIN_HOST"
+        },
         "redirectUrl": "ISSUER_TOOL_REDIRECT_URL"
       }
     },
