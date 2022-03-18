@@ -22,7 +22,7 @@
           "host": "https://isb-test.op.fi/"
         },
         "findy": {
-          "clientId": "issuer-tool",
+          "clientId": "issuer-tool-local",
           "clientSecret": "superSecretKeyLol",
           "host": "http://localhost:3000/"
         },
