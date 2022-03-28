@@ -24,9 +24,9 @@
         "findy": {
           "clientId": "issuer-tool-local",
           "clientSecret": "superSecretKeyLol",
-          "host": "http://localhost:3005"
+          "host": "http://localhost:3000"
         },
-        "redirectUrl": "lhttp://localhost:8081"
+        "redirectUrl": "http://localhost:8081"
       }
     },
     "allowedDomains": ["op.fi", "gmail.com"]
