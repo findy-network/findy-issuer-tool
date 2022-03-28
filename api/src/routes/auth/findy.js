@@ -7,6 +7,7 @@ export default async (createToken, config) => {
   const findyOIDCHost = config.auth.apps['findy-issuer-app'].findy.host;
   const { ourHost } = config;
 
+  log.info(`Fetching OIDC provider from ${findyOIDCHost}`);
   const issuer = await Issuer.discover(findyOIDCHost);
   log.info(
     `Discovered findy OIDC ${issuer.issuer} docs: ${issuer.metadata.service_documentation}`,
