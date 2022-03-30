@@ -101,7 +101,7 @@ const CredDefEditor = ({
               <ItemsHeader>{title}s created by us:</ItemsHeader>
               {items.map((item, index) => (
                 <ItemContainer key={item} id={`cred-def-item-${index}`}>
-                  <LedgerLink value={item} txnType={txnType} />
+                  <LedgerLink id={item} value={item} txnType={txnType} />
                 </ItemContainer>
               ))}
             </div>

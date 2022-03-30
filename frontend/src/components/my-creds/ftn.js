@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Paper } from '@material-ui/core';
+import styled from 'styled-components';
 
 import PairwiseEditor from '../pairwise-editor';
 import { Header, Button, Section } from './style';
 
-const IsbCred = ({
+const CredPaper = styled(Paper)`
+  padding: 1rem;
+`;
+
+const FtnCred = ({
   connections,
   credDefs,
   onFetchUrl,
@@ -13,25 +19,27 @@ const IsbCred = ({
   user,
   sendCredential,
 }) => {
-  const [isbPairwiseName, setIsbPairwiseName] = useState('');
+  const [ftnPairwiseName, setFtnPairwiseName] = useState('');
   const [urlFetched, setUrlFetched] = useState(false);
-  const credDefId = credDefs.find((item) => item.toLowerCase().includes('isb'));
+  const credDefId = credDefs.find((item) => item.toLowerCase().includes('ftn'));
   useEffect(() => {
-    if (config.creds && config.creds.isb.url && !urlFetched) {
-      onFetchUrl({ url: config.creds.isb.url });
+    if (config.creds && config.creds.ftn.url && !urlFetched) {
+      onFetchUrl({ url: config.creds.ftn.url });
       setUrlFetched(true);
     }
   });
 
-  const authUrl = config.creds ? urls[config.creds.isb.url] : '';
-  const isbCred = user.creds.find((item) => item.id === 'isb');
-  const authenticateStr = isbCred ? 'Reauthenticate' : 'Authenticate';
+  const authUrl = config.creds ? urls[config.creds.ftn.url] : '';
+  const ftnCred = user.creds.find((item) => item.id === 'ftn');
+  const authenticateStr = ftnCred ? 'Reauthenticate' : 'Authenticate';
   return (
     <Section>
-      <Header>ISB cred</Header>
+      <Header>FTN cred</Header>
+      <div>CredDef: {credDefId}</div>
+
       {credDefId ? (
         <div>
-          <p>{authenticateStr} via ISB:</p>
+          <strong>{authenticateStr} via FTN:</strong>
           {authUrl ? (
             <a href={authUrl}>
               <Button>{authenticateStr}</Button>
@@ -40,28 +48,30 @@ const IsbCred = ({
             <div />
           )}
 
-          {isbCred && (
+          {ftnCred && (
             <div>
               <div>
-                <h3>ISB credential values</h3>
-                {Object.keys(isbCred.values).map((key) => (
-                  <div key={key}>
-                    {key}: {isbCred.values[key]}
-                  </div>
-                ))}
+                <h3>FTN credential values</h3>
+                <CredPaper>
+                  {Object.keys(ftnCred.values).map((key) => (
+                    <div key={key}>
+                      {key}: {ftnCred.values[key]}
+                    </div>
+                  ))}
+                </CredPaper>
               </div>
               <PairwiseEditor
-                name={isbPairwiseName}
-                onSetName={setIsbPairwiseName}
+                name={ftnPairwiseName}
+                onSetName={setFtnPairwiseName}
                 connections={connections}
-                title="Send ISB credential"
-                description="Send ISB credential to pairwise connection"
+                title="Send FTN credential"
+                description="Send FTN credential to pairwise connection"
               >
                 <Button
                   onClick={() =>
                     sendCredential({
-                      connectionId: isbPairwiseName,
-                      values: isbCred.values,
+                      connectionId: ftnPairwiseName,
+                      values: ftnCred.values,
                       credDefId,
                     })
                   }
@@ -74,7 +84,7 @@ const IsbCred = ({
         </div>
       ) : (
         <div>
-          Create cred def tagged &quot;ISB&quot; with schema attributes
+          Create cred def tagged &quot;FTN&quot; with schema attributes
           &quot;name&quot;, &quot;given_name&quot;, &quot;family_name&quot;,
           &quot;birthdate&quot;, &quot;personal_identity_code&quot;,
           &quot;auth_time&quot;
@@ -84,7 +94,7 @@ const IsbCred = ({
   );
 };
 
-IsbCred.propTypes = {
+FtnCred.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,
   credDefs: PropTypes.arrayOf(PropTypes.string).isRequired,
   onFetchUrl: PropTypes.func.isRequired,
@@ -94,4 +104,4 @@ IsbCred.propTypes = {
   sendCredential: PropTypes.func.isRequired,
 };
 
-export default IsbCred;
+export default FtnCred;

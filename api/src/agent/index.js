@@ -56,6 +56,17 @@ export default async (storage, config) => {
     return schemaId;
   };
 
+  const getSchema = async (id) => {
+    log.info(`Getting schema ${JSON.stringify(id)}`);
+
+    const msg = new agencyv1.Schema();
+    msg.setId(id);
+
+    const res = await agentClient.getSchema(msg);
+
+    return res;
+  };
+
   const createCredDef = async (body) => {
     log.info(`Creating cred def ${JSON.stringify(body)}`);
 
@@ -160,6 +171,7 @@ export default async (storage, config) => {
 
   return {
     createSchema,
+    getSchema,
     createCredDef,
     pairwiseSendMessage,
     pairwiseSendProofRequest,
