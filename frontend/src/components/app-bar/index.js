@@ -6,17 +6,23 @@ import AppBarComponent from '@material-ui/core/AppBar';
 import ToolbarComponent from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const Toolbar = styled(ToolbarComponent)`
   display: flex;
   justify-content: space-between;
 `;
 
+const Title = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+`;
+
 const AppBar = ({ userName }) => (
   <AppBarComponent position="relative">
     <Toolbar>
       <Typography variant="h6" noWrap>
-        Issuer Tool
+        <Title to="/">Issuer Tool</Title>
       </Typography>
       <Button
         title="Logout"
