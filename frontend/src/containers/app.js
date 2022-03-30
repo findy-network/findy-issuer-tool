@@ -13,6 +13,7 @@ import Welcome from './welcome';
 import Events from './events';
 import Issue from './issue';
 import Login from './login';
+import LoginCredential from './login-credential';
 import Verify from './verify';
 import Message from './message';
 import Tools from './tools';
@@ -41,7 +42,10 @@ const App = ({ user, activePath }) => (
             </AppContainer>
           </div>
         ) : (
-          <Login />
+          <Switch>
+            <Route exact path="/login-credential" component={LoginCredential} />
+            <Route component={Login} />
+          </Switch>
         )}
       </div>
     )}
