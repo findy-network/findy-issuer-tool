@@ -53,7 +53,10 @@ export const config = (state = initialState.config, action) => {
 export const ledger = (state = initialState.ledger, action) => {
   switch (action.type) {
     case FETCH_LEDGER_FULFILLED:
-      return action.payload;
+      return {
+        ...action.payload,
+        credDefs: action.payload.credDefs.sort((a, b) => (a < b ? 1 : -1)),
+      };
     default:
       return state;
   }
