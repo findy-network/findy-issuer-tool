@@ -54,7 +54,7 @@ const init = async (config) => {
   const appAgent = await agent(appStorage, config);
 
   const ledgerHasDefault =
-    conf.skipDefaultCredDefs ||
+    config.skipDefaultCredDefs ||
     (await appStorage.getLedger()).credDefs.find((item) =>
       defaultCredDefs.find(
         (credDef) =>

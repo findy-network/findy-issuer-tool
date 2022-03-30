@@ -22,7 +22,7 @@ const SendMessage = ({ connections, onSendMessage, sending }) => {
     >
       <TextField label="Message" onChange={setMessage} value={message} />
       <EditorButtons
-        id="chat-message-buttons"
+        id="chat-message"
         canReset={canResetMessage}
         onReset={handleResetMessage}
         canSave={canSaveMessage}
