@@ -43,7 +43,7 @@ const QRInfo = ({ value, title }) => (
       );
     })}
     <CodeContainer>
-      <QRCode value={value} />
+      <QRCode value={value} size={256} renderAs="svg" />
     </CodeContainer>
   </div>
 );
