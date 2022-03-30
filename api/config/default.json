@@ -3,6 +3,7 @@
   "ourHost": "http://localhost:3001",
   "ourName": "issuer-tool",
   "devMode": true,
+  "skipDefaultCredDefs": false,
   "storage": {
     "type": "DYNAMODB",
     "host": "http://localhost:8000",

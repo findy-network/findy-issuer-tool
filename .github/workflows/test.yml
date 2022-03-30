@@ -99,6 +99,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AWS_ACCESS_KEY_ID: "foo"
           AWS_SECRET_ACCESS_KEY: "bar"
+          ISSUER_TOOL_SKIP_DEFAULT_CRED_DEFS: true
 
       - name: run frontend
         run: |

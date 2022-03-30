@@ -53,12 +53,14 @@ const init = async (config) => {
   const appStorage = await storage(config);
   const appAgent = await agent(appStorage, config);
 
-  const ledger = await appStorage.getLedger();
-  const ledgerHasDefault = ledger.credDefs.find((item) =>
-    defaultCredDefs.find(
-      (credDef) => item.toLowerCase().indexOf(credDef.id.toLowerCase()) !== -1,
-    ),
-  );
+  const ledgerHasDefault =
+    conf.skipDefaultCredDefs ||
+    (await appStorage.getLedger()).credDefs.find((item) =>
+      defaultCredDefs.find(
+        (credDef) =>
+          item.toLowerCase().indexOf(credDef.id.toLowerCase()) !== -1,
+      ),
+    );
   if (!ledgerHasDefault) {
     log.info('Creating default cred defs...');
 
