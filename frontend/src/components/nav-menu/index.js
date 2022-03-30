@@ -25,7 +25,12 @@ LinkItem.propTypes = {
 const NavMenu = (props) => (
   <Paper>
     <List>
-      <LinkItem id="events-link-item" path="/" label="Events" {...props} />
+      <LinkItem
+        id="events-link-item"
+        path="/events"
+        label="Events"
+        {...props}
+      />
       <LinkItem
         id="connect-link-item"
         path="/connect"

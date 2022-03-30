@@ -9,6 +9,7 @@ import AppBar from '../components/app-bar';
 import AppContainer from '../components/app-container';
 import NoMatch from '../components/no-match';
 import Connect from './connect';
+import Welcome from './welcome';
 import Events from './events';
 import Issue from './issue';
 import Login from './login';
@@ -27,7 +28,8 @@ const App = ({ user, activePath }) => (
             <AppBar userName={user.name} />
             <AppContainer activePath={activePath}>
               <Switch>
-                <Route exact path="/" component={Events} />
+                <Route exact path="/" component={Welcome} />
+                <Route exact path="/events" component={Events} />
                 <Route exact path="/connect" component={Connect} />
                 <Route exact path="/issue" component={Issue} />
                 <Route exact path="/verify" component={Verify} />
