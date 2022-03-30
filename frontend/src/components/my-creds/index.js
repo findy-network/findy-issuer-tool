@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Paper } from '@material-ui/core';
+import styled from 'styled-components';
 
 import PairwiseEditor from '../pairwise-editor';
-import IsbCred from './isb';
+import FtnCred from './ftn';
 import { Header, ButtonContainer, Button, Section } from './style';
+
+const CredPaper = styled(Paper)`
+  padding: 1rem;
+`;
 
 const MyCreds = (props) => {
   const { connections, credDefs, onSendCredential, user, sending } = props;
@@ -17,6 +23,19 @@ const MyCreds = (props) => {
     <div>
       <Section>
         <Header>GitHub cred</Header>
+        <div>CredDef: {credDefId}</div>
+
+        <div>
+          <h3>GitHub credential values</h3>
+          <CredPaper>
+            <div>
+              <div>Name: {name}</div>
+              <div>Email: {email}</div>
+              <div>GitHub id: {id}</div>
+            </div>
+          </CredPaper>
+        </div>
+
         {credDefId ? (
           <PairwiseEditor
             name={pairwiseName}
@@ -24,13 +43,8 @@ const MyCreds = (props) => {
             connections={connections}
             title="Send GitHub credential"
             description="Send GitHub credential to pairwise connection"
+            contentHidden
           >
-            <div>
-              <div>Name: {name}</div>
-              <div>Email: {email}</div>
-              <div>GitHub id: {id}</div>
-              <div>CredDef: {credDefId}</div>
-            </div>
             <ButtonContainer>
               <Button
                 disabled={sending}
@@ -55,7 +69,7 @@ const MyCreds = (props) => {
         )}
       </Section>
 
-      <IsbCred {...props} sendCredential={onSendCredential} />
+      <FtnCred {...props} sendCredential={onSendCredential} />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 {
   "ourHost": "ISSUER_TOOL_OUR_HOST",
+  "skipDefaultCredDefs": "ISSUER_TOOL_SKIP_DEFAULT_CRED_DEFS",
   "storage": {
     "host": "ISSUER_TOOL_STORAGE_HOST",
     "region": "ISSUER_TOOL_STORAGE_REGION"

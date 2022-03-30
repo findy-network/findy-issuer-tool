@@ -11,6 +11,7 @@ const Container = styled.div`
 
 const Content = styled.div`
   opacity: ${(props) => (props.visible ? '1' : '0')};
+  display: ${(props) => (props.hidden ? 'none' : 'block')};
 `;
 
 const Description = styled.div`
@@ -30,6 +31,7 @@ const PairwiseEditor = ({
   onSetName,
   title,
   description,
+  contentHidden,
 }) => (
   <Container>
     <Header>{title}</Header>
@@ -44,7 +46,7 @@ const PairwiseEditor = ({
       onValueChange={onSetName}
       label={name ? 'Connection' : 'Select connection'}
     />
-    <Content id="pairwise-content" visible={name}>
+    <Content id="pairwise-content" visible={name} hidden={contentHidden}>
       {children}
     </Content>
   </Container>
@@ -57,6 +59,11 @@ PairwiseEditor.propTypes = {
   onSetName: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  contentHidden: PropTypes.bool,
+};
+
+PairwiseEditor.defaultProps = {
+  contentHidden: false,
 };
 
 export default PairwiseEditor;

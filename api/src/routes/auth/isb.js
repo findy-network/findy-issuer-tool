@@ -109,7 +109,7 @@ export default async (addOrUpdateUser, config) => {
         `Saving ISB credential to user ${email}: ${JSON.stringify(values)}`,
       );
 
-      await addOrUpdateUser({ email, creds: [{ id: 'isb', values }] });
+      await addOrUpdateUser({ email, creds: [{ id: 'ftn', values }] });
 
       req.session.nonce = null;
       req.session.email = null;

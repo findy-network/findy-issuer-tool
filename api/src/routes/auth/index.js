@@ -34,7 +34,7 @@ export default async (storage, config) => {
         ...(findyLogin ? { findy: { url: findyLogin.getUrl(req) } } : {}),
       },
       creds: {
-        isb: { url: isbCred.getUrl() },
+        ftn: { url: isbCred.getUrl() },
       },
     };
     return conf;
@@ -45,6 +45,6 @@ export default async (storage, config) => {
     devModeLogin: devLogin.devLogin,
     findyLogin: findyLogin ? findyLogin.findyOIDCCallback : () => {},
     isbGetUrlForEmail: isbCred.getUrlForEmail,
-    isbSendCred: isbCred.isbCallback,
+    isbCallback: isbCred.isbCallback,
   };
 };

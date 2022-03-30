@@ -136,7 +136,7 @@ const SchemaEditor = ({
           {result && (
             <Typography variant="subtitle2">
               {`Successfully saved ${title} with id`}
-              <LedgerLink value={result} txnType={txnType} />
+              <LedgerLink id="schema-id" value={result} txnType={txnType} />
             </Typography>
           )}
           {items.length > 0 && (
@@ -144,7 +144,7 @@ const SchemaEditor = ({
               <ItemsHeader>{title}s created by us:</ItemsHeader>
               {items.map((item, index) => (
                 <ItemContainer key={item} id={`${title}-item-${index}`}>
-                  <LedgerLink value={item} txnType={txnType} />
+                  <LedgerLink id={item} value={item} txnType={txnType} />
                 </ItemContainer>
               ))}
             </div>
