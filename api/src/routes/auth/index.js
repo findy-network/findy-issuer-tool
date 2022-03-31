@@ -44,7 +44,7 @@ export default async (storage, config) => {
     githubLogin: ghLogin.githubLoginIssuer,
     devModeLogin: devLogin.devLogin,
     findyLogin: findyLogin ? findyLogin.findyOIDCCallback : () => {},
-    isbGetUrlForEmail: isbCred.getUrlForEmail,
+    isbGetUrlForEmail: isbCred.getUrlForEmailForRequest,
     isbCallback: isbCred.isbCallback,
   };
 };

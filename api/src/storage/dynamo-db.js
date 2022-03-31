@@ -226,6 +226,11 @@ export default async (config) => {
 
   const getProofRequest = async (id) => getProofRequestObject(id);
 
+  const addFtnConnection = async (id, data) =>
+    putData('ftn-connection', id, data);
+
+  const getFtnConnection = async (id) => getData('ftn-connection', id);
+
   return {
     addOrUpdateUser,
     getUser,
@@ -240,5 +245,7 @@ export default async (config) => {
     getAllEvents,
     getAllConnections,
     getDefaultCred,
+    addFtnConnection,
+    getFtnConnection,
   };
 };

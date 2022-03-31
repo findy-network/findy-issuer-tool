@@ -36,9 +36,6 @@ export default async (storage, config) => {
   const agentClient = await createAgentClient();
   const protocolClient = await createProtocolClient();
 
-  // start listening for status events
-  await listen(agentClient, protocolClient, storage);
-
   const createSchema = async (body) => {
     log.info(`Creating schema ${JSON.stringify(body)}`);
 
@@ -155,11 +152,11 @@ export default async (storage, config) => {
     return true;
   };
 
-  const createPairwiseInvitation = async () => {
-    log.info(`Creating invitation for ${config.ourName}`);
+  const createPairwiseInvitation = async (label = config.ourName) => {
+    log.info(`Creating invitation for ${label}`);
 
     const msg = new agencyv1.InvitationBase();
-    msg.setLabel(config.ourName);
+    msg.setLabel(label);
 
     const res = await agentClient.createInvitation(msg);
 
@@ -167,6 +164,11 @@ export default async (storage, config) => {
       url: res.getUrl(),
       raw: res.getJson(),
     };
+  };
+
+  const startListening = async (ftnService) => {
+    // start listening for status events
+    return listen(agentClient, protocolClient, storage, ftnService);
   };
 
   return {
@@ -177,5 +179,6 @@ export default async (storage, config) => {
     pairwiseSendProofRequest,
     pairwiseSendCredential,
     createPairwiseInvitation,
+    startListening,
   };
 };

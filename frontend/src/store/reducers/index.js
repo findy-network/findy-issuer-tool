@@ -27,6 +27,8 @@ import {
   SEND_PROOF_REQUEST_REJECTED,
   FETCH_CONFIG_FULFILLED,
   FETCH_URL_FULFILLED,
+  FETCH_FTN_INVITATION_FULFILLED,
+  FETCH_FTN_STATUS_FULFILLED,
 } from '../actions';
 import initialState from './initial-state';
 
@@ -35,7 +37,7 @@ export const user = (state = initialState.user, action) => {
     case SET_TOKEN:
       return null;
     case FETCH_USER_FULFILLED:
-      return action.payload;
+      return action.payload || {};
     default:
       return state;
   }
@@ -156,6 +158,22 @@ export const events = (state = initialState.events, action) => {
   }
 };
 
+export const ftn = (state = initialState.ftn, action) => {
+  switch (action.type) {
+    case FETCH_FTN_INVITATION_FULFILLED: {
+      return { ...state, invitation: action.payload };
+    }
+    case FETCH_FTN_STATUS_FULFILLED: {
+      return {
+        ...state,
+        status: action.payload.status,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
@@ -167,4 +185,5 @@ export default (history) =>
     result,
     events,
     alert,
+    ftn,
   });

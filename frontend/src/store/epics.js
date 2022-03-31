@@ -1,6 +1,13 @@
-import { of } from 'rxjs';
+import { of, pipe } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { map, mergeMap, switchMap, catchError, filter } from 'rxjs/operators';
+import {
+  map,
+  mergeMap,
+  switchMap,
+  catchError,
+  filter,
+  delay,
+} from 'rxjs/operators';
 import { combineEpics, ofType } from 'redux-observable';
 import { LOCATION_CHANGE, replace } from 'connected-react-router';
 
@@ -49,6 +56,13 @@ import {
   fetchUrlRejected,
   fetchCredentialFulfilled,
   fetchCredentialRejected,
+  FETCH_FTN_INVITATION,
+  fetchFtnInvitationFulfilled,
+  fetchFtnInvitationRejected,
+  FETCH_FTN_STATUS,
+  fetchFtnStatusFulfilled,
+  fetchFtnStatusRejected,
+  fetchFtnStatus,
 } from './actions';
 
 const post = (state$, path, payload) =>
@@ -205,6 +219,22 @@ const createEpic =
       )
     );
 
+const fetchFtnStatusEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(FETCH_FTN_STATUS),
+    delay(3000),
+    mergeMap(({ payload }) =>
+      get(state$, `/ftn/status?id=${payload.id}`).pipe(
+        map(({ response }) =>
+          response.status === 'ready'
+            ? fetchFtnStatusFulfilled(response)
+            : fetchFtnStatus({ id: payload.id })
+        ),
+        catchError((error) => of(fetchFtnStatusRejected(error.xhr.response)))
+      )
+    )
+  );
+
 export default combineEpics(
   initUserFetchEpic,
   initConfigFetchEpic,
@@ -280,5 +310,14 @@ export default combineEpics(
     () => {},
     fetchUrlFulfilled,
     fetchUrlRejected
-  )
+  ),
+  createEpic(
+    FETCH_FTN_INVITATION,
+    get,
+    () => `/ftn/start`,
+    () => {},
+    fetchFtnInvitationFulfilled,
+    fetchFtnInvitationRejected
+  ),
+  fetchFtnStatusEpic
 );

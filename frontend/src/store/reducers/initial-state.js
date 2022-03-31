@@ -19,6 +19,11 @@ export default {
   },
   connections: null,
   alert: {
-    description: 'plaa',
+    description: '',
+  },
+  ftn: {
+    invitation: null,
+    status: null,
+    url: null,
   },
 };

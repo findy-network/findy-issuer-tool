@@ -1,21 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import LoginCredential from '../components/login-credential';
+import LoginCredentialComponent from '../components/login-credential';
+import { fetchFtnInvitation, fetchFtnStatus } from '../store/actions';
 
-const Login = ({ config }) => <LoginCredential />;
+const LoginCredential = ({
+  status,
+  invitation,
+  doFetchFtnInvitation,
+  doFetchFtnStatus,
+}) => {
+  const [invitationFetched, setIinvitationFetched] = useState(false);
+  const [pollingStatus, setPollingStatus] = useState(false);
+  useEffect(() => {
+    if (!invitationFetched) {
+      doFetchFtnInvitation();
+      setIinvitationFetched(true);
+    }
+    if (invitation && !pollingStatus) {
+      doFetchFtnStatus({ id: invitation.id });
+      setPollingStatus(true);
+    }
+  });
 
-const mapStateToProps = ({ config }) => ({
-  config,
+  return <LoginCredentialComponent invitation={invitation} status={status} />;
+};
+
+const mapStateToProps = ({ ftn }) => ({
+  invitation: ftn.invitation,
+  status: ftn.status,
 });
 
-Login.propTypes = {
-  config: PropTypes.object,
+const mapDispatchToProps = (dispatch) => ({
+  doFetchFtnInvitation: () => dispatch(fetchFtnInvitation()),
+  doFetchFtnStatus: (payload) => dispatch(fetchFtnStatus(payload)),
+});
+
+LoginCredential.propTypes = {
+  invitation: PropTypes.object,
+  status: PropTypes.string,
+  doFetchFtnInvitation: PropTypes.func.isRequired,
+  doFetchFtnStatus: PropTypes.func.isRequired,
 };
 
-Login.defaultProps = {
-  config: {},
+LoginCredential.defaultProps = {
+  invitation: null,
+  status: null,
 };
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginCredential);

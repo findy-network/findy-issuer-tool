@@ -44,6 +44,7 @@ const App = ({ user, activePath }) => (
         ) : (
           <Switch>
             <Route exact path="/login-credential" component={LoginCredential} />
+            <Route exact path="/" component={Login} />
             <Route component={Login} />
           </Switch>
         )}
