@@ -29,6 +29,7 @@ import {
   FETCH_URL_FULFILLED,
   FETCH_FTN_INVITATION_FULFILLED,
   FETCH_FTN_STATUS_FULFILLED,
+  FETCH_FTN_STATUS,
 } from '../actions';
 import initialState from './initial-state';
 
@@ -167,6 +168,12 @@ export const ftn = (state = initialState.ftn, action) => {
       return {
         ...state,
         status: action.payload.status,
+      };
+    }
+    case FETCH_FTN_STATUS: {
+      return {
+        ...state,
+        status: action.payload.status || state.status,
       };
     }
     default:

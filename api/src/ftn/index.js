@@ -38,7 +38,7 @@ export default async (storage, agent, config) => {
             connectionId: id,
             msg: `Start authentication by opening the following link in your browser: ${config.ourHost}/ftn/auth?id=${id}`,
           },
-          200,
+          500,
         ),
       );
       return true;
@@ -86,7 +86,7 @@ export default async (storage, agent, config) => {
       log.info(`Connection ${id} FTN credential ready`);
       await storage.addFtnConnection(id, {
         ...connection,
-        status: 'ready',
+        status: ok ? 'ready_ok' : 'ready_fail',
         result: ok,
       });
       const msg = ok

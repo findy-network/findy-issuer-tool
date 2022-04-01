@@ -1,4 +1,4 @@
-import { of, pipe } from 'rxjs';
+import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
   map,
@@ -138,6 +138,27 @@ const initAlertEpic = (action$, state$) =>
     })
   );
 
+const initFtnEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(LOCATION_CHANGE),
+    filter(() => {
+      const query = getQueryParams(state$);
+      if (
+        state$.value.router.location.pathname.startsWith('/login-credential') &&
+        query
+      ) {
+        return query && query.get('ftn_cred_ready');
+      }
+      return false;
+    }),
+    switchMap(() => {
+      const sent = getQueryParams(state$).get('ftn_cred_ready');
+      return sent === 'true'
+        ? of(fetchFtnStatusFulfilled({ status: 'done_ok' }))
+        : of(fetchFtnStatusFulfilled({ status: 'done_fail' }));
+    })
+  );
+
 const fetchLedgerEpic = (action$, state$) =>
   action$.pipe(
     ofType(FETCH_LEDGER, SAVE_SCHEMA_FULFILLED, SAVE_CRED_DEF_FULFILLED),
@@ -226,9 +247,9 @@ const fetchFtnStatusEpic = (action$, state$) =>
     mergeMap(({ payload }) =>
       get(state$, `/ftn/status?id=${payload.id}`).pipe(
         map(({ response }) =>
-          response.status === 'ready'
+          response.status.startsWith('ready')
             ? fetchFtnStatusFulfilled(response)
-            : fetchFtnStatus({ id: payload.id })
+            : fetchFtnStatus({ id: payload.id, status: response.status })
         ),
         catchError((error) => of(fetchFtnStatusRejected(error.xhr.response)))
       )
@@ -319,5 +340,6 @@ export default combineEpics(
     fetchFtnInvitationFulfilled,
     fetchFtnInvitationRejected
   ),
-  fetchFtnStatusEpic
+  fetchFtnStatusEpic,
+  initFtnEpic
 );

@@ -32,42 +32,76 @@ const QRCode = styled(QRCodeComponent)`
   min-height: 200px;
 `;
 
-const Login = ({ invitation, status }) => (
-  <div>
-    <Container>
-      {status === 'ready' ? (
-        <div>READY</div>
-      ) : (
-        <>
-          <Paragraph variant="h3">FTN Credential Service</Paragraph>
+const Login = ({ invitation, status }) => {
+  const statusComponent = () => {
+    switch (status) {
+      case 'connected':
+      case 'issue':
+        return (
           <Paragraph>
-            You can acquire FTN (Finnish Trust Network) credential to your SSI
-            wallet using this service.
+            Open your SSI wallet to complete the authentication and saving of
+            the FTN credential.
           </Paragraph>
-          <Paragraph>
-            To start, please read the QR code below with your{' '}
-            <a href={walletURL} target="_blank" rel="noopener noreferrer">
-              SSI wallet
-            </a>
-            .
-          </Paragraph>
-          {invitation && invitation.url && (
-            <>
-              <QRCode value={invitation.url} size={256} renderAs="svg" />
+        );
+      case 'ready_ok':
+        return (
+          <>
+            <Paragraph>Authentication succeeded.</Paragraph>
+            <Paragraph> You can now close this window.</Paragraph>
+          </>
+        );
+      case 'done_ok':
+        return (
+          <>
+            <Paragraph>Credential sending succeeded.</Paragraph>
+            <Paragraph> You can now close this window.</Paragraph>
+          </>
+        );
+      default:
+        break;
+    }
+    return (
+      <Paragraph>Something went wrong... Please contact support.</Paragraph>
+    );
+  };
 
-              <details>
-                <summary>
-                  <Typography variant="caption">Show as text</Typography>
-                </summary>
-                <Paragraph variant="body2">{invitation.url}</Paragraph>
-              </details>
-            </>
-          )}
-        </>
-      )}
-    </Container>
-  </div>
-);
+  return (
+    <div>
+      <Container>
+        <Paragraph variant="h3">FTN Credential Service</Paragraph>
+        {!status || status === 'initialized' ? (
+          <>
+            <Paragraph>
+              You can acquire FTN (Finnish Trust Network) credential to your SSI
+              wallet using this service.
+            </Paragraph>
+            <Paragraph>
+              To start, please read the QR code below with your{' '}
+              <a href={walletURL} target="_blank" rel="noopener noreferrer">
+                SSI wallet
+              </a>
+              .
+            </Paragraph>
+            {invitation && invitation.url && (
+              <>
+                <QRCode value={invitation.url} size={256} renderAs="svg" />
+
+                <details>
+                  <summary>
+                    <Typography variant="caption">Show as text</Typography>
+                  </summary>
+                  <Paragraph variant="body2">{invitation.url}</Paragraph>
+                </details>
+              </>
+            )}
+          </>
+        ) : (
+          <div>{statusComponent()}</div>
+        )}
+      </Container>
+    </div>
+  );
+};
 
 Login.propTypes = {
   invitation: PropTypes.object,
