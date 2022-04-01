@@ -68,7 +68,7 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.16.7",
     "babel-core": "7.0.0-bridge.0",
-    "babel-loader": "^8.2.3",
+    "babel-loader": "^8.2.4",
     "babel-plugin-styled-components": "^2.0.6",
     "config": "^3.3.6",
     "eslint": "^8.12.0",
