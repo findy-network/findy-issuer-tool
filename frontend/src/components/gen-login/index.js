@@ -12,7 +12,11 @@ export const LoginButton = styled(Button)`
   min-height: 3.5rem;
 `;
 
-const Login = ({ url, label }) => (
+export const Help = styled.span`
+  text-align: right;
+`;
+
+const Login = ({ url, label, helpComponent }) => (
   <Container maxWidth="sm">
     <a href={url}>
       <LoginButton
@@ -25,16 +29,19 @@ const Login = ({ url, label }) => (
         {label}
       </LoginButton>
     </a>
+    <Help>{helpComponent && helpComponent}</Help>
   </Container>
 );
 
 Login.propTypes = {
   url: PropTypes.string,
   label: PropTypes.string.isRequired,
+  helpComponent: PropTypes.node,
 };
 
 Login.defaultProps = {
   url: '',
+  helpComponent: null,
 };
 
 export default Login;

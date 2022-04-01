@@ -2,14 +2,17 @@ import { agencyv1 } from '@findy-network/findy-common-ts';
 
 import log from '../log';
 
-export default async (agentClient, protocolClient, storage) => {
+export default async (agentClient, protocolClient, storage, ftnService) => {
   const handlePairwise = async (status) => {
     const notification = status.agent.getNotification();
     const protocolStatus = status.protocol;
     const state = protocolStatus.getState().getState();
     if (
       notification.getTypeid() !== agencyv1.Notification.Type.STATUS_UPDATE ||
-      state !== agencyv1.ProtocolState.State.OK
+      state !== agencyv1.ProtocolState.State.OK ||
+      (await ftnService.handleNewConnection(
+        protocolStatus.getDidExchange().getId(),
+      ))
     ) {
       return;
     }
@@ -88,6 +91,26 @@ export default async (agentClient, protocolClient, storage) => {
     }
   };
 
+  const handleCredential = async (status) => {
+    const notification = status.agent.getNotification();
+    const protocolStatus = status.protocol;
+    const state = protocolStatus.getState().getState();
+    if (notification.getTypeid() !== agencyv1.Notification.Type.STATUS_UPDATE) {
+      return;
+    }
+    if (
+      await ftnService.handleCredential(
+        notification.getConnectionid(),
+        state === agencyv1.ProtocolState.State.OK,
+      )
+    ) {
+      return;
+    }
+    log.debug(
+      `Credential ready for connection ${notification.getConnectionid()}`,
+    );
+  };
+
   const getValueName = (obj, code) =>
     Object.keys(obj).find((item) => obj[item] === code);
 
@@ -121,6 +144,9 @@ export default async (agentClient, protocolClient, storage) => {
           break;
         case agencyv1.Protocol.Type.PRESENT_PROOF:
           await handleProof(status);
+          break;
+        case agencyv1.Protocol.Type.ISSUE_CREDENTIAL:
+          await handleCredential(status);
           break;
         default:
           break;

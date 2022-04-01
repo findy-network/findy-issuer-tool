@@ -9,7 +9,14 @@ import log from '../../log';
 // Sample implementation for credential generation from OIDC based authentication
 // Note: this is a PoC, not production ready
 // implementation is missing security considerations like error handling
-export default async (addOrUpdateUser, config) => {
+export default async (
+  addOrUpdateUser,
+  config,
+  finalStep = (res, ok) =>
+    res.redirect(
+      `${config.auth.apps['findy-issuer-app'].redirectUrl}/me?cred_ready=${ok}`,
+    ),
+) => {
   const { clientId } = config.auth.apps['findy-issuer-app'].isb;
   const isbHost = config.auth.apps['findy-issuer-app'].isb.host;
   const urlGenPath = '/creds/isb-url';
@@ -68,6 +75,8 @@ export default async (addOrUpdateUser, config) => {
   await keyStore.add(keys.signingKey, 'pem', { use: 'sig' });
   await keyStore.add(keys.encyptionKey, 'pem', { use: 'enc' });
 
+  const newNonce = () => generators.nonce();
+
   const isbCallback = async (req, res) => {
     const payload = {
       client_id: clientId,
@@ -116,22 +125,16 @@ export default async (addOrUpdateUser, config) => {
     } else {
       log.warn(`Nonce mismatch ${profile.nonce}, ${req.session.nonce}`);
     }
-    return res.redirect(
-      `${config.auth.apps['findy-issuer-app'].redirectUrl}/me?cred_ready=${nonceValid}`,
-    );
+    return finalStep(res, nonceValid);
   };
 
   const getUrl = () => urlGenPath;
 
-  const getUrlForEmail = async (req, res) => {
-    const nonce = generators.nonce();
-    req.session.nonce = nonce;
-    req.session.email = req.user.email;
-    log.info(`Generating ISB auth url to user ${req.user.email}`);
+  const getUrlForEmail = async (nonce, redirectUri = `${ourHost}/auth/isb`) => {
     const content = {
       client_id: clientId,
       response_type: 'code',
-      redirect_uri: `${ourHost}/auth/isb`,
+      redirect_uri: redirectUri,
       nonce,
       scope: 'openid profile personal_identity_code',
     };
@@ -146,13 +149,28 @@ export default async (addOrUpdateUser, config) => {
     );
 
     const request = await client.requestObject(content);
-    res.json({
-      path: urlGenPath,
-      url: client.authorizationUrl({
-        request,
-      }),
+    return client.authorizationUrl({
+      request,
     });
   };
 
-  return { isbCallback, getUrl, getUrlForEmail };
+  const getUrlForEmailForRequest = async (req, res) => {
+    const nonce = newNonce();
+    req.session.nonce = nonce;
+    req.session.email = req.user.email;
+    log.info(`Generating ISB auth url to user ${req.user.email}`);
+
+    return res.json({
+      path: urlGenPath,
+      url: await getUrlForEmail(nonce),
+    });
+  };
+
+  return {
+    isbCallback,
+    getUrl,
+    getUrlForEmail,
+    getUrlForEmailForRequest,
+    newNonce,
+  };
 };

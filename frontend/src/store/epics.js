@@ -1,6 +1,13 @@
 import { of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { map, mergeMap, switchMap, catchError, filter } from 'rxjs/operators';
+import {
+  map,
+  mergeMap,
+  switchMap,
+  catchError,
+  filter,
+  delay,
+} from 'rxjs/operators';
 import { combineEpics, ofType } from 'redux-observable';
 import { LOCATION_CHANGE, replace } from 'connected-react-router';
 
@@ -49,6 +56,13 @@ import {
   fetchUrlRejected,
   fetchCredentialFulfilled,
   fetchCredentialRejected,
+  FETCH_FTN_INVITATION,
+  fetchFtnInvitationFulfilled,
+  fetchFtnInvitationRejected,
+  FETCH_FTN_STATUS,
+  fetchFtnStatusFulfilled,
+  fetchFtnStatusRejected,
+  fetchFtnStatus,
 } from './actions';
 
 const post = (state$, path, payload) =>
@@ -121,6 +135,27 @@ const initAlertEpic = (action$, state$) =>
       return sent === 'true'
         ? of(fetchCredentialFulfilled())
         : of(fetchCredentialRejected());
+    })
+  );
+
+const initFtnEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(LOCATION_CHANGE),
+    filter(() => {
+      const query = getQueryParams(state$);
+      if (
+        state$.value.router.location.pathname.startsWith('/login-credential') &&
+        query
+      ) {
+        return query && query.get('ftn_cred_ready');
+      }
+      return false;
+    }),
+    switchMap(() => {
+      const sent = getQueryParams(state$).get('ftn_cred_ready');
+      return sent === 'true'
+        ? of(fetchFtnStatusFulfilled({ status: 'done_ok' }))
+        : of(fetchFtnStatusFulfilled({ status: 'done_fail' }));
     })
   );
 
@@ -205,6 +240,22 @@ const createEpic =
       )
     );
 
+const fetchFtnStatusEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(FETCH_FTN_STATUS),
+    delay(3000),
+    mergeMap(({ payload }) =>
+      get(state$, `/ftn/status?id=${payload.id}`).pipe(
+        map(({ response }) =>
+          response.status.startsWith('ready')
+            ? fetchFtnStatusFulfilled(response)
+            : fetchFtnStatus({ id: payload.id, status: response.status })
+        ),
+        catchError((error) => of(fetchFtnStatusRejected(error.xhr.response)))
+      )
+    )
+  );
+
 export default combineEpics(
   initUserFetchEpic,
   initConfigFetchEpic,
@@ -280,5 +331,15 @@ export default combineEpics(
     () => {},
     fetchUrlFulfilled,
     fetchUrlRejected
-  )
+  ),
+  createEpic(
+    FETCH_FTN_INVITATION,
+    get,
+    () => `/ftn/start`,
+    () => {},
+    fetchFtnInvitationFulfilled,
+    fetchFtnInvitationRejected
+  ),
+  fetchFtnStatusEpic,
+  initFtnEpic
 );

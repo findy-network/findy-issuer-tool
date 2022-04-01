@@ -11,6 +11,7 @@ import agent from './agent';
 import routes from './routes';
 import storage from './storage';
 import conf from './config';
+import ftn from './ftn';
 
 class Stream {
   // eslint-disable-next-line class-methods-use-this
@@ -48,10 +49,12 @@ const init = async (config) => {
     secret: config.auth.jwtSharedSecret,
     algorithms: ['HS256'],
   }).unless({
-    path: [/\/auth/i],
+    path: [/\/auth/i, /\/ftn/i],
   });
   const appStorage = await storage(config);
   const appAgent = await agent(appStorage, config);
+  const ftnService = await ftn(appStorage, appAgent, config);
+  await appAgent.startListening(ftnService);
 
   const ledgerHasDefault =
     config.skipDefaultCredDefs ||
@@ -102,7 +105,7 @@ const init = async (config) => {
   }
 
   const app = express();
-  const appRoutes = await routes(appStorage, appAgent, config);
+  const appRoutes = await routes(appStorage, appAgent, config, ftnService);
 
   const { port } = config;
 
@@ -136,6 +139,11 @@ const init = async (config) => {
   app.get('/auth/callback/findy-issuer-app', appRoutes.githubLogin);
   app.get('/auth/isb', appRoutes.isbCallback);
   app.get('/auth/findy', appRoutes.findyLogin);
+
+  app.get('/ftn/start', appRoutes.ftnStart);
+  app.get('/ftn/status', appRoutes.ftnStatus);
+  app.get('/ftn/auth', appRoutes.ftnAuth);
+  app.get('/ftn/callback', appRoutes.ftnCallback);
 
   app.get('/user', async (req, res) => {
     const user = await appStorage.getUser(req.user.email);

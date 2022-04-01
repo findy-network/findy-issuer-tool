@@ -254,3 +254,45 @@ export const fetchConfigFulfilled = (payload) => ({
   type: FETCH_CONFIG_FULFILLED,
   payload,
 });
+
+export const FETCH_FTN_INVITATION = 'FETCH_FTN_INVITATION';
+
+export const fetchFtnInvitation = (payload) => ({
+  type: FETCH_FTN_INVITATION,
+  payload,
+});
+
+export const FETCH_FTN_INVITATION_FULFILLED = 'FETCH_FTN_INVITATION_FULFILLED';
+
+export const fetchFtnInvitationFulfilled = (payload) => ({
+  type: FETCH_FTN_INVITATION_FULFILLED,
+  payload,
+});
+
+export const FETCH_FTN_INVITATION_REJECTED = 'FETCH_FTN_INVITATION_REJECTED';
+
+export const fetchFtnInvitationRejected = (payload) => ({
+  type: FETCH_FTN_INVITATION_REJECTED,
+  payload,
+});
+
+export const FETCH_FTN_STATUS = 'FETCH_FTN_STATUS';
+
+export const fetchFtnStatus = (payload) => ({
+  type: FETCH_FTN_STATUS,
+  payload,
+});
+
+export const FETCH_FTN_STATUS_FULFILLED = 'FETCH_FTN_STATUS_FULFILLED';
+
+export const fetchFtnStatusFulfilled = (payload) => ({
+  type: FETCH_FTN_STATUS_FULFILLED,
+  payload,
+});
+
+export const FETCH_FTN_STATUS_REJECTED = 'FETCH_FTN_STATUS_REJECTED';
+
+export const fetchFtnStatusRejected = (payload) => ({
+  type: FETCH_FTN_STATUS_REJECTED,
+  payload,
+});
