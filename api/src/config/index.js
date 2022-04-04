@@ -16,6 +16,7 @@ export default async () => {
           .promise();
         const secrets = JSON.parse(res.SecretString);
         configFromAWS.ourHost = secrets['our-host'];
+        configFromAWS.defaultWalletUrl = secrets['default-wallet-url'];
         configFromAWS.storage = {
           host: secrets['storage-host'],
           region: secrets['storage-region'],

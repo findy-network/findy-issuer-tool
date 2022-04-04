@@ -90,7 +90,7 @@ export default async (storage, agent, config) => {
         result: ok,
       });
       const msg = ok
-        ? 'Credential sent successfully.'
+        ? 'Credential saved successfully. You can now use your FTN credential for compatible services.'
         : 'Credential sending failed.';
       await agent.pairwiseSendMessage({
         connectionId: id,
@@ -99,7 +99,7 @@ export default async (storage, agent, config) => {
 
       return true;
     }
-    log.error(`Connection ${id} not found for FTN credential`);
+    log.info(`Connection ${id} not found for FTN credential`);
     return false;
   };
   return {

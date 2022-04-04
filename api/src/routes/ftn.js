@@ -4,7 +4,9 @@ import isb from './auth/isb';
 export default async (ftnService, config) => {
   const isbAuth = await isb(ftnService.authReady, config, (res, ok) =>
     res.redirect(
-      `${config.auth.apps['findy-issuer-app'].redirectUrl}/login-credential?ftn_cred_ready=${ok}`,
+      config.defaultWalletUrl
+        ? `${config.defaultWalletUrl}/connections`
+        : `${config.auth.apps['findy-issuer-app'].redirectUrl}/login-credential?ftn_cred_ready=${ok}`,
     ),
   );
 
