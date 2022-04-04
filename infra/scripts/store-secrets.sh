@@ -67,6 +67,7 @@ fi
 
 params=(
   "\"our-host\":\"$ISSUER_TOOL_OUR_HOST\""
+  "\"default-wallet-url\":\"$ISSUER_TOOL_DEFAULT_WALLET_URL\""
   "\"storage-host\":\"$ISSUER_TOOL_STORAGE_HOST\""
   "\"storage-region\":\"$ISSUER_TOOL_STORAGE_REGION\""
   "\"github-username\":\"$ISSUER_TOOL_GITHUB_USERNAME\""
