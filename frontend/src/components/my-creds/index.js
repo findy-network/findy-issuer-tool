@@ -43,7 +43,6 @@ const MyCreds = (props) => {
             connections={connections}
             title="Send GitHub credential"
             description="Send GitHub credential to pairwise connection"
-            contentHidden
           >
             <ButtonContainer>
               <Button

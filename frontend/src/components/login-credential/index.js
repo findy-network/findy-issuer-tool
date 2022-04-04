@@ -39,8 +39,8 @@ const Login = ({ invitation, status }) => {
       case 'issue':
         return (
           <Paragraph>
-            Open your SSI wallet to complete the authentication and saving of
-            the FTN credential.
+            Use your SSI wallet to complete the authentication and saving of the
+            FTN credential.
           </Paragraph>
         );
       case 'ready_ok':

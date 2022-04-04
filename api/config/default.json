@@ -4,6 +4,7 @@
   "ourName": "issuer-tool",
   "devMode": true,
   "skipDefaultCredDefs": false,
+  "defaultWalletUrl": "http://localhost:3000",
   "storage": {
     "type": "DYNAMODB",
     "host": "http://localhost:8000",
@@ -25,7 +26,7 @@
         "findy": {
           "clientId": "issuer-tool-local",
           "clientSecret": "superSecretKeyLol",
-          "host": "http://localhost:3000"
+          "host": "http://localhost:3005"
         },
         "redirectUrl": "http://localhost:8081"
       }

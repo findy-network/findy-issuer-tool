@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 
 import LoginComponent from '../gen-login';
@@ -29,9 +28,13 @@ const Login = ({ config }) => (
           url={config.findy.url}
           label="Login via credential"
           helpComponent={
-            <Link to="/login-credential">
+            <a
+              href="/login-credential"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Typography>No credential yet?</Typography>
-            </Link>
+            </a>
           }
         />
       )}
