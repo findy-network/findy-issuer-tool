@@ -68,6 +68,7 @@ new IssuerToolInfraStack(app, process.env.ISSUER_TOOL_APP_NAME, {
     "/create/*",
     "/pairwise/*",
     "/creds/*",
+    "/ftn/*",
   ],
   ecrURL,
   tokenName,
