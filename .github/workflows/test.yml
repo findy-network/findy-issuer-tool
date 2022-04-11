@@ -74,7 +74,11 @@ jobs:
           scope: "@findy-network"
 
       - name: install deps
-        run: npm ci
+        run: |
+          npm ci
+          full_version=$(google-chrome --product-version)
+          chrome_version=$(echo "${full_version%.*.*.*}")
+          npm install chromedriver@$chrome_version
 
       - name: install cli
         run: |
