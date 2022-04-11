@@ -4,6 +4,8 @@ export default async (storage, agent, config) => {
   const credDefId = (await storage.getLedger()).credDefs.find(
     (item) => item.toLowerCase().indexOf('ftn') !== -1,
   );
+  log.info(`FTN credDefId: ${credDefId}`);
+
   const start = async () => {
     const invitation = await agent.createPairwiseInvitation('FTN service');
     const id = JSON.parse(invitation.raw)['@id'];
