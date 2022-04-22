@@ -35,13 +35,13 @@ if (!process.env.ISSUER_TOOL_WALLET_DOMAIN_NAME) {
   console.log("WARNING: ISSUER_TOOL_WALLET_DOMAIN_NAME not configured");
 }
 
-["./.secrets/server.crt"].map((item) => {
+/*["./.secrets/server.crt"].map((item) => {
   if (!existsSync(item)) {
     console.log(`${item} missing`);
     process.exit(1);
   }
 });
-
+*/
 const app = new cdk.App();
 const domainRoot = `${process.env.ISSUER_TOOL_DOMAIN_ROOT}`;
 const domainName = `${process.env.ISSUER_TOOL_SUBDOMAIN}.${domainRoot}`;
