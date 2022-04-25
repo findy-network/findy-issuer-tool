@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY .npmrc ./
 
-RUN npm ci --legacy-peer-deps
+RUN npm ci
 
 COPY . .
 
@@ -27,7 +27,7 @@ ENV NODE_ENV production
 ENV FINDY_CTS_LOG_LEVEL debug
 ENV ISSUER_TOOL_SERVER_CERT_PATH ${ISSUER_TOOL_SERVER_CERT_PATH}
 
-RUN npm ci --only=production --legacy-peer-deps
+RUN npm ci --only=production
 
 RUN rm .npmrc
 

@@ -96,7 +96,7 @@ jobs:
         run: |
           cd api
           npm run db
-          npm ci --legacy-peer-deps
+          npm ci
           mkdir -p ../tests_output
           nohup npm start > /dev/null 2>../tests_output/backend.log &
         env:
