@@ -1,8 +1,8 @@
 name: release
 on:
   push:
-    tags:
-      - "*"
+    # tags:
+    #   - "*"
 jobs:
   push-image:
     runs-on: ubuntu-latest
@@ -31,28 +31,29 @@ jobs:
 
       - uses: docker/build-push-action@v2
         with:
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/findy-issuer-tool:${{ env.version }}
             ghcr.io/${{ github.repository_owner }}/findy-issuer-tool:latest
           cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/findy-issuer-tool:latest
           cache-to: type=inline
-          file: ./api/Dockerfile
+          context: ./api
+          file: ./Dockerfile
           build-args: |
             GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
             ISSUER_TOOL_SERVER_CERT_PATH=
 
-  merge:
-    needs: push-image
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          ref: master
-      - name: merge
-        run: |
-          git fetch --tags origin
-          git merge $GITHUB_REF
-          git push origin master
+  # merge:
+  #   needs: push-image
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: checkout
+  #       uses: actions/checkout@v2
+  #       with:
+  #         ref: master
+  #     - name: merge
+  #       run: |
+  #         git fetch --tags origin
+  #         git merge $GITHUB_REF
+  #         git push origin master
