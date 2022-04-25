@@ -100,10 +100,7 @@ export class IssuerToolPipelineStack extends cdk.Stack {
             version: "0.2",
             phases: {
               build: {
-                commands: [
-                  'echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN\n@findy-network:registry=https://npm.pkg.github.com" > ./api/.npmrc',
-                  "./infra/scripts/push-to-ecr.sh",
-                ],
+                commands: ["./infra/scripts/push-to-ecr.sh"],
               },
             },
           }),
@@ -139,7 +136,7 @@ export class IssuerToolPipelineStack extends cdk.Stack {
           projectName: `${projectName}-front`,
           environment: {
             buildImage: LinuxBuildImage.fromDockerRegistry(
-              "node:16.13.2-alpine3.15"
+              "node:16.14.2-alpine3.15"
             ),
           },
           buildSpec: BuildSpec.fromObject({
