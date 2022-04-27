@@ -11,6 +11,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v2
+      - name: download test keys
+        run: cd api/tools/isb && ./download-keys.sh
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
