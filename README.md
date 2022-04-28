@@ -71,6 +71,7 @@ App authenticates to [agency](https://github.com/findy-network/findy-agent) usin
       - the key value is your agency authenticator master key and should be kept secret in production environment.
       - the auth origin is usually needed only in development setup where wallet app and authentication service resides in different domains
       - more info for GRPC errors can be revealed setting following env variables:
+
         ```shell
         export GRPC_VERBOSITY=debug
         export GRPC_TRACE=all
@@ -92,6 +93,7 @@ App authenticates to [agency](https://github.com/findy-network/findy-agent) usin
    1. Open new terminal
 
    1. Run
+
       ```sh
       cd frontend
       npm install
@@ -102,7 +104,7 @@ App authenticates to [agency](https://github.com/findy-network/findy-agent) usin
 
 ### Login
 
-1. Open browser at http://localhost:8081
+1. Open browser at <http://localhost:8081>
 1. Login using "Dev login"-button. Optionally you can configure [GitHub login](./api/README.md#github_authentication)
 
 ### Create schema and credential definition
@@ -137,12 +139,26 @@ App authenticates to [agency](https://github.com/findy-network/findy-agent) usin
 
 1. Issue credential
 
-   Select connection and credential definition, define attributes and click send. Accept credential in wallet application.
+   Select connection and credential definition, define attributes and click send.
+   Accept credential in wallet application.
 
    ![Make connection](./docs/usage-05.gif)
 
 1. Verify credential
 
-   Select connection and credential definition, define attributes and click send. Accept proof request in wallet application. Proof succeeds if the credential values sent from the wallet match the proof attributes you defined when sending the request.
+   Select connection and credential definition, define attributes and click send.
+   Accept proof request in wallet application. Proof succeeds if the credential
+   values sent from the wallet match the proof attributes you defined when sending
+   the request.
 
    ![Make connection](./docs/usage-06.gif)
+
+## Authentication
+
+In development mode you can login using "Dev login"-button.
+Optionally you can configure [GitHub login](./api/README.md#github_authentication)
+The app also showcases how to login using verified credentials.
+For this approach to work, you need to setup and configure
+[findy-oidc-provider](https://github.com/findy-network/findy-oidc-provider) installation.
+See [the docs](https://github.com/findy-network/findy-issuer-tool/blob/master/api/README.md#ftn-credential-flow)
+for acquiring the login credential.
