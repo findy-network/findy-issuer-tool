@@ -89,7 +89,7 @@ export class InfraPipelineStack extends cdk.Stack {
           },
         },
         commands: [
-          "cd infra-2",
+          "cd infra",
           `echo "$CDK_CONTEXT_JSON" > cdk.context.json`,
           "cat cdk.context.json",
           "npm ci",
@@ -105,7 +105,7 @@ export class InfraPipelineStack extends cdk.Stack {
             ],
           }),
         ],
-        primaryOutputDirectory: "infra-2/cdk.out",
+        primaryOutputDirectory: "infra/cdk.out",
       }),
       codeBuildDefaults: {
         buildEnvironment: {

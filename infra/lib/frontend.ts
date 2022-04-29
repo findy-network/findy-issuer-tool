@@ -1,51 +1,44 @@
-import * as cdk from "@aws-cdk/core";
+import { RemovalPolicy, Duration } from "aws-cdk-lib";
+import { Bucket, BlockPublicAccess } from "aws-cdk-lib/aws-s3";
+import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 import {
   OriginAccessIdentity,
   OriginProtocolPolicy,
-} from "@aws-cdk/aws-cloudfront";
-import { Bucket, BlockPublicAccess, IBucket } from "@aws-cdk/aws-s3";
-import { PolicyStatement } from "@aws-cdk/aws-iam";
-import { DnsValidatedCertificate } from "@aws-cdk/aws-certificatemanager";
-import {
   CloudFrontWebDistribution,
   SSLMethod,
   SecurityPolicyProtocol,
   CloudFrontAllowedMethods,
-} from "@aws-cdk/aws-cloudfront";
-import { ARecord, RecordTarget } from "@aws-cdk/aws-route53";
-import { CloudFrontTarget } from "@aws-cdk/aws-route53-targets/lib";
-import { IHostedZone } from "@aws-cdk/aws-route53";
+} from "aws-cdk-lib/aws-cloudfront";
+import { DnsValidatedCertificate } from "aws-cdk-lib/aws-certificatemanager";
+import { ARecord, RecordTarget, HostedZone } from "aws-cdk-lib/aws-route53";
+import { CloudFrontTarget } from "aws-cdk-lib/aws-route53-targets";
+import { Construct } from "constructs";
 
-export interface IssuerToolFrontendStackProps extends cdk.StackProps {
-  bucketName: string;
-  prod: boolean;
-  domainName: string;
-  apiDomain: string;
+interface FrontendProps {
+  rootDomainName: string;
+  appDomainPrefix: string;
+  backendUrl: string;
   apiPaths: string[];
 }
 
-export class IssuerToolFrontendStack extends cdk.Stack {
-  public readonly bucket: IBucket;
-  constructor(
-    scope: cdk.Construct,
-    id: string,
-    zone: IHostedZone,
-    props: IssuerToolFrontendStackProps
-  ) {
-    super(scope, `${id}-frontend`, props);
+export class Frontend extends Construct {
+  constructor(scope: Construct, id: string, props: FrontendProps) {
+    super(scope, id);
 
-    const { bucketName, prod } = props;
+    const { rootDomainName: domainName, appDomainPrefix: subDomainName } =
+      props;
+    const bucketName = `${subDomainName}.${domainName}`;
 
+    // Create S3 bucket for frontend deployment
     const bucket = new Bucket(this, `${id}-bucket`, {
       bucketName: bucketName,
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
-      removalPolicy: prod
-        ? cdk.RemovalPolicy.RETAIN
-        : cdk.RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.DESTROY,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
     });
 
+    // Allow access only from cloudfront
     const bucketOriginAccessIdentity = new OriginAccessIdentity(
       this,
       `${id}-origin-access-identity`,
@@ -73,7 +66,9 @@ export class IssuerToolFrontendStack extends cdk.Stack {
       originAccessIdentity: bucketOriginAccessIdentity,
     };
 
-    const { domainName, apiDomain, apiPaths } = props!;
+    const zone = HostedZone.fromLookup(this, `${id}-hosted-zone`, {
+      domainName: domainName,
+    });
 
     // To use an ACM certificate with Amazon CloudFront, you must request or import the certificate
     // in the US East (N. Virginia) region. ACM certificates in this region that are associated
@@ -82,21 +77,24 @@ export class IssuerToolFrontendStack extends cdk.Stack {
       this,
       `${id}-certificate`,
       {
-        domainName,
+        domainName: bucketName,
         hostedZone: zone,
         region: "us-east-1",
       }
     ).certificateArn;
 
+    // CloudFront distribution with forward logic to backend
     const distribution = new CloudFrontWebDistribution(
       this,
       `${id}-distribution`,
       {
-        aliasConfiguration: {
-          acmCertRef: certificateArn,
-          names: [domainName],
-          sslMethod: SSLMethod.SNI,
-          securityPolicy: SecurityPolicyProtocol.TLS_V1_2_2019,
+        viewerCertificate: {
+          props: {
+            acmCertificateArn: certificateArn,
+            minimumProtocolVersion: SecurityPolicyProtocol.TLS_V1_2_2021,
+            sslSupportMethod: SSLMethod.SNI,
+          },
+          aliases: [bucketName],
         },
         errorConfigurations: [
           {
@@ -115,20 +113,20 @@ export class IssuerToolFrontendStack extends cdk.Stack {
               },
               {
                 pathPattern: "/index.html",
-                maxTtl: cdk.Duration.seconds(0),
-                minTtl: cdk.Duration.seconds(0),
-                defaultTtl: cdk.Duration.seconds(0),
+                maxTtl: Duration.seconds(0),
+                minTtl: Duration.seconds(0),
+                defaultTtl: Duration.seconds(0),
               },
             ],
           },
           {
             customOriginSource: {
-              domainName: apiDomain,
+              domainName: props.backendUrl,
               originProtocolPolicy: OriginProtocolPolicy.HTTP_ONLY,
-              originReadTimeout: cdk.Duration.seconds(60),
-              originKeepaliveTimeout: cdk.Duration.seconds(60),
+              originReadTimeout: Duration.seconds(60),
+              originKeepaliveTimeout: Duration.seconds(60),
             },
-            behaviors: apiPaths.map((item: string) => ({
+            behaviors: props.apiPaths.map((item: string) => ({
               pathPattern: item,
               allowedMethods: CloudFrontAllowedMethods.ALL,
               forwardedValues: {
@@ -144,11 +142,11 @@ export class IssuerToolFrontendStack extends cdk.Stack {
       }
     );
 
+    // Add CloudFront distribution to domain routing
     new ARecord(this, `${id}-a-record`, {
-      recordName: domainName,
+      recordName: bucketName,
       target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
       zone,
     });
-    this.bucket = bucket;
   }
 }
