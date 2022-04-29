@@ -5,7 +5,7 @@ import {
   CodePipeline,
   CodePipelineSource,
 } from "aws-cdk-lib/pipelines";
-import { aws_codebuild as codebuild } from "aws-cdk-lib";
+import { aws_codebuild as codebuild, aws_logs as logs } from "aws-cdk-lib";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
 import { PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 import { Bucket, BlockPublicAccess } from "aws-cdk-lib/aws-s3";
@@ -122,6 +122,16 @@ export class InfraPipelineStack extends cdk.Stack {
           },
         },
       },
+    });
+
+    // manually adjust logs retention
+    this.node.findAll().forEach((construct, index) => {
+      if (construct instanceof codebuild.Project) {
+        new logs.LogRetention(this, `LogRetention${index}`, {
+          logGroupName: `/aws/codebuild/${construct.projectName}`,
+          retention: logs.RetentionDays.ONE_MONTH,
+        });
+      }
     });
 
     const deploy = new InfraPipelineStage(this, "Deploy", {
