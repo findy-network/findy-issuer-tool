@@ -74,7 +74,7 @@ export class InfraPipelineStack extends cdk.Stack {
       synth: new CodeBuildStep("SynthStep", {
         input: CodePipelineSource.connection(
           "findy-network/findy-issuer-tool",
-          "cdk-v2",
+          "master",
           {
             connectionArn: githubConnectionArn, // Created using the AWS console
           }
