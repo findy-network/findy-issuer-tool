@@ -8,7 +8,7 @@ import {
 import { aws_codebuild as codebuild, aws_logs as logs } from "aws-cdk-lib";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
 import { PolicyStatement, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
-import { Bucket, BlockPublicAccess } from "aws-cdk-lib/aws-s3";
+import { Bucket, BlockPublicAccess, IBucket } from "aws-cdk-lib/aws-s3";
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import { writeFileSync, mkdirSync } from "fs";
 import { execSync } from "child_process";
@@ -31,7 +31,40 @@ export class InfraPipelineStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props);
 
-    // CONFIG
+    // Create configuration bucket for storing EB configuration files
+    const confBucket = this.createConfigBucket(id);
+
+    // Create pipeline
+    const pipeline = this.createPipeline(confBucket);
+
+    // Add app to pipeline
+    const deploy = new InfraPipelineStage(this, "Deploy", {
+      env: props.env,
+    });
+    const deployStage = pipeline.addStage(deploy);
+
+    // Add EB application update step
+    deployStage.addPost(this.createEbUpdateStep(id, deploy));
+
+    // Add frontend build step
+    const frontBuildStep = this.createFrontendBuildStep();
+    deployStage.addPost(frontBuildStep);
+
+    // Add frontend deploy step
+    deployStage.addPost(this.createFrontendDeployStep(frontBuildStep));
+
+    // manually adjust logs retention
+    pipeline.node.findAll().forEach((construct, index) => {
+      if (construct instanceof codebuild.Project) {
+        new logs.LogRetention(this, `LogRetention${index}`, {
+          logGroupName: `/aws/codebuild/${construct.projectName}`,
+          retention: logs.RetentionDays.ONE_MONTH,
+        });
+      }
+    });
+  }
+
+  createConfigBucket(id: string) {
     const filesPath = "./.config";
     const confBucket = new Bucket(this, `${id}-conf-bucket`, {
       bucketName: `${id}-conf-bucket`.toLowerCase(),
@@ -62,8 +95,10 @@ export class InfraPipelineStack extends cdk.Stack {
       sources: [Source.asset(filesPath)],
       destinationBucket: confBucket,
     });
+    return confBucket;
+  }
 
-    // PIPELINE
+  createPipeline(confBucket: IBucket) {
     const githubConnectionArn = StringParameter.valueForStringParameter(
       this,
       "findy-issuer-tool-github-connection-arn"
@@ -124,21 +159,10 @@ export class InfraPipelineStack extends cdk.Stack {
       },
     });
 
-    // manually adjust logs retention
-    this.node.findAll().forEach((construct, index) => {
-      if (construct instanceof codebuild.Project) {
-        new logs.LogRetention(this, `LogRetention${index}`, {
-          logGroupName: `/aws/codebuild/${construct.projectName}`,
-          retention: logs.RetentionDays.ONE_MONTH,
-        });
-      }
-    });
+    return pipeline;
+  }
 
-    const deploy = new InfraPipelineStage(this, "Deploy", {
-      env: props.env,
-    });
-    const deployStage = pipeline.addStage(deploy);
-
+  createEbUpdateStep(id: string, deploy: InfraPipelineStage) {
     const deployRole = new Role(this, `${id}-deploy-role`, {
       assumedBy: new ServicePrincipal("codebuild.amazonaws.com"),
     });
@@ -162,23 +186,23 @@ export class InfraPipelineStack extends cdk.Stack {
     ebPolicy.addResources("*");
     deployRole.addToPolicy(ebPolicy);
 
-    deployStage.addPost(
-      new CodeBuildStep("DeployBackendStep", {
-        projectName: "DeployBackend",
-        commands: [
-          `VERSION="$(./infra/scripts/version.sh ./api)-$(date +%s)"`,
-          `aws elasticbeanstalk create-application-version --application-name $APP_NAME --version-label $VERSION --source-bundle S3Bucket=$CONF_BUCKET_NAME,S3Key=Dockerrun.zip`,
-          `aws elasticbeanstalk update-environment --environment-name $ENV_NAME --version-label $VERSION`,
-        ],
-        envFromCfnOutputs: {
-          APP_NAME: deploy.appName,
-          ENV_NAME: deploy.envName,
-        },
-        role: deployRole,
-      })
-    );
+    return new CodeBuildStep("DeployBackendStep", {
+      projectName: "DeployBackend",
+      commands: [
+        `VERSION="$(./infra/scripts/version.sh ./api)-$(date +%s)"`,
+        `aws elasticbeanstalk create-application-version --application-name $APP_NAME --version-label $VERSION --source-bundle S3Bucket=$CONF_BUCKET_NAME,S3Key=Dockerrun.zip`,
+        `aws elasticbeanstalk update-environment --environment-name $ENV_NAME --version-label $VERSION`,
+      ],
+      envFromCfnOutputs: {
+        APP_NAME: deploy.appName,
+        ENV_NAME: deploy.envName,
+      },
+      role: deployRole,
+    });
+  }
 
-    const frontBuildStep = new CodeBuildStep("BuildFrontendStep", {
+  createFrontendBuildStep() {
+    return new CodeBuildStep("BuildFrontendStep", {
       projectName: "BuildFrontend",
       commands: [
         "apk add bash",
@@ -207,25 +231,23 @@ export class InfraPipelineStack extends cdk.Stack {
       },
       primaryOutputDirectory: "frontend/build",
     });
+  }
 
-    deployStage.addPost(frontBuildStep);
-
-    deployStage.addPost(
-      new CodeBuildStep("DeployFrontendStep", {
-        input: frontBuildStep.primaryOutput,
-        projectName: "DeployFrontend",
-        commands: [
-          `V1=$(curl https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt)`,
-          `V2=$(cat ./version.txt)`,
-          `if [ "$V1" != "$V2" ]; then aws s3 sync --delete . s3://$SUB_DOMAIN_NAME.$DOMAIN_NAME; fi`,
-        ],
-        rolePolicyStatements: [
-          new PolicyStatement({
-            actions: ["s3:Put*", "s3:Delete*", "s3:Get*", "s3:List*"],
-            resources: ["*"],
-          }),
-        ],
-      })
-    );
+  createFrontendDeployStep(frontBuildStep: CodeBuildStep) {
+    return new CodeBuildStep("DeployFrontendStep", {
+      input: frontBuildStep.primaryOutput,
+      projectName: "DeployFrontend",
+      commands: [
+        `V1=$(curl https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt)`,
+        `V2=$(cat ./version.txt)`,
+        `if [ "$V1" != "$V2" ]; then aws s3 sync --delete . s3://$SUB_DOMAIN_NAME.$DOMAIN_NAME; fi`,
+      ],
+      rolePolicyStatements: [
+        new PolicyStatement({
+          actions: ["s3:Put*", "s3:Delete*", "s3:Get*", "s3:List*"],
+          resources: ["*"],
+        }),
+      ],
+    });
   }
 }
