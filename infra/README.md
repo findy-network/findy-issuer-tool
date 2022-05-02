@@ -90,5 +90,5 @@ Note! "<>" indicates example value, and shouldn't be included in values you defi
    cdk deploy
    ```
 
-1. Open pipelines at AWS console and see that pipeline succeeds. Following changes
+1. Open pipelines at AWS console and see that the pipeline succeeds. Following changes
 to the app or infra are deployed automatically by the pipeline.

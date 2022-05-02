@@ -15,6 +15,10 @@ import { execSync } from "child_process";
 
 import { InfraPipelineStage } from "./pipeline-stage";
 
+interface InfraPipelineProperties extends cdk.StackProps {
+  skipConfigCopy?: boolean;
+}
+
 const environmentVariables: Record<string, codebuild.BuildEnvironmentVariable> =
   {
     DOMAIN_NAME: {
@@ -32,11 +36,11 @@ const environmentVariables: Record<string, codebuild.BuildEnvironmentVariable> =
   };
 
 export class InfraPipelineStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: InfraPipelineProperties) {
     super(scope, id, props);
 
     // Create configuration bucket for storing EB configuration files
-    const confBucket = this.createConfigBucket(id);
+    const confBucket = this.createConfigBucket(id, props.skipConfigCopy);
 
     // Create pipeline
     const pipeline = this.createPipeline(confBucket);
@@ -68,7 +72,7 @@ export class InfraPipelineStack extends cdk.Stack {
     });
   }
 
-  createConfigBucket(id: string) {
+  createConfigBucket(id: string, skipCopy: boolean = false) {
     const filesPath = "./.config";
     const confBucket = new Bucket(this, `${id}-conf-bucket`, {
       bucketName: `${id}-conf-bucket`.toLowerCase(),
@@ -95,10 +99,12 @@ export class InfraPipelineStack extends cdk.Stack {
     execSync(`zip -r -j ${filesPath}/Dockerrun.zip ${dockerRunPath}`);
     execSync(`zip -r ${filesPath}/Dockerrun.zip .ebextensions`);
 
-    new BucketDeployment(this, `${id}-bucket-deployment`, {
-      sources: [Source.asset(filesPath)],
-      destinationBucket: confBucket,
-    });
+    if (!skipCopy) {
+      new BucketDeployment(this, `${id}-bucket-deployment`, {
+        sources: [Source.asset(filesPath)],
+        destinationBucket: confBucket,
+      });
+    }
     return confBucket;
   }
 

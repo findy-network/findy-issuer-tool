@@ -9,189 +9,11 @@ Object {
       "Type": "AWS::SSM::Parameter::Value<String>",
     },
     "SsmParameterValuefindyissuertoolgithubconnectionarnC96584B6F00A464EAD1953AFF4B05118Parameter": Object {
-      "Default": "findy-issuer-tool-github-connection-arn",
+      "Default": "/findy-issuer-tool/github-connection-arn",
       "Type": "AWS::SSM::Parameter::Value<String>",
     },
   },
   "Resources": Object {
-    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536": Object {
-      "DependsOn": Array [
-        "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
-        "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": "cdk-hnb659fds-assets-123456789012-us-east-1",
-          "S3Key": "f98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711da.zip",
-        },
-        "Handler": "index.handler",
-        "Layers": Array [
-          Object {
-            "Ref": "MyTestStackbucketdeploymentAwsCliLayer9EE05EC8",
-          },
-        ],
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
-            "Arn",
-          ],
-        },
-        "Runtime": "python3.7",
-        "Timeout": 900,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
-                "s3:GetObject*",
-                "s3:GetBucket*",
-                "s3:List*",
-              ],
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "arn:",
-                      Object {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":s3:::cdk-hnb659fds-assets-123456789012-us-east-1",
-                    ],
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      "arn:",
-                      Object {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":s3:::cdk-hnb659fds-assets-123456789012-us-east-1/*",
-                    ],
-                  ],
-                },
-              ],
-            },
-            Object {
-              "Action": Array [
-                "s3:GetObject*",
-                "s3:GetBucket*",
-                "s3:List*",
-                "s3:DeleteObject*",
-                "s3:PutObject",
-                "s3:PutObjectLegalHold",
-                "s3:PutObjectRetention",
-                "s3:PutObjectTagging",
-                "s3:PutObjectVersionTagging",
-                "s3:Abort*",
-              ],
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "MyTestStackconfbucket3F056BA4",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "MyTestStackconfbucket3F056BA4",
-                          "Arn",
-                        ],
-                      },
-                      "/*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
-        "Roles": Array [
-          Object {
-            "Ref": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "MyTestStackbucketdeploymentAwsCliLayer9EE05EC8": Object {
-      "Properties": Object {
-        "Content": Object {
-          "S3Bucket": "cdk-hnb659fds-assets-123456789012-us-east-1",
-          "S3Key": "92c405c4551a308bcdd55823f8b16268bd3c38fd2a011edaaf3ed72a80f557c4.zip",
-        },
-        "Description": "/opt/awscli/aws",
-      },
-      "Type": "AWS::Lambda::LayerVersion",
-    },
-    "MyTestStackbucketdeploymentCustomResourceA32FA7A3": Object {
-      "DeletionPolicy": "Delete",
-      "Properties": Object {
-        "DestinationBucketName": Object {
-          "Ref": "MyTestStackconfbucket3F056BA4",
-        },
-        "Prune": true,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536",
-            "Arn",
-          ],
-        },
-        "SourceBucketNames": Array [
-          "cdk-hnb659fds-assets-123456789012-us-east-1",
-        ],
-        "SourceObjectKeys": Array [
-          "888722fa23c1011352670c666316a70af368f02c433e7897921f2bf82e06b852.zip",
-        ],
-      },
-      "Type": "Custom::CDKBucketDeployment",
-      "UpdateReplacePolicy": "Delete",
-    },
     "MyTestStackconfbucket3F056BA4": Object {
       "DeletionPolicy": "Delete",
       "Properties": Object {
@@ -202,12 +24,6 @@ Object {
           "IgnorePublicAcls": true,
           "RestrictPublicBuckets": true,
         },
-        "Tags": Array [
-          Object {
-            "Key": "aws-cdk:cr-owned:54d4e8e0",
-            "Value": "true",
-          },
-        ],
       },
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Delete",
@@ -264,7 +80,7 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
@@ -276,7 +92,19 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-sub-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
                     ],
                   ],
                 },
@@ -455,7 +283,7 @@ Object {
                   "Version": "1",
                 },
                 "Configuration": Object {
-                  "EnvironmentVariables": "[{\\"name\\":\\"_PROJECT_CONFIG_HASH\\",\\"type\\":\\"PLAINTEXT\\",\\"value\\":\\"b79a96874268dfb5edb052b5205428d7985b836594902133af87cee558cd59b6\\"}]",
+                  "EnvironmentVariables": "[{\\"name\\":\\"_PROJECT_CONFIG_HASH\\",\\"type\\":\\"PLAINTEXT\\",\\"value\\":\\"23c75891ff0c166e9f8fb953a323d288316933058cf9089775b034cd9a7baffd\\"}]",
                   "ProjectName": Object {
                     "Ref": "PipelineBuildSynthStepCdkBuildProject7FBB5116",
                   },
@@ -492,7 +320,7 @@ Object {
                   "Version": "1",
                 },
                 "Configuration": Object {
-                  "EnvironmentVariables": "[{\\"name\\":\\"_PROJECT_CONFIG_HASH\\",\\"type\\":\\"PLAINTEXT\\",\\"value\\":\\"2a23aaccdc55b8f9216b0c7f46c5f039b299a717d71365e4cc922c403347aaf8\\"}]",
+                  "EnvironmentVariables": "[{\\"name\\":\\"_PROJECT_CONFIG_HASH\\",\\"type\\":\\"PLAINTEXT\\",\\"value\\":\\"14acd4fdbdcea77081957633fe5e486757babea9a34fd8635ca76d3a8b489a9b\\"}]",
                   "ProjectName": Object {
                     "Ref": "PipelineUpdatePipelineSelfMutationDAA41400",
                   },
@@ -841,12 +669,17 @@ Object {
             Object {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-domain-name",
+              "Value": "/findy-issuer-tool/domain-name",
             },
             Object {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-sub-domain-name",
+              "Value": "/findy-issuer-tool/sub-domain-name",
+            },
+            Object {
+              "Name": "WALLET_DOMAIN_NAME",
+              "Type": "PARAMETER_STORE",
+              "Value": "/findy-issuer-tool/wallet-domain-name",
             },
             Object {
               "Name": "CONF_BUCKET_NAME",
@@ -1067,7 +900,7 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
@@ -1079,7 +912,19 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-sub-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
                     ],
                   ],
                 },
@@ -1143,12 +988,17 @@ Object {
             Object {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-domain-name",
+              "Value": "/findy-issuer-tool/domain-name",
             },
             Object {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-sub-domain-name",
+              "Value": "/findy-issuer-tool/sub-domain-name",
+            },
+            Object {
+              "Name": "WALLET_DOMAIN_NAME",
+              "Type": "PARAMETER_STORE",
+              "Value": "/findy-issuer-tool/wallet-domain-name",
             },
             Object {
               "Name": "CONF_BUCKET_NAME",
@@ -1170,7 +1020,7 @@ Object {
             Object {
               "Name": "CDK_CONTEXT_JSON",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-cdk-context",
+              "Value": "/findy-issuer-tool/cdk-context",
             },
           ],
           "Image": "aws/codebuild/standard:5.0",
@@ -1248,7 +1098,7 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
@@ -1260,7 +1110,7 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-sub-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
                     ],
                   ],
                 },
@@ -1272,7 +1122,19 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-cdk-context",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/cdk-context",
                     ],
                   ],
                 },
@@ -1531,12 +1393,17 @@ Object {
             Object {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-domain-name",
+              "Value": "/findy-issuer-tool/domain-name",
             },
             Object {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-sub-domain-name",
+              "Value": "/findy-issuer-tool/sub-domain-name",
+            },
+            Object {
+              "Name": "WALLET_DOMAIN_NAME",
+              "Type": "PARAMETER_STORE",
+              "Value": "/findy-issuer-tool/wallet-domain-name",
             },
             Object {
               "Name": "CONF_BUCKET_NAME",
@@ -1568,7 +1435,7 @@ Object {
             Object {
               "Name": "DEFAULT_WEB_WALLET_URL",
               "Type": "PLAINTEXT",
-              "Value": "https://undefined.undefined/connect/",
+              "Value": "https://undefined/connect/",
             },
           ],
           "Image": "node:16.14.2-alpine3.15",
@@ -1642,7 +1509,7 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
@@ -1654,7 +1521,19 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-sub-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
                     ],
                   ],
                 },
@@ -1792,12 +1671,17 @@ Object {
             Object {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-domain-name",
+              "Value": "/findy-issuer-tool/domain-name",
             },
             Object {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-sub-domain-name",
+              "Value": "/findy-issuer-tool/sub-domain-name",
+            },
+            Object {
+              "Name": "WALLET_DOMAIN_NAME",
+              "Type": "PARAMETER_STORE",
+              "Value": "/findy-issuer-tool/wallet-domain-name",
             },
             Object {
               "Name": "CONF_BUCKET_NAME",
@@ -1921,12 +1805,17 @@ Object {
             Object {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-domain-name",
+              "Value": "/findy-issuer-tool/domain-name",
             },
             Object {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-sub-domain-name",
+              "Value": "/findy-issuer-tool/sub-domain-name",
+            },
+            Object {
+              "Name": "WALLET_DOMAIN_NAME",
+              "Type": "PARAMETER_STORE",
+              "Value": "/findy-issuer-tool/wallet-domain-name",
             },
             Object {
               "Name": "CONF_BUCKET_NAME",
@@ -2067,7 +1956,7 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
@@ -2079,7 +1968,19 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-sub-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
                     ],
                   ],
                 },
@@ -2543,12 +2444,17 @@ Object {
             Object {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-domain-name",
+              "Value": "/findy-issuer-tool/domain-name",
             },
             Object {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
-              "Value": "findy-issuer-tool-sub-domain-name",
+              "Value": "/findy-issuer-tool/sub-domain-name",
+            },
+            Object {
+              "Name": "WALLET_DOMAIN_NAME",
+              "Type": "PARAMETER_STORE",
+              "Value": "/findy-issuer-tool/wallet-domain-name",
             },
             Object {
               "Name": "CONF_BUCKET_NAME",
@@ -2634,7 +2540,7 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
@@ -2646,7 +2552,19 @@ Object {
                       Object {
                         "Ref": "AWS::Partition",
                       },
-                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool-sub-domain-name",
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
+                    ],
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "arn:",
+                      Object {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
                     ],
                   ],
                 },
