@@ -1,46 +1,38 @@
-import * as cdk from "@aws-cdk/core";
-import { IBucket } from "@aws-cdk/aws-s3";
-import { IHostedZone } from "@aws-cdk/aws-route53";
-
+import { Construct } from "constructs";
+import { CfnOutput } from "aws-cdk-lib";
 import {
   CfnApplication,
   CfnApplicationVersion,
   CfnEnvironment,
-} from "@aws-cdk/aws-elasticbeanstalk";
+} from "aws-cdk-lib/aws-elasticbeanstalk";
+import { CfnTable } from "aws-cdk-lib/aws-dynamodb";
+import { Secret } from "aws-cdk-lib/aws-secretsmanager";
 import {
   CfnInstanceProfile,
   Effect,
-  ManagedPolicy,
   PolicyDocument,
   PolicyStatement,
   Role,
   ServicePrincipal,
-} from "@aws-cdk/aws-iam";
-import { CfnTable, Table } from "@aws-cdk/aws-dynamodb";
-import { Secret } from "@aws-cdk/aws-secretsmanager";
+} from "aws-cdk-lib/aws-iam";
 
-export interface IssuerToolBackendStackProps extends cdk.StackProps {
-  prod: boolean;
-  ecrURL: string;
-  bucket: IBucket;
+interface BackendProps {
+  readonly account: string;
 }
 
-export class IssuerToolBackendStack extends cdk.Stack {
-  public readonly envDomain: string;
-  public readonly envName: string;
+export class Backend extends Construct {
   public readonly appName: string;
-  constructor(
-    scope: cdk.Construct,
-    id: string,
-    props: IssuerToolBackendStackProps
-  ) {
-    super(scope, `${id}-backend`, props);
-    const { bucket } = props;
+  public readonly envName: string;
+  public readonly cnamePrefix: string;
 
+  constructor(scope: Construct, id: string, props: BackendProps) {
+    super(scope, id);
+
+    // Elastic Beanstalk application
     const app = new CfnApplication(this, `${id}-app`, {
       applicationName: `${id}-app`,
       resourceLifecycleConfig: {
-        serviceRole: `arn:aws:iam::${this.account}:role/aws-service-role/elasticbeanstalk.amazonaws.com/AWSServiceRoleForElasticBeanstalk`,
+        serviceRole: `arn:aws:iam::${props.account}:role/aws-service-role/elasticbeanstalk.amazonaws.com/AWSServiceRoleForElasticBeanstalk`,
         versionLifecycleConfig: {
           maxAgeRule: {
             enabled: true,
@@ -49,15 +41,18 @@ export class IssuerToolBackendStack extends cdk.Stack {
         },
       },
     });
+
+    // Elastic Beanstalk application version
     const version = new CfnApplicationVersion(this, `${id}-app-version`, {
       applicationName: app.applicationName!,
       sourceBundle: {
-        s3Bucket: bucket.bucketName,
+        s3Bucket: process.env.CONF_BUCKET_NAME || "conf-bucket",
         s3Key: "Dockerrun.zip",
       },
     });
     version.addDependsOn(app);
 
+    // Dynamo DB table for app data
     const table = new CfnTable(this, `${id}-table`, {
       tableName: "issuerToolData",
       attributeDefinitions: [
@@ -74,9 +69,7 @@ export class IssuerToolBackendStack extends cdk.Stack {
       },
     });
 
-    const policy = ManagedPolicy.fromAwsManagedPolicyName(
-      "AmazonEC2ContainerRegistryReadOnly"
-    );
+    // Access rights for the Elastic Beanstalk application
     const secret = Secret.fromSecretNameV2(
       this,
       `issuer-tool-secret-name`,
@@ -108,7 +101,7 @@ export class IssuerToolBackendStack extends cdk.Stack {
           sid: "AllowS3Read",
           effect: Effect.ALLOW,
           actions: ["s3:GetObject"],
-          resources: [`${bucket.bucketArn}/*`],
+          resources: [`${process.env.CONF_BUCKET_ARN}/*`],
         }),
         new PolicyStatement({
           sid: "AllowSecretRead",
@@ -123,7 +116,6 @@ export class IssuerToolBackendStack extends cdk.Stack {
     const instanceProfileRole = new Role(this, roleName, {
       roleName,
       assumedBy: new ServicePrincipal("ec2.amazonaws.com"),
-      managedPolicies: [policy],
       inlinePolicies: { "issuer-tool-policy": policyDoc },
     });
     instanceProfileRole.assumeRolePolicy?.addStatements(
@@ -144,13 +136,14 @@ export class IssuerToolBackendStack extends cdk.Stack {
       }
     );
 
+    // Elastic Beanstalk environment
     const env = new CfnEnvironment(this, `${id}-environment`, {
       applicationName: version.applicationName,
       environmentName: version.applicationName,
       versionLabel: version.ref,
       cnamePrefix: "issuer-tool",
       solutionStackName:
-        "64bit Amazon Linux 2018.03 v2.17.3 running Docker 20.10.7",
+        "64bit Amazon Linux 2018.03 v2.17.7 running Docker 20.10.7-ce",
       optionSettings: [
         {
           namespace: "aws:autoscaling:launchconfiguration",
@@ -179,8 +172,9 @@ export class IssuerToolBackendStack extends cdk.Stack {
         },
       ],
     });
-    this.envDomain = `${env.cnamePrefix}.${this.region}.elasticbeanstalk.com`;
+
     this.envName = env.environmentName!;
-    this.appName = version.applicationName;
+    this.appName = version.applicationName!;
+    this.cnamePrefix = env.cnamePrefix!;
   }
 }

@@ -1,60 +1,78 @@
-import * as cdk from "@aws-cdk/core";
-import { HostedZone } from "@aws-cdk/aws-route53";
-import { IssuerToolBackendStack, IssuerToolBackendStackProps } from "./backend";
-import { IssuerToolEcrStack } from "./ecr";
 import {
-  IssuerToolFrontendStack,
-  IssuerToolFrontendStackProps,
-} from "./frontend";
-import { IssuerToolBackendConfStack } from "./backend-conf";
-import { IssuerToolPipelineStack } from "./pipeline";
-import { StackProps } from "@aws-cdk/core";
+  Stack,
+  StackProps,
+  RemovalPolicy,
+  Duration,
+  CfnOutput,
+} from "aws-cdk-lib";
+import { Construct } from "constructs";
+import {
+  CfnApplication,
+  CfnApplicationVersion,
+  CfnEnvironment,
+} from "aws-cdk-lib/aws-elasticbeanstalk";
+import { CfnTable } from "aws-cdk-lib/aws-dynamodb";
+import { IBucket, Bucket, BlockPublicAccess } from "aws-cdk-lib/aws-s3";
+import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
+import { Secret } from "aws-cdk-lib/aws-secretsmanager";
+import {
+  CfnInstanceProfile,
+  Effect,
+  PolicyDocument,
+  PolicyStatement,
+  Role,
+  ServicePrincipal,
+} from "aws-cdk-lib/aws-iam";
+import {
+  OriginAccessIdentity,
+  OriginProtocolPolicy,
+  CloudFrontWebDistribution,
+  SSLMethod,
+  SecurityPolicyProtocol,
+  CloudFrontAllowedMethods,
+} from "aws-cdk-lib/aws-cloudfront";
+import { DnsValidatedCertificate } from "aws-cdk-lib/aws-certificatemanager";
+import { ARecord, RecordTarget, HostedZone } from "aws-cdk-lib/aws-route53";
+import { CloudFrontTarget } from "aws-cdk-lib/aws-route53-targets";
 
-export interface IssuerToolInfraStackProps extends StackProps {
-  bucketName: string;
-  prod: boolean;
-  domainName: string;
-  apiPaths: string[];
+import { Frontend } from "./frontend";
+import { Backend } from "./backend";
 
-  ecrURL: string;
-  domainRoot: string;
-  tokenName: string;
-  walletDomainName: string;
-}
+export class InfraStack extends Stack {
+  public readonly appName: CfnOutput;
+  public readonly envName: CfnOutput;
+  constructor(scope: Construct, id: string, props?: StackProps) {
+    super(scope, id, props);
 
-export class IssuerToolInfraStack extends cdk.Stack {
-  constructor(
-    scope: cdk.Construct,
-    id: string,
-    props: IssuerToolInfraStackProps
-  ) {
-    super(scope, `${id}-infra`, props);
-
-    const zone = HostedZone.fromLookup(this, `${id}-hosted-zone`, {
-      domainName: props.domainRoot,
+    const backend = new Backend(this, `${id}-backend`, {
+      account: this.account,
     });
 
-    const ecrStack = new IssuerToolEcrStack(this, id, { prod: props.prod });
-    const confStack = new IssuerToolBackendConfStack(this, id, zone, {
-      ...props,
-      ecrURL: props.ecrURL,
+    this.envName = new CfnOutput(this, "EnvName", {
+      value: backend.envName,
     });
-    const backendStack = new IssuerToolBackendStack(this, id, {
-      ...props,
-      ecrURL: props.ecrURL,
-      bucket: confStack.bucket,
+    this.appName = new CfnOutput(this, "AppName", {
+      value: backend.appName,
     });
-    const frontendStack = new IssuerToolFrontendStack(this, id, zone, {
-      ...props,
-      apiDomain: backendStack.envDomain,
-    });
-    new IssuerToolPipelineStack(this, id, {
-      frontendBucket: frontendStack.bucket,
-      confBucket: confStack.bucket,
-      ...props,
-      ecrURL: props.ecrURL,
-      envName: backendStack.envName,
-      appName: backendStack.appName,
+
+    const apiPaths = [
+      "/auth/*",
+      "/issuer*",
+      "/user*",
+      "/ledger*",
+      "/events/*",
+      "/connections*",
+      "/create/*",
+      "/pairwise/*",
+      "/creds/*",
+      "/ftn/*",
+    ];
+    const backendUrl = `${backend.cnamePrefix}.${this.region}.elasticbeanstalk.com`;
+    new Frontend(this, `${id}-frontend`, {
+      rootDomainName: process.env.DOMAIN_NAME || "example.com",
+      appDomainPrefix: process.env.SUB_DOMAIN_NAME || "example",
+      apiPaths,
+      backendUrl,
     });
   }
 }

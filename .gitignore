@@ -4,6 +4,7 @@ coverage/
 .vscode
 .secrets
 .docker
+.config
 .build
 .temp
 

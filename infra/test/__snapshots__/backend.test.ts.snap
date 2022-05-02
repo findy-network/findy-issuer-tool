@@ -1,0 +1,229 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Backend Created 1`] = `
+Object {
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": Object {
+    "MyTestBackendMyTestBackendapp73A3D5DA": Object {
+      "Properties": Object {
+        "ApplicationName": "MyTestBackend-app",
+        "ResourceLifecycleConfig": Object {
+          "ServiceRole": "arn:aws:iam::123456789012:role/aws-service-role/elasticbeanstalk.amazonaws.com/AWSServiceRoleForElasticBeanstalk",
+          "VersionLifecycleConfig": Object {
+            "MaxAgeRule": Object {
+              "Enabled": true,
+              "MaxAgeInDays": 3,
+            },
+          },
+        },
+      },
+      "Type": "AWS::ElasticBeanstalk::Application",
+    },
+    "MyTestBackendMyTestBackendappversion8C6DDEFE": Object {
+      "DependsOn": Array [
+        "MyTestBackendMyTestBackendapp73A3D5DA",
+      ],
+      "Properties": Object {
+        "ApplicationName": "MyTestBackend-app",
+        "SourceBundle": Object {
+          "S3Bucket": "conf-bucket",
+          "S3Key": "Dockerrun.zip",
+        },
+      },
+      "Type": "AWS::ElasticBeanstalk::ApplicationVersion",
+    },
+    "MyTestBackendMyTestBackendenvironmentDDB80453": Object {
+      "Properties": Object {
+        "ApplicationName": "MyTestBackend-app",
+        "CNAMEPrefix": "issuer-tool",
+        "EnvironmentName": "MyTestBackend-app",
+        "OptionSettings": Array [
+          Object {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "OptionName": "IamInstanceProfile",
+            "Value": Object {
+              "Ref": "MyTestBackendissuertoolinstanceprofile0A99BA9E",
+            },
+          },
+          Object {
+            "Namespace": "aws:elasticbeanstalk:environment",
+            "OptionName": "EnvironmentType",
+            "Value": "SingleInstance",
+          },
+          Object {
+            "Namespace": "aws:elasticbeanstalk:environment",
+            "OptionName": "EnvironmentType",
+            "Value": "SingleInstance",
+          },
+          Object {
+            "Namespace": "aws:autoscaling:asg",
+            "OptionName": "MinSize",
+            "Value": "1",
+          },
+          Object {
+            "Namespace": "aws:autoscaling:asg",
+            "OptionName": "MaxSize",
+            "Value": "1",
+          },
+        ],
+        "SolutionStackName": "64bit Amazon Linux 2018.03 v2.17.7 running Docker 20.10.7-ce",
+        "VersionLabel": Object {
+          "Ref": "MyTestBackendMyTestBackendappversion8C6DDEFE",
+        },
+      },
+      "Type": "AWS::ElasticBeanstalk::Environment",
+    },
+    "MyTestBackendMyTestBackendinstanceprofilerole3AC3276B": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "ec2.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Policies": Array [
+          Object {
+            "PolicyDocument": Object {
+              "Statement": Array [
+                Object {
+                  "Action": "dynamodb:*",
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::GetAtt": Array [
+                      "MyTestBackendMyTestBackendtableBF3680E9",
+                      "Arn",
+                    ],
+                  },
+                  "Sid": "AllowDynamoDb",
+                },
+                Object {
+                  "Action": Array [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:GetLogEvents",
+                    "logs:PutLogEvents",
+                    "logs:DescribeLogGroups",
+                    "logs:DescribeLogStreams",
+                    "logs:PutRetentionPolicy",
+                  ],
+                  "Effect": "Allow",
+                  "Resource": "*",
+                  "Sid": "AllowCloudWatch",
+                },
+                Object {
+                  "Action": "s3:GetObject",
+                  "Effect": "Allow",
+                  "Resource": "undefined/*",
+                  "Sid": "AllowS3Read",
+                },
+                Object {
+                  "Action": "secretsmanager:GetSecretValue",
+                  "Effect": "Allow",
+                  "Resource": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:",
+                        Object {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":secretsmanager:us-east-1:123456789012:secret:issuer-tool*",
+                      ],
+                    ],
+                  },
+                  "Sid": "AllowSecretRead",
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "issuer-tool-policy",
+          },
+        ],
+        "RoleName": "MyTestBackend-instance-profile-role",
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "MyTestBackendMyTestBackendtableBF3680E9": Object {
+      "Properties": Object {
+        "AttributeDefinitions": Array [
+          Object {
+            "AttributeName": "type",
+            "AttributeType": "S",
+          },
+          Object {
+            "AttributeName": "id",
+            "AttributeType": "S",
+          },
+        ],
+        "KeySchema": Array [
+          Object {
+            "AttributeName": "type",
+            "KeyType": "HASH",
+          },
+          Object {
+            "AttributeName": "id",
+            "KeyType": "RANGE",
+          },
+        ],
+        "ProvisionedThroughput": Object {
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5,
+        },
+        "TableName": "issuerToolData",
+      },
+      "Type": "AWS::DynamoDB::Table",
+    },
+    "MyTestBackendissuertoolinstanceprofile0A99BA9E": Object {
+      "Properties": Object {
+        "InstanceProfileName": "MyTestBackend-instance-profile-role",
+        "Path": "/",
+        "Roles": Array [
+          Object {
+            "Ref": "MyTestBackendMyTestBackendinstanceprofilerole3AC3276B",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::InstanceProfile",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

@@ -1,5 +1,23 @@
 #!/bin/bash
 
+# Stores secret needed for app to run in the cloud
+
+if [ -z "$ISSUER_TOOL_DEFAULT_WALLET_URL" ]; then
+  echo "WARNING: ISSUER_TOOL_DEFAULT_WALLET_URL missing"
+fi
+
+if [ -z "$ISSUER_TOOL_FINDY_LOGIN_CLIENT_ID" ]; then
+  echo "WARNING: ISSUER_TOOL_FINDY_LOGIN_CLIENT_ID missing"
+fi
+
+if [ -z "$ISSUER_TOOL_FINDY_LOGIN_CLIENT_SECRET" ]; then
+  echo "WARNING: ISSUER_TOOL_FINDY_LOGIN_CLIENT_SECRET missing"
+fi
+
+if [ -z "$ISSUER_TOOL_FINDY_LOGIN_HOST" ]; then
+  echo "WARNING: ISSUER_TOOL_FINDY_LOGIN_HOST missing"
+fi
+
 if [ -z "$ISSUER_TOOL_OUR_HOST" ]; then
   echo "ERROR: Define env variable ISSUER_TOOL_OUR_HOST"
   exit 1
