@@ -19,11 +19,15 @@ const environmentVariables: Record<string, codebuild.BuildEnvironmentVariable> =
   {
     DOMAIN_NAME: {
       type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
-      value: "findy-issuer-tool-domain-name",
+      value: "/findy-issuer-tool/domain-name",
     },
     SUB_DOMAIN_NAME: {
       type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
-      value: "findy-issuer-tool-sub-domain-name",
+      value: "/findy-issuer-tool/sub-domain-name",
+    },
+    WALLET_DOMAIN_NAME: {
+      type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
+      value: "/findy-issuer-tool/wallet-domain-name",
     },
   };
 
@@ -101,7 +105,7 @@ export class InfraPipelineStack extends cdk.Stack {
   createPipeline(confBucket: IBucket) {
     const githubConnectionArn = StringParameter.valueForStringParameter(
       this,
-      "findy-issuer-tool-github-connection-arn"
+      "/findy-issuer-tool/github-connection-arn"
     );
 
     const pipeline = new CodePipeline(this, "Pipeline", {
@@ -119,7 +123,7 @@ export class InfraPipelineStack extends cdk.Stack {
           environmentVariables: {
             CDK_CONTEXT_JSON: {
               type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
-              value: "findy-issuer-tool-cdk-context",
+              value: "/findy-issuer-tool/cdk-context",
             },
           },
         },
@@ -225,7 +229,7 @@ export class InfraPipelineStack extends cdk.Stack {
             value: "Findy Web Wallet",
           },
           DEFAULT_WEB_WALLET_URL: {
-            value: `https://${process.env.SUB_DOMAIN_NAME}.${process.env.DOMAIN_NAME}/connect/`, // TODO: config for wallet URL
+            value: `https://${process.env.WALLET_DOMAIN_NAME}/connect/`,
           },
         },
       },

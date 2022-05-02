@@ -1,29 +1,8 @@
-# Welcome to your CDK TypeScript project
-
-You should explore the contents of this project. It demonstrates a CDK app with an instance of a stack (`Infra2Stack`)
-which contains an Amazon SQS queue that is subscribed to an Amazon SNS topic.
-
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
-
-## Useful commands
-
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
-
-## Instructions
-
--> Github ARN, domain names
--> CDK bootstrap
--> cdk synth & save cdk context
--> cdk deploy
-
-# Issuer-tool infra
+# Issuer Tool infra for AWS
 
 This project helps to setup issuer-tool to AWS.
+The backend is deployed as single-container Elastic Beanstalk application
+and frontend via S3 bucket and CloudFront proxy.
 
 Note! "<>" indicates example value, and shouldn't be included in values you define.
 
@@ -35,7 +14,11 @@ Note! "<>" indicates example value, and shouldn't be included in values you defi
    npm install
    ```
 
-1. Define environment variables
+1. Install [AWS CLI](https://aws.amazon.com/cli/)
+
+1. Create [codestar connection to GitHub](https://docs.aws.amazon.com/dtconsole/latest/userguide/connections-create-github.html)
+
+1. Define environment variables for initializing AWS pipeline
 
    ```bash
    # AWS related
@@ -45,56 +28,28 @@ Note! "<>" indicates example value, and shouldn't be included in values you defi
    export CDK_DEFAULT_REGION=<AWS_REGION>
    export CDK_DEFAULT_ACCOUNT=<AWS_ACCOUNT_NUMBER>
 
-   # unique app id
-   export ISSUER_TOOL_APP_NAME=<my-fantastic-issuer-tool>
+   # github connection arn
+   export GITHUB_CONNECTION_ARN=<arn:aws:codestar-connections:us-east-1:xxx:connection/xxx>
    # app root domain
-   export ISSUER_TOOL_DOMAIN_ROOT=<example.com>
+   export DOMAIN_NAME=<example.com>
    # app sub domain part
-   export ISSUER_TOOL_SUBDOMAIN=<issuer-tool>
+   export SUB_DOMAIN_NAME=<issuer-tool>
+   # SSI wallet domain
+   export WALLET_DOMAIN_NAME=<wallet.example.com>
    ```
 
-1. List available stacks:
+1. Store pipelines parameters to AWS
 
    ```bash
-   cdk list
-
-   ...
-
-   my-fantastic-issuer-tool-infra
-   my-fantastic-issuer-tool-infra/my-fantastic-issuer-tool-conf
-   my-fantastic-issuer-tool-infra/my-fantastic-issuer-tool-ecr
-   my-fantastic-issuer-tool-infra/my-fantastic-issuer-tool-frontend
-   my-fantastic-issuer-tool-infra/my-fantastic-issuer-tool-backend
-   my-fantastic-issuer-tool-infra/my-fantastic-issuer-tool-pipeline
+   ./tools/init.sh
    ```
 
-   In following cdk commands replace the stack name according to this list.
-
-1. Create ECR repository
+1. Bootstrap, first synth and store context to AWS params
 
    ```bash
-   cdk deploy <app-id>-infra/<app-id>-ecr
-   ```
-
-   Copy the ECR URL that the script outputs.
-
-1. Define ECR URL
-
-   ```bash
-   # full ECR url from previous step
-   export ISSUER_TOOL_ECR_URL="<123456789.dkr.ecr.region.amazonaws.com/imagename>"
-   # ECR root url
-   export ISSUER_TOOL_ECR_ROOT_URL="<123456789.dkr.ecr.region.amazonaws.com>"
-   # ECR image name
-   export ISSUER_TOOL_ECR_IMAGE_NAME="<imagename>"
-   # S3 cert path or empty, depending on agency certificate type
-   export ISSUER_TOOL_SERVER_CERT_PATH="<s3://somebucket>"
-   ```
-
-1. Build and push the api service image
-
-   ```bash
-   ./scripts/push-to-ecr.sh
+   cdk bootstrap
+   cdk synth
+   npm run pipeline:context
    ```
 
 1. Save secrets for service runtime functionality.
@@ -129,26 +84,11 @@ Note! "<>" indicates example value, and shouldn't be included in values you defi
    ./scripts/store-secrets.sh
    ```
 
-1. Create backend configuration stack
+1. Deploy pipeline
 
    ```bash
-   cdk deploy <app-id>-infra/<app-id>-conf
+   cdk deploy
    ```
 
-1. Create backend stack
-
-   ```bash
-   cdk deploy <app-id>-infra/<app-id>-backend
-   ```
-
-1. Create frontend stack
-
-   ```bash
-   cdk deploy <app-id>-infra/<app-id>-frontend
-   ```
-
-1. Create pipeline stack
-
-   ```bash
-   cdk deploy <app-id>-infra/<app-id>-pipeline
-   ```
+1. Open pipelines at AWS console and see that pipeline succeeds. Following changes
+to the app or infra are deployed automatically by the pipeline.

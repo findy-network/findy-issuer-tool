@@ -9,8 +9,8 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "pipeline:init": "aws ssm put-parameter --name \"findy-issuer-tool-github-connection-arn\" --value \"$GITHUB_CONNECTION_ARN\" --type String",
-    "pipeline:context": "JSON=$(tr -d '\n' < cdk.context.json) && aws ssm put-parameter --overwrite --name \"findy-issuer-tool-cdk-context\" --value \"$JSON\" --type String"
+    "pipeline:init": "./tools/init.sh",
+    "pipeline:context": "JSON=$(cat cdk.context.json) && aws ssm put-parameter --overwrite --name \"/findy-issuer-tool/cdk-context\" --value \"$JSON\" --type String"
   },
   "devDependencies": {
     "aws-cdk": "2.20.0",
