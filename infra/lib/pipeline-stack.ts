@@ -199,7 +199,7 @@ export class InfraPipelineStack extends cdk.Stack {
     return new CodeBuildStep("DeployBackendStep", {
       projectName: "DeployBackend",
       commands: [
-        `VERSION="$(./infra/scripts/version.sh ./api)-$(date +%s)"`,
+        `VERSION="$(./infra/tools/version.sh ./api)-$(date +%s)"`,
         `aws elasticbeanstalk create-application-version --application-name $APP_NAME --version-label $VERSION --source-bundle S3Bucket=$CONF_BUCKET_NAME,S3Key=Dockerrun.zip`,
         `aws elasticbeanstalk update-environment --environment-name $ENV_NAME --version-label $VERSION`,
       ],
