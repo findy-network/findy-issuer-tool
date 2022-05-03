@@ -22,7 +22,7 @@ if [ -z "$WALLET_DOMAIN_NAME" ]; then
   exit 1
 fi
 
-aws ssm put-parameter --name \"/findy-issuer-tool/github-connection-arn\" --value \"$GITHUB_CONNECTION_ARN\" --type String
-aws ssm put-parameter --name \"/findy-issuer-tool/domain-name\" --value \"$DOMAIN_NAME\" --type String
-aws ssm put-parameter --name \"/findy-issuer-tool/sub-domain-name\" --value \"$SUB_DOMAIN_NAME\" --type String
-aws ssm put-parameter --name \"/findy-issuer-tool/wallet-domain-name\" --value \"$WALLET_DOMAIN_NAME\" --type String
+aws ssm put-parameter --name "/findy-issuer-tool/github-connection-arn" --value "$GITHUB_CONNECTION_ARN" --type String
+aws ssm put-parameter --name "/findy-issuer-tool/domain-name" --value "$DOMAIN_NAME" --type String
+aws ssm put-parameter --name "/findy-issuer-tool/sub-domain-name" --value "$SUB_DOMAIN_NAME" --type String
+aws ssm put-parameter --name "/findy-issuer-tool/wallet-domain-name" --value "$WALLET_DOMAIN_NAME" --type String

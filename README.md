@@ -178,3 +178,7 @@ For this approach to work, you need to setup and configure
 [findy-oidc-provider](https://github.com/findy-network/findy-oidc-provider) installation.
 See [the docs](https://github.com/findy-network/findy-issuer-tool/blob/master/api/README.md#ftn-credential-flow)
 for acquiring the login credential.
+
+## Infra
+
+See folder [./infra](./infra/README.md) for AWS setup scripts.
