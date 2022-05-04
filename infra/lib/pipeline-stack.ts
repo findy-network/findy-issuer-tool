@@ -61,6 +61,9 @@ export class InfraPipelineStack extends cdk.Stack {
     // Add frontend deploy step
     deployStage.addPost(this.createFrontendDeployStep(frontBuildStep));
 
+    // Add deployment test step
+    deployStage.addPost(this.createPostDeploymentTestStep());
+
     // manually adjust logs retention
     pipeline.node.findAll().forEach((construct, index) => {
       if (construct instanceof codebuild.Project) {
@@ -257,6 +260,16 @@ export class InfraPipelineStack extends cdk.Stack {
           actions: ["s3:Put*", "s3:Delete*", "s3:Get*", "s3:List*"],
           resources: ["*"],
         }),
+      ],
+    });
+  }
+
+  createPostDeploymentTestStep() {
+    return new CodeBuildStep("DeploymentTest", {
+      projectName: "DeploymentTest",
+      commands: [
+        `curl -sI https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt | grep "HTTP/2 200"`,
+        `curl -sI https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/user | grep "HTTP/2 401"`, // User should be unauthorized
       ],
     });
   }
