@@ -61,7 +61,7 @@ export class InfraPipelineStack extends cdk.Stack {
     // Add frontend deploy step
     deployStage.addPost(this.createFrontendDeployStep(frontBuildStep));
 
-    // Add deployment test steo
+    // Add deployment test step
     deployStage.addPost(this.createPostDeploymentTestStep());
 
     // manually adjust logs retention
