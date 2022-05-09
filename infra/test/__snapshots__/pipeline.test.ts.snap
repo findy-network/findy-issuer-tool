@@ -516,22 +516,27 @@ Object {
                 },
                 "Configuration": Object {
                   "ProjectName": Object {
-                    "Ref": "PipelineDeployDeploymentTestD6E0B704",
+                    "Ref": "PipelineDeployDeployFrontendStep69B9BED3",
                   },
                 },
                 "InputArtifacts": Array [
                   Object {
-                    "Name": "findy_network_findy_issuer_tool_Source",
+                    "Name": "BuildFrontendStep_Output",
                   },
                 ],
-                "Name": "DeploymentTest",
+                "Name": "DeployFrontendStep",
+                "OutputArtifacts": Array [
+                  Object {
+                    "Name": "DeployFrontendStep_Output",
+                  },
+                ],
                 "RoleArn": Object {
                   "Fn::GetAtt": Array [
-                    "PipelineDeployDeploymentTestCodePipelineActionRole13723831",
+                    "PipelineDeployDeployFrontendStepCodePipelineActionRole882111B1",
                     "Arn",
                   ],
                 },
-                "RunOrder": 3,
+                "RunOrder": 4,
               },
               Object {
                 "ActionTypeId": Object {
@@ -542,22 +547,22 @@ Object {
                 },
                 "Configuration": Object {
                   "ProjectName": Object {
-                    "Ref": "PipelineDeployDeployFrontendStep69B9BED3",
+                    "Ref": "PipelineDeployDeploymentTestD6E0B704",
                   },
                 },
                 "InputArtifacts": Array [
                   Object {
-                    "Name": "BuildFrontendStep_Output",
+                    "Name": "DeployFrontendStep_Output",
                   },
                 ],
-                "Name": "DeployFrontendStep",
+                "Name": "DeploymentTest",
                 "RoleArn": Object {
                   "Fn::GetAtt": Array [
-                    "PipelineDeployDeployFrontendStepCodePipelineActionRole882111B1",
+                    "PipelineDeployDeploymentTestCodePipelineActionRole13723831",
                     "Arn",
                   ],
                 },
-                "RunOrder": 4,
+                "RunOrder": 5,
               },
             ],
             "Name": "Deploy",
@@ -1884,6 +1889,10 @@ Object {
         \\"if [ \\\\\\"$V1\\\\\\" != \\\\\\"$V2\\\\\\" ]; then aws s3 sync --delete . s3://$SUB_DOMAIN_NAME.$DOMAIN_NAME; fi\\"
       ]
     }
+  },
+  \\"artifacts\\": {
+    \\"base-directory\\": \\".\\",
+    \\"files\\": \\"**/*\\"
   }
 }",
           "Type": "CODEPIPELINE",
@@ -2094,6 +2103,13 @@ Object {
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject",
+                "s3:PutObjectLegalHold",
+                "s3:PutObjectRetention",
+                "s3:PutObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:Abort*",
               ],
               "Effect": "Allow",
               "Resource": Array [
@@ -2575,7 +2591,7 @@ Object {
               "Effect": "Allow",
               "Resource": Object {
                 "Fn::GetAtt": Array [
-                  "PipelineDeployDeploymentTestCodePipelineActionRole13723831",
+                  "PipelineDeployDeployFrontendStepCodePipelineActionRole882111B1",
                   "Arn",
                 ],
               },
@@ -2585,7 +2601,7 @@ Object {
               "Effect": "Allow",
               "Resource": Object {
                 "Fn::GetAtt": Array [
-                  "PipelineDeployDeployFrontendStepCodePipelineActionRole882111B1",
+                  "PipelineDeployDeploymentTestCodePipelineActionRole13723831",
                   "Arn",
                 ],
               },
