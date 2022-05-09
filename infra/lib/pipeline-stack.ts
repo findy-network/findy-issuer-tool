@@ -59,10 +59,11 @@ export class InfraPipelineStack extends cdk.Stack {
     deployStage.addPost(frontBuildStep);
 
     // Add frontend deploy step
-    deployStage.addPost(this.createFrontendDeployStep(frontBuildStep));
+    const frontDeployStep = this.createFrontendDeployStep(frontBuildStep);
+    deployStage.addPost(frontDeployStep);
 
     // Add deployment test step
-    deployStage.addPost(this.createPostDeploymentTestStep());
+    deployStage.addPost(this.createPostDeploymentTestStep(frontDeployStep));
 
     // manually adjust logs retention
     pipeline.node.findAll().forEach((construct, index) => {
@@ -264,9 +265,11 @@ export class InfraPipelineStack extends cdk.Stack {
     });
   }
 
-  createPostDeploymentTestStep() {
+  createPostDeploymentTestStep(frontDeployStep: CodeBuildStep) {
     return new CodeBuildStep("DeploymentTest", {
+      input: frontDeployStep.primaryOutput,
       projectName: "DeploymentTest",
+      // TODO: make more extensive tests
       commands: [
         `curl -sI https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt | grep "HTTP/2 200"`,
         `curl -sI https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/user | grep "HTTP/2 401"`, // User should be unauthorized
