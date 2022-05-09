@@ -262,6 +262,7 @@ export class InfraPipelineStack extends cdk.Stack {
           resources: ["*"],
         }),
       ],
+      primaryOutputDirectory: ".",
     });
   }
 
