@@ -16,7 +16,7 @@ updates:
       interval: "monthly"
     target-branch: "dev"
   - package-ecosystem: npm
-    directory: "/infra
+    directory: "/infra"
     schedule:
       interval: "monthly"
     target-branch: "dev"
