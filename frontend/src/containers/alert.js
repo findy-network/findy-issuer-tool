@@ -11,17 +11,24 @@ const AlertComponent = styled(AlertContainer)`
   width: 100%;
 `;
 
-const Alert = ({ alert }) => (
-  <div>
-    {alert && (
-      <AlertComponent elevation={6} variant="filled" severity={alert.severity}>
-        {`${alert.description} ${
-          alert.reason ? `(${JSON.stringify(alert.reason)})` : ''
-        }`}
-      </AlertComponent>
-    )}
-  </div>
-);
+const Alert = ({ alert }) => {
+  console.log(alert);
+  return (
+    <div>
+      {alert && (
+        <AlertComponent
+          elevation={6}
+          variant="filled"
+          severity={alert.severity}
+        >
+          {`${alert.description} ${
+            alert.reason ? `(${JSON.stringify(alert.reason)})` : ''
+          }`}
+        </AlertComponent>
+      )}
+    </div>
+  );
+};
 
 Alert.propTypes = {
   alert: PropTypes.object,

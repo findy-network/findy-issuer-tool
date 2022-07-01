@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import { CompatRouter } from 'react-router-dom-v5-compat';
-
 import configureStore from './store';
 
 import App from './containers/app';
@@ -15,12 +13,10 @@ const store = configureStore();
 const Root = () => (
   <Provider store={store}>
     <BrowserRouter>
-      <CompatRouter>
-        <div>
-          <Alert />
-          <App />
-        </div>
-      </CompatRouter>
+      <div>
+        <Alert />
+        <App />
+      </div>
     </BrowserRouter>
   </Provider>
 );

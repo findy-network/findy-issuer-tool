@@ -85,10 +85,9 @@ const get = (state$, path) =>
     withCredentials: true,
   });
 
-const initUserFetchEpic = (action$, state$) =>
+const initUserFetchEpic = (action$) =>
   action$.pipe(
     ofType(INIT_APP),
-    filter(() => !state$.value.user),
     switchMap(() => {
       const query = new URLSearchParams(window.location.search);
       if (query) {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import { Routes, Route } from 'react-router-dom';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -35,29 +35,24 @@ const App = ({ user, doInitApp }) => {
               <CssBaseline />
               <AppBar userName={user.name} />
               <AppContainer>
-                <Switch>
-                  <Route exact path="/" component={Welcome} />
-                  <Route exact path="/events" component={Events} />
-                  <Route exact path="/connect" component={Connect} />
-                  <Route exact path="/issue" component={Issue} />
-                  <Route exact path="/verify" component={Verify} />
-                  <Route exact path="/message" component={Message} />
-                  <Route path="/tools" component={Tools} />
-                  <Route path="/me" component={Me} />
-                  <Route component={NoMatch} />
-                </Switch>
+                <Routes>
+                  <Route path="/" element={<Welcome />} />
+                  <Route path="/events" element={<Events />} />
+                  <Route path="/connect" element={<Connect />} />
+                  <Route path="/issue" element={<Issue />} />
+                  <Route path="/verify" element={<Verify />} />
+                  <Route path="/message" element={<Message />} />
+                  <Route path="/tools" element={<Tools />} />
+                  <Route path="/me" element={<Me />} />
+                  <Route element={<NoMatch />} />
+                </Routes>
               </AppContainer>
             </div>
           ) : (
-            <Switch>
-              <Route
-                exact
-                path="/login-credential"
-                component={LoginCredential}
-              />
-              <Route exact path="/" component={Login} />
-              <Route component={Login} />
-            </Switch>
+            <Routes>
+              <Route path="/login-credential" element={<LoginCredential />} />
+              <Route path="*" element={<Login />} />
+            </Routes>
           )}
         </div>
       )}
