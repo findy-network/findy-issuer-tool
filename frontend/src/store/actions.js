@@ -1,3 +1,9 @@
+export const INIT_APP = 'INIT_APP';
+
+export const initApp = () => ({
+  type: INIT_APP,
+});
+
 export const FETCH_USER = 'FETCH_USER';
 
 export const fetchUser = (username) => ({
@@ -71,13 +77,6 @@ export const FETCH_PAIRWISE_INVITATION_REJECTED =
 
 export const fetchPairwiseInvitationRejected = (payload) => ({
   type: FETCH_PAIRWISE_INVITATION_REJECTED,
-  payload,
-});
-
-export const SET_TOKEN = 'SET_TOKEN';
-
-export const setToken = (payload) => ({
-  type: SET_TOKEN,
   payload,
 });
 

@@ -9,7 +9,6 @@ import {
   delay,
 } from 'rxjs/operators';
 import { combineEpics, ofType } from 'redux-observable';
-import { LOCATION_CHANGE, replace } from 'connected-react-router';
 
 import {
   FETCH_USER,
@@ -23,8 +22,6 @@ import {
   fetchConnections,
   fetchConnectionsFulfilled,
   fetchConnectionsRejected,
-  setToken,
-  SET_TOKEN,
   SAVE_SCHEMA,
   saveSchemaFulfilled,
   saveSchemaRejected,
@@ -63,6 +60,7 @@ import {
   fetchFtnStatusFulfilled,
   fetchFtnStatusRejected,
   fetchFtnStatus,
+  INIT_APP,
 } from './actions';
 
 const post = (state$, path, payload) =>
@@ -87,19 +85,17 @@ const get = (state$, path) =>
     withCredentials: true,
   });
 
-const getQueryParams = (state$) =>
-  new URLSearchParams(state$.value.router.location.search);
-
 const initUserFetchEpic = (action$, state$) =>
   action$.pipe(
-    ofType(LOCATION_CHANGE),
+    ofType(INIT_APP),
     filter(() => !state$.value.user),
     switchMap(() => {
-      const query = getQueryParams(state$);
+      const query = new URLSearchParams(window.location.search);
       if (query) {
         const token = query.get('token');
         if (token) {
-          return of(setToken(token));
+          localStorage.setItem('token', token);
+          window.location.assign('/');
         }
       }
       return of(fetchUser());
@@ -108,51 +104,52 @@ const initUserFetchEpic = (action$, state$) =>
 
 const initConfigFetchEpic = (action$, state$) =>
   action$.pipe(
-    ofType(LOCATION_CHANGE),
+    ofType(INIT_APP),
     filter(() => !state$.value.config),
     switchMap(() => of(fetchConfig()))
   );
 
 const initLedgerFetchEpic = (action$, state$) =>
   action$.pipe(
-    ofType(LOCATION_CHANGE),
+    ofType(INIT_APP),
     filter(() => !state$.value.ledger),
     switchMap(() => of(fetchLedger()))
   );
 
-const initAlertEpic = (action$, state$) =>
+const initAlertEpic = (action$) =>
   action$.pipe(
-    ofType(LOCATION_CHANGE),
+    ofType(INIT_APP),
     filter(() => {
-      const query = getQueryParams(state$);
+      const query = new URLSearchParams(window.location.search);
       if (query) {
         return query && query.get('cred_ready');
       }
       return false;
     }),
     switchMap(() => {
-      const sent = getQueryParams(state$).get('cred_ready');
+      const sent = new URLSearchParams(window.location.search).get(
+        'cred_ready'
+      );
       return sent === 'true'
         ? of(fetchCredentialFulfilled())
         : of(fetchCredentialRejected());
     })
   );
 
-const initFtnEpic = (action$, state$) =>
+const initFtnEpic = (action$) =>
   action$.pipe(
-    ofType(LOCATION_CHANGE),
+    ofType(INIT_APP),
     filter(() => {
-      const query = getQueryParams(state$);
-      if (
-        state$.value.router.location.pathname.startsWith('/login-credential') &&
-        query
-      ) {
+      const query = new URLSearchParams(window.location.search);
+      if (window.location.pathname.startsWith('/login-credential') && query) {
         return query && query.get('ftn_cred_ready');
       }
       return false;
     }),
     switchMap(() => {
-      const sent = getQueryParams(state$).get('ftn_cred_ready');
+      const sent = new URLSearchParams(window.location.search).get(
+        'ftn_cred_ready'
+      );
       return sent === 'true'
         ? of(fetchFtnStatusFulfilled({ status: 'done_ok' }))
         : of(fetchFtnStatusFulfilled({ status: 'done_fail' }));
@@ -172,7 +169,7 @@ const fetchLedgerEpic = (action$, state$) =>
 
 const initConnectionsFetchEpic = (action$, state$) =>
   action$.pipe(
-    ofType(LOCATION_CHANGE),
+    ofType(INIT_APP),
     filter(
       () =>
         !state$.value.connections ||
@@ -192,15 +189,6 @@ const fetchConnectionsEpic = (action$, state$) =>
         catchError((error) => of(fetchConnectionsRejected(error.xhr.response)))
       )
     )
-  );
-
-const useTokenEpic = (action$) =>
-  action$.pipe(
-    ofType(SET_TOKEN),
-    switchMap((action) => {
-      localStorage.setItem('token', action.payload);
-      return of(replace('/'));
-    })
   );
 
 const fetchUserEpic = (action$, state$) =>
@@ -264,7 +252,6 @@ export default combineEpics(
   initConnectionsFetchEpic,
   initAlertEpic,
   fetchConnectionsEpic,
-  useTokenEpic,
   fetchUserEpic,
   fetchConfigEpic,
   createEpic(
