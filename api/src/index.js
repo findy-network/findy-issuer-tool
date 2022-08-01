@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
-import jwt from 'express-jwt';
+import { expressjwt as jwt } from 'express-jwt';
 import { Validator } from 'express-json-validator-middleware';
 import session from 'express-session';
 import crypto from 'crypto';
@@ -146,7 +146,7 @@ const init = async (config) => {
   app.get('/ftn/callback', appRoutes.ftnCallback);
 
   app.get('/user', async (req, res) => {
-    const user = await appStorage.getUser(req.user.email);
+    const user = await appStorage.getUser(req.auth.email);
     return res.json(user);
   });
   app.get('/ledger', async (req, res) =>

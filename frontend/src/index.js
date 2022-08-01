@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import { BrowserRouter } from 'react-router-dom';
 
-import configureStore, { history } from './store';
+import configureStore from './store';
 
 import App from './containers/app';
 import Alert from './containers/alert';
@@ -12,12 +12,12 @@ const store = configureStore();
 
 const Root = () => (
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <BrowserRouter>
       <div>
         <Alert />
         <App />
       </div>
-    </ConnectedRouter>
+    </BrowserRouter>
   </Provider>
 );
 

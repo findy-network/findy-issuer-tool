@@ -18,9 +18,7 @@ export default {
     log: [],
   },
   connections: null,
-  alert: {
-    description: '',
-  },
+  alert: null,
   ftn: {
     invitation: null,
     status: null,

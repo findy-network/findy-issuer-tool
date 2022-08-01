@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
 
 import alert from './alert';
 
 import {
   FETCH_USER_FULFILLED,
-  SET_TOKEN,
   SAVE_SCHEMA_FULFILLED,
   SAVE_CRED_DEF_FULFILLED,
   SAVE_SCHEMA,
@@ -35,8 +33,6 @@ import initialState from './initial-state';
 
 export const user = (state = initialState.user, action) => {
   switch (action.type) {
-    case SET_TOKEN:
-      return null;
     case FETCH_USER_FULFILLED:
       return action.payload || {};
     default:
@@ -76,8 +72,6 @@ export const connections = (state = initialState.connections, action) => {
 
 export const token = (state = initialState.token, action) => {
   switch (action.type) {
-    case SET_TOKEN:
-      return action.payload || state;
     default:
       return state;
   }
@@ -181,9 +175,8 @@ export const ftn = (state = initialState.ftn, action) => {
   }
 };
 
-export default (history) =>
+export default () =>
   combineReducers({
-    router: connectRouter(history),
     user,
     config,
     ledger,

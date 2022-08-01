@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: "16.x"
       - name: install deps
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       - name: build
         run: npm run build
       - name: test
@@ -122,7 +122,7 @@ jobs:
       - name: run frontend
         run: |
           cd frontend
-          npm ci
+          npm ci --legacy-peer-deps
           npm start &
 
       - name: run e2e

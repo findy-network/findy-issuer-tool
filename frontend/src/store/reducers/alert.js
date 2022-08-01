@@ -1,5 +1,4 @@
 import {
-  SET_TOKEN,
   SAVE_SCHEMA_REJECTED,
   SAVE_CRED_DEF_REJECTED,
   SAVE_SCHEMA,
@@ -86,7 +85,6 @@ export default (state = initialState.alert, action) => {
     case FETCH_USER:
     case FETCH_LEDGER:
     case FETCH_CONNECTIONS:
-    case SET_TOKEN:
     case SAVE_SCHEMA:
     case SAVE_CRED_DEF:
     case FETCH_PAIRWISE_INVITATION:

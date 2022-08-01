@@ -6,6 +6,19 @@ describe("Issuer Tool", function () {
   const issuerToolLabel = '//p[contains(.,"issuer-tool")]';
   const acceptBtn = '//button[contains(.,"Accept")]';
 
+  afterEach((browser) => {
+    browser
+      .getLog("browser", (logEntriesArray) => {
+        console.log("Log length: " + logEntriesArray.length);
+        logEntriesArray.forEach(function (log) {
+          console.log(
+            "[" + log.level.name + "] " + log.timestamp + " : " + log.message
+          );
+        });
+      })
+      .end();
+  });
+
   it("app loads", function (browser) {
     browser
       .url(home)

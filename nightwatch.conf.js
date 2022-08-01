@@ -44,6 +44,7 @@ module.exports = {
 
       desiredCapabilities: {
         browserName: "chrome",
+        "goog:loggingPrefs": { browser: "ALL" },
         "goog:chromeOptions": {
           // More info on Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/
           //
