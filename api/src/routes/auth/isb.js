@@ -157,8 +157,8 @@ export default async (
   const getUrlForEmailForRequest = async (req, res) => {
     const nonce = newNonce();
     req.session.nonce = nonce;
-    req.session.email = req.user.email;
-    log.info(`Generating ISB auth url to user ${req.user.email}`);
+    req.session.email = req.auth.email;
+    log.info(`Generating ISB auth url to user ${req.auth.email}`);
 
     return res.json({
       path: urlGenPath,
