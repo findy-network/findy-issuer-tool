@@ -1,5 +1,4 @@
 import { Construct } from "constructs";
-import { CfnOutput } from "aws-cdk-lib";
 import {
   CfnApplication,
   CfnApplicationVersion,

@@ -1,4 +1,5 @@
 {
+  "onboardWaitTime": "60",
   "devMode": false,
   "log": {
     "colorize": false
