@@ -117,6 +117,12 @@ export class Frontend extends Construct {
                 minTtl: Duration.seconds(0),
                 defaultTtl: Duration.seconds(0),
               },
+              {
+                pathPattern: "/version.txt",
+                maxTtl: Duration.seconds(0),
+                minTtl: Duration.seconds(0),
+                defaultTtl: Duration.seconds(0),
+              },
             ],
           },
           {

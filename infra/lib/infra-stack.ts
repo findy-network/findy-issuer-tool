@@ -1,39 +1,5 @@
-import {
-  Stack,
-  StackProps,
-  RemovalPolicy,
-  Duration,
-  CfnOutput,
-} from "aws-cdk-lib";
+import { Stack, StackProps, CfnOutput } from "aws-cdk-lib";
 import { Construct } from "constructs";
-import {
-  CfnApplication,
-  CfnApplicationVersion,
-  CfnEnvironment,
-} from "aws-cdk-lib/aws-elasticbeanstalk";
-import { CfnTable } from "aws-cdk-lib/aws-dynamodb";
-import { IBucket, Bucket, BlockPublicAccess } from "aws-cdk-lib/aws-s3";
-import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
-import { Secret } from "aws-cdk-lib/aws-secretsmanager";
-import {
-  CfnInstanceProfile,
-  Effect,
-  PolicyDocument,
-  PolicyStatement,
-  Role,
-  ServicePrincipal,
-} from "aws-cdk-lib/aws-iam";
-import {
-  OriginAccessIdentity,
-  OriginProtocolPolicy,
-  CloudFrontWebDistribution,
-  SSLMethod,
-  SecurityPolicyProtocol,
-  CloudFrontAllowedMethods,
-} from "aws-cdk-lib/aws-cloudfront";
-import { DnsValidatedCertificate } from "aws-cdk-lib/aws-certificatemanager";
-import { ARecord, RecordTarget, HostedZone } from "aws-cdk-lib/aws-route53";
-import { CloudFrontTarget } from "aws-cdk-lib/aws-route53-targets";
 
 import { Frontend } from "./frontend";
 import { Backend } from "./backend";

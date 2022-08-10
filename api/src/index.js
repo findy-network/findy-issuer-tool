@@ -68,6 +68,8 @@ const init = async (config) => {
     log.info('Creating default cred defs...');
 
     const createDefaultCredDefs = async () => {
+      await sleep(config.onboardWaitTime * 1000);
+
       const schemaIds = await Promise.all(
         defaultCredDefs.map((item) =>
           appAgent.createSchema({
@@ -89,7 +91,8 @@ const init = async (config) => {
               await appAgent.getSchema(id);
               tries = 10;
             } catch (err) {
-              sleep(1000);
+              // eslint-disable-next-line no-await-in-loop
+              await sleep(1000);
             }
           }
           return appAgent.createCredDef({
