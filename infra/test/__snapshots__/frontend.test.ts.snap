@@ -154,7 +154,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "S3Bucket": "cdk-hnb659fds-assets-123456789012-us-east-1",
-          "S3Key": "b283b3813e8acf3b0198620b2d8b35db67a211da4f04c3d720a89d54cfb2f9bc.zip",
+          "S3Key": "8ddf29ab619460567d3cda58de2ff1bf0f6e95d8822ff630ec58a4d52ed1fa67.zip",
         },
         "Handler": "index.certificateRequestHandler",
         "Role": Object {
@@ -163,7 +163,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
