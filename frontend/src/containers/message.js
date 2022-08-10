@@ -5,13 +5,15 @@ import PropTypes from 'prop-types';
 import SendMessage from '../components/send-message';
 import { sendBasicMessage } from '../store/actions';
 
-const Message = ({ connections, doSendBasicMessage, sendingBasicMessage }) => (
-  <SendMessage
-    connections={connections}
-    onSendMessage={doSendBasicMessage}
-    sending={sendingBasicMessage}
-  />
-);
+function Message({ connections, doSendBasicMessage, sendingBasicMessage }) {
+  return (
+    <SendMessage
+      connections={connections}
+      onSendMessage={doSendBasicMessage}
+      sending={sendingBasicMessage}
+    />
+  );
+}
 
 Message.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,

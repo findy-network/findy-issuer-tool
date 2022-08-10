@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import CredEditor from '../cred-editor';
 import PairwiseEditor from '../pairwise-editor';
 
-const RequestProof = ({
+function RequestProof({
   connections,
   credDefs,
   onSendProofRequest,
   defaultValues,
   sending,
-}) => {
+}) {
   const [pairwiseName, setPairwiseName] = useState('');
   return (
     <PairwiseEditor
@@ -34,7 +34,7 @@ const RequestProof = ({
       />
     </PairwiseEditor>
   );
-};
+}
 
 RequestProof.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,

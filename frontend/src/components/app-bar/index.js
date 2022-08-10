@@ -18,24 +18,26 @@ const Title = styled(Link)`
   text-decoration: none;
 `;
 
-const AppBar = ({ userName }) => (
-  <AppBarComponent position="relative">
-    <Toolbar>
-      <Typography variant="h6" noWrap>
-        <Title to="/">Issuer Tool</Title>
-      </Typography>
-      <Button
-        title="Logout"
-        onClick={() => {
-          localStorage.setItem('token', null);
-          window.location.reload();
-        }}
-      >
-        {userName}
-      </Button>
-    </Toolbar>
-  </AppBarComponent>
-);
+function AppBar({ userName }) {
+  return (
+    <AppBarComponent position="relative">
+      <Toolbar>
+        <Typography variant="h6" noWrap>
+          <Title to="/">Issuer Tool</Title>
+        </Typography>
+        <Button
+          title="Logout"
+          onClick={() => {
+            localStorage.setItem('token', null);
+            window.location.reload();
+          }}
+        >
+          {userName}
+        </Button>
+      </Toolbar>
+    </AppBarComponent>
+  );
+}
 
 AppBar.propTypes = {
   userName: PropTypes.string.isRequired,

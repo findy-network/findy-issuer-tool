@@ -13,7 +13,7 @@ const defaultSchemaJSON = JSON.stringify({
   version: '1.0',
 });
 
-const Tools = ({
+function Tools({
   doSaveSchema,
   doSaveCredDef,
   schemaId,
@@ -22,7 +22,7 @@ const Tools = ({
   sendingCredDef,
   schemas,
   credDefs,
-}) => {
+}) {
   const defaultCredDefJSON = JSON.stringify({
     schema: {
       id: schemaId || 'schema-id',
@@ -56,7 +56,7 @@ const Tools = ({
       />
     </div>
   );
-};
+}
 
 Tools.propTypes = {
   doSaveSchema: PropTypes.func.isRequired,

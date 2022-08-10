@@ -5,7 +5,7 @@ import PairwiseEditor from '../pairwise-editor';
 import TextField from '../text-input';
 import EditorButtons from '../editor-buttons';
 
-const SendMessage = ({ connections, onSendMessage, sending }) => {
+function SendMessage({ connections, onSendMessage, sending }) {
   const [pairwiseName, setPairwiseName] = useState('');
   const [message, setMessage] = useState('');
   const canResetMessage = !sending && message !== '';
@@ -34,7 +34,7 @@ const SendMessage = ({ connections, onSendMessage, sending }) => {
       />
     </PairwiseEditor>
   );
-};
+}
 
 SendMessage.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,

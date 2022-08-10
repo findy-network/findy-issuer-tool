@@ -11,7 +11,7 @@ const FormControl = styled(FormControlComponent)`
   width: 100%;
 `;
 
-const DropDown = ({ label, value, onValueChange, values, id }) => {
+function DropDown({ label, value, onValueChange, values, id }) {
   const selectValues = values.map((item) =>
     item.id ? item : { id: item, title: item }
   );
@@ -44,7 +44,7 @@ const DropDown = ({ label, value, onValueChange, values, id }) => {
       </FormControl>
     </div>
   );
-};
+}
 
 DropDown.propTypes = {
   value: PropTypes.string,

@@ -21,7 +21,7 @@ const SaveButtonContainer = styled.div`
   justify-content: center;
 `;
 
-const CredEditor = ({ credDefs, onSend, defaultValues, sending }) => {
+function CredEditor({ credDefs, onSend, defaultValues, sending }) {
   const [credDefId, setCredDefId] = useState('');
   const defaultAttributes = [];
   const [attributes, setAttributes] = useState(defaultAttributes);
@@ -128,7 +128,7 @@ const CredEditor = ({ credDefs, onSend, defaultValues, sending }) => {
       />
     </Container>
   );
-};
+}
 
 CredEditor.propTypes = {
   credDefs: PropTypes.arrayOf(PropTypes.string).isRequired,

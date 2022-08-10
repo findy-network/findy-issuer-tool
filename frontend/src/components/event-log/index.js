@@ -26,25 +26,27 @@ const Header = styled(Typography)`
   margin: 0.5rem;
 `;
 
-const EventLog = ({ events }) => (
-  <div>
-    {events.length === 0 ? (
-      <div>No events recorded yet.</div>
-    ) : (
-      <Header>Latest messages received from agency:</Header>
-    )}
-    {events
-      .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1))
-      .map((item) => (
-        <Paper key={item.timestamp}>
-          <Cell>{new Date(item.timestamp).toLocaleString()}</Cell>
-          <Cell>{item.payload.type}</Cell>
-          <Cell>{item.payload.protocol}</Cell>
-          <Cell>{item.payload.status}</Cell>
-        </Paper>
-      ))}
-  </div>
-);
+function EventLog({ events }) {
+  return (
+    <div>
+      {events.length === 0 ? (
+        <div>No events recorded yet.</div>
+      ) : (
+        <Header>Latest messages received from agency:</Header>
+      )}
+      {events
+        .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1))
+        .map((item) => (
+          <Paper key={item.timestamp}>
+            <Cell>{new Date(item.timestamp).toLocaleString()}</Cell>
+            <Cell>{item.payload.type}</Cell>
+            <Cell>{item.payload.protocol}</Cell>
+            <Cell>{item.payload.status}</Cell>
+          </Paper>
+        ))}
+    </div>
+  );
+}
 
 EventLog.propTypes = {
   events: PropTypes.arrayOf(PropTypes.object).isRequired,

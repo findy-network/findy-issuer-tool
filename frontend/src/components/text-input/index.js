@@ -8,16 +8,18 @@ const TextField = styled(TextFieldComponent)`
   width: 30rem;
 `;
 
-const TextInput = ({ onChange, ...props }) => (
-  <TextField
-    multiline
-    rows="10"
-    margin="normal"
-    variant="outlined"
-    onChange={({ target: { value } }) => onChange(value)}
-    {...props}
-  />
-);
+function TextInput({ onChange, ...props }) {
+  return (
+    <TextField
+      multiline
+      rows="10"
+      margin="normal"
+      variant="outlined"
+      onChange={({ target: { value } }) => onChange(value)}
+      {...props}
+    />
+  );
+}
 
 TextInput.propTypes = {
   label: PropTypes.string.isRequired,

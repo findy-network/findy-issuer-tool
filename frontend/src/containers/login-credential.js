@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import LoginCredentialComponent from '../components/login-credential';
 import { fetchFtnInvitation, fetchFtnStatus } from '../store/actions';
 
-const LoginCredential = ({
+function LoginCredential({
   status,
   invitation,
   doFetchFtnInvitation,
   doFetchFtnStatus,
-}) => {
+}) {
   const [invitationFetched, setIinvitationFetched] = useState(false);
   const [pollingStatus, setPollingStatus] = useState(false);
   useEffect(() => {
@@ -25,7 +25,7 @@ const LoginCredential = ({
   });
 
   return <LoginCredentialComponent invitation={invitation} status={status} />;
-};
+}
 
 const mapStateToProps = ({ ftn }) => ({
   invitation: ftn.invitation,

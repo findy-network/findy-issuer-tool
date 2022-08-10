@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 
 import WelcomeComponent from '../components/welcome';
 
-const Welcome = ({ user }) => <WelcomeComponent user={user} />;
+function Welcome({ user }) {
+  return <WelcomeComponent user={user} />;
+}
 
 Welcome.propTypes = {
   user: PropTypes.object.isRequired,

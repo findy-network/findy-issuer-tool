@@ -32,7 +32,7 @@ const QRCode = styled(QRCodeComponent)`
   min-height: 200px;
 `;
 
-const Login = ({ invitation, status }) => {
+function Login({ invitation, status }) {
   const statusComponent = () => {
     switch (status) {
       case 'connected':
@@ -101,7 +101,7 @@ const Login = ({ invitation, status }) => {
       </Container>
     </div>
   );
-};
+}
 
 Login.propTypes = {
   invitation: PropTypes.object,

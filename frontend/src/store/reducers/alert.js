@@ -23,7 +23,7 @@ import {
 
 import initialState from './initial-state';
 
-export default (state = initialState.alert, action) => {
+export default (state = initialState.alert, action = {}) => {
   switch (action.type) {
     case FETCH_CREDENTIAL_FULFILLED:
       return {

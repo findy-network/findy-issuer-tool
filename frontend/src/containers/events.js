@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { fetchEventsLog } from '../store/actions';
 import EventLog from '../components/event-log';
 
-const Events = ({ doFetchEventsLog, events }) => {
+function Events({ doFetchEventsLog, events }) {
   const [updated, setUpdated] = useState(false);
   useEffect(() => {
     if (!updated) {
@@ -14,7 +14,7 @@ const Events = ({ doFetchEventsLog, events }) => {
     }
   });
   return <EventLog events={events} />;
-};
+}
 
 Events.propTypes = {
   doFetchEventsLog: PropTypes.func.isRequired,

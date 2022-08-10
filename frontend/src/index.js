@@ -10,15 +10,17 @@ import Alert from './containers/alert';
 
 const store = configureStore();
 
-const Root = () => (
-  <Provider store={store}>
-    <BrowserRouter>
-      <div>
-        <Alert />
-        <App />
-      </div>
-    </BrowserRouter>
-  </Provider>
-);
+function Root() {
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <div>
+          <Alert />
+          <App />
+        </div>
+      </BrowserRouter>
+    </Provider>
+  );
+}
 
 ReactDOM.render(<Root />, document.getElementById('app'));

@@ -5,21 +5,23 @@ import PropTypes from 'prop-types';
 import RequestProof from '../components/request-proof';
 import { sendProofRequest } from '../store/actions';
 
-const Verify = ({
+function Verify({
   connections,
   credDefs,
   doSendProofRequest,
   defaultValues,
   sendingProofRequest,
-}) => (
-  <RequestProof
-    connections={connections}
-    credDefs={credDefs}
-    defaultValues={defaultValues}
-    onSendProofRequest={doSendProofRequest}
-    sending={sendingProofRequest}
-  />
-);
+}) {
+  return (
+    <RequestProof
+      connections={connections}
+      credDefs={credDefs}
+      defaultValues={defaultValues}
+      onSendProofRequest={doSendProofRequest}
+      sending={sendingProofRequest}
+    />
+  );
+}
 
 Verify.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,

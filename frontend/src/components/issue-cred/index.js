@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import CredEditor from '../cred-editor';
 import PairwiseEditor from '../pairwise-editor';
 
-const IssueCred = ({
+function IssueCred({
   connections,
   credDefs,
   onSendCredential,
   defaultValues,
   sending,
-}) => {
+}) {
   const [pairwiseName, setPairwiseName] = useState('');
   return (
     <PairwiseEditor
@@ -34,7 +34,7 @@ const IssueCred = ({
       />
     </PairwiseEditor>
   );
-};
+}
 
 IssueCred.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,

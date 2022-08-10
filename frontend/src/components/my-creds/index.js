@@ -11,7 +11,7 @@ const CredPaper = styled(Paper)`
   padding: 1rem;
 `;
 
-const MyCreds = (props) => {
+function MyCreds(props) {
   const { connections, credDefs, onSendCredential, user, sending } = props;
 
   const [pairwiseName, setPairwiseName] = useState('');
@@ -71,7 +71,7 @@ const MyCreds = (props) => {
       <FtnCred {...props} sendCredential={onSendCredential} />
     </div>
   );
-};
+}
 
 MyCreds.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,
