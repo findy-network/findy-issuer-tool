@@ -8,7 +8,7 @@ import DropDown from '../drop-down';
 
 const Container = styled.div``;
 
-const PairwiseForm = ({ credDefs, onSend, defaultValues }) => {
+function PairwiseForm({ credDefs, onSend, defaultValues }) {
   const [credDefId, setCredDefId] = useState('');
   const defaultAttributes = '{"attribute":"value"}';
   const [attributes, setAttributes] = useState(defaultAttributes);
@@ -50,7 +50,7 @@ const PairwiseForm = ({ credDefs, onSend, defaultValues }) => {
       />
     </Container>
   );
-};
+}
 
 PairwiseForm.propTypes = {
   credDefs: PropTypes.arrayOf(PropTypes.string).isRequired,

@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { Container, Content } from './style';
 import Menu from '../nav-menu';
 
-const AppContainer = ({ children }) => {
+function AppContainer({ children }) {
   const location = useLocation();
   return (
     <Container>
@@ -13,7 +13,7 @@ const AppContainer = ({ children }) => {
       <Content>{children}</Content>{' '}
     </Container>
   );
-};
+}
 
 AppContainer.propTypes = {
   children: PropTypes.node.isRequired,

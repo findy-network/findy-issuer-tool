@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import MyCreds from '../components/my-creds';
 import { fetchUrl, sendCredential } from '../store/actions';
 
-const Me = ({
+function Me({
   connections,
   credDefs,
   doSendCredential,
@@ -14,18 +14,20 @@ const Me = ({
   sendingCredential,
   config,
   urls,
-}) => (
-  <MyCreds
-    connections={connections}
-    credDefs={credDefs}
-    user={user}
-    onSendCredential={doSendCredential}
-    onFetchUrl={doFetchUrl}
-    sending={sendingCredential}
-    config={config}
-    urls={urls}
-  />
-);
+}) {
+  return (
+    <MyCreds
+      connections={connections}
+      credDefs={credDefs}
+      user={user}
+      onSendCredential={doSendCredential}
+      onFetchUrl={doFetchUrl}
+      sending={sendingCredential}
+      config={config}
+      urls={urls}
+    />
+  );
+}
 
 Me.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,

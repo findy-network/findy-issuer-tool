@@ -5,21 +5,23 @@ import PropTypes from 'prop-types';
 import IssueCred from '../components/issue-cred';
 import { sendCredential } from '../store/actions';
 
-const Issue = ({
+function Issue({
   connections,
   credDefs,
   doSendCredential,
   defaultValues,
   sendingCredential,
-}) => (
-  <IssueCred
-    connections={connections}
-    credDefs={credDefs}
-    defaultValues={defaultValues}
-    onSendCredential={doSendCredential}
-    sending={sendingCredential}
-  />
-);
+}) {
+  return (
+    <IssueCred
+      connections={connections}
+      credDefs={credDefs}
+      defaultValues={defaultValues}
+      onSendCredential={doSendCredential}
+      sending={sendingCredential}
+    />
+  );
+}
 
 Issue.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,

@@ -6,16 +6,18 @@ import { Container, ButtonImage, ExternalLink } from './style';
 
 import ghLogo from '../../../assets/GitHub-Mark-Light-120px-plus.png';
 
-const Login = ({ conf }) => (
-  <Container maxWidth="sm">
-    <ExternalLink href={conf.url}>
-      <Button type="button" fullWidth variant="contained" color="primary">
-        <ButtonImage src={ghLogo} alt="Login with GitHub account" />
-        Log In
-      </Button>
-    </ExternalLink>
-  </Container>
-);
+function Login({ conf }) {
+  return (
+    <Container maxWidth="sm">
+      <ExternalLink href={conf.url}>
+        <Button type="button" fullWidth variant="contained" color="primary">
+          <ButtonImage src={ghLogo} alt="Login with GitHub account" />
+          Log In
+        </Button>
+      </ExternalLink>
+    </Container>
+  );
+}
 
 Login.propTypes = {
   conf: PropTypes.object,

@@ -13,34 +13,36 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const Login = ({ config }) => (
-  <div>
-    <Container>
-      {CONFIG.auth.dev && config.dev && (
-        <LoginComponent
-          url={`${CONFIG.api.url}${config.dev.url}`}
-          label="Dev login"
-        />
-      )}
-      <GitHubLogin conf={config.github} />
-      {config.findy && (
-        <LoginComponent
-          url={config.findy.url}
-          label="Login via credential"
-          helpComponent={
-            <a
-              href="/login-credential"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Typography>No credential yet?</Typography>
-            </a>
-          }
-        />
-      )}
-    </Container>
-  </div>
-);
+function Login({ config }) {
+  return (
+    <div>
+      <Container>
+        {CONFIG.auth.dev && config.dev && (
+          <LoginComponent
+            url={`${CONFIG.api.url}${config.dev.url}`}
+            label="Dev login"
+          />
+        )}
+        <GitHubLogin conf={config.github} />
+        {config.findy && (
+          <LoginComponent
+            url={config.findy.url}
+            label="Login via credential"
+            helpComponent={
+              <a
+                href="/login-credential"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Typography>No credential yet?</Typography>
+              </a>
+            }
+          />
+        )}
+      </Container>
+    </div>
+  );
+}
 
 Login.propTypes = {
   config: PropTypes.object.isRequired,

@@ -31,7 +31,7 @@ import {
 } from '../actions';
 import initialState from './initial-state';
 
-export const user = (state = initialState.user, action) => {
+export const user = (state = initialState.user, action = {}) => {
   switch (action.type) {
     case FETCH_USER_FULFILLED:
       return action.payload || {};
@@ -40,7 +40,7 @@ export const user = (state = initialState.user, action) => {
   }
 };
 
-export const config = (state = initialState.config, action) => {
+export const config = (state = initialState.config, action = {}) => {
   switch (action.type) {
     case FETCH_CONFIG_FULFILLED:
       return action.payload;
@@ -49,7 +49,7 @@ export const config = (state = initialState.config, action) => {
   }
 };
 
-export const ledger = (state = initialState.ledger, action) => {
+export const ledger = (state = initialState.ledger, action = {}) => {
   switch (action.type) {
     case FETCH_LEDGER_FULFILLED:
       return {
@@ -61,7 +61,7 @@ export const ledger = (state = initialState.ledger, action) => {
   }
 };
 
-export const connections = (state = initialState.connections, action) => {
+export const connections = (state = initialState.connections, action = {}) => {
   switch (action.type) {
     case FETCH_CONNECTIONS_FULFILLED:
       return action.payload;
@@ -70,14 +70,14 @@ export const connections = (state = initialState.connections, action) => {
   }
 };
 
-export const token = (state = initialState.token, action) => {
+export const token = (state = initialState.token, action = {}) => {
   switch (action.type) {
     default:
       return state;
   }
 };
 
-export const result = (state = initialState.result, action) => {
+export const result = (state = initialState.result, action = {}) => {
   switch (action.type) {
     case FETCH_PAIRWISE_INVITATION_FULFILLED: {
       return { ...state, pairwiseInvitation: action.payload };
@@ -143,7 +143,7 @@ export const result = (state = initialState.result, action) => {
   }
 };
 
-export const events = (state = initialState.events, action) => {
+export const events = (state = initialState.events, action = {}) => {
   switch (action.type) {
     case FETCH_EVENTS_LOG_FULFILLED: {
       return { ...state, log: action.payload };
@@ -153,7 +153,7 @@ export const events = (state = initialState.events, action) => {
   }
 };
 
-export const ftn = (state = initialState.ftn, action) => {
+export const ftn = (state = initialState.ftn, action = {}) => {
   switch (action.type) {
     case FETCH_FTN_INVITATION_FULFILLED: {
       return { ...state, invitation: action.payload };

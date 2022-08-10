@@ -11,7 +11,7 @@ const Container = styled.div`
   text-align: center;
 `;
 
-const Connect = ({ doFetchPairwiseInvitation, pairwiseInvitation }) => {
+function Connect({ doFetchPairwiseInvitation, pairwiseInvitation }) {
   useEffect(() => {
     if (!pairwiseInvitation) {
       doFetchPairwiseInvitation();
@@ -33,7 +33,7 @@ const Connect = ({ doFetchPairwiseInvitation, pairwiseInvitation }) => {
       )}
     </div>
   );
-};
+}
 
 Connect.propTypes = {
   doFetchPairwiseInvitation: PropTypes.func.isRequired,

@@ -10,7 +10,7 @@ const CredPaper = styled(Paper)`
   padding: 1rem;
 `;
 
-const FtnCred = ({
+function FtnCred({
   connections,
   credDefs,
   onFetchUrl,
@@ -18,7 +18,7 @@ const FtnCred = ({
   urls,
   user,
   sendCredential,
-}) => {
+}) {
   const [ftnPairwiseName, setFtnPairwiseName] = useState('');
   const [urlFetched, setUrlFetched] = useState(false);
   const credDefId = credDefs.find((item) => item.toLowerCase().includes('ftn'));
@@ -92,7 +92,7 @@ const FtnCred = ({
       )}
     </Section>
   );
-};
+}
 
 FtnCred.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,

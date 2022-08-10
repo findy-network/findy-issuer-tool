@@ -20,7 +20,7 @@ import Tools from './tools';
 import Me from './me';
 import { initApp } from '../store/actions';
 
-const App = ({ user, doInitApp }) => {
+function App({ user, doInitApp }) {
   useEffect(() => {
     if (!user) {
       doInitApp();
@@ -58,7 +58,7 @@ const App = ({ user, doInitApp }) => {
       )}
     </div>
   );
-};
+}
 
 App.propTypes = {
   user: PropTypes.object,

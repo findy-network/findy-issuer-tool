@@ -16,22 +16,24 @@ export const Help = styled.span`
   text-align: right;
 `;
 
-const Login = ({ url, label, helpComponent }) => (
-  <Container maxWidth="sm">
-    <a href={url}>
-      <LoginButton
-        id="dev-login-button"
-        type="button"
-        fullWidth
-        variant="contained"
-        color="primary"
-      >
-        {label}
-      </LoginButton>
-    </a>
-    <Help>{helpComponent && helpComponent}</Help>
-  </Container>
-);
+function Login({ url, label, helpComponent }) {
+  return (
+    <Container maxWidth="sm">
+      <a href={url}>
+        <LoginButton
+          id="dev-login-button"
+          type="button"
+          fullWidth
+          variant="contained"
+          color="primary"
+        >
+          {label}
+        </LoginButton>
+      </a>
+      <Help>{helpComponent && helpComponent}</Help>
+    </Container>
+  );
+}
 
 Login.propTypes = {
   url: PropTypes.string,

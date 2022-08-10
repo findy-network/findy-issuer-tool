@@ -39,7 +39,7 @@ const Header = styled(Typography)`
   font-weight: bold !important;
 `;
 
-const CredDefEditor = ({
+function CredDefEditor({
   doSaveEditorItem,
   txnType,
   title,
@@ -48,7 +48,7 @@ const CredDefEditor = ({
   value: result,
   schemas,
   sending,
-}) => {
+}) {
   const defaultValue = {
     schemaId: '',
     tag: '',
@@ -110,7 +110,7 @@ const CredDefEditor = ({
       </div>
     </Container>
   );
-};
+}
 
 CredDefEditor.propTypes = {
   doSaveEditorItem: PropTypes.func.isRequired,

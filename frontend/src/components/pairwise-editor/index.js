@@ -24,7 +24,7 @@ const Header = styled(Typography)`
   font-weight: bold !important;
 `;
 
-const PairwiseEditor = ({
+function PairwiseEditor({
   children,
   connections,
   name,
@@ -32,25 +32,27 @@ const PairwiseEditor = ({
   title,
   description,
   contentHidden,
-}) => (
-  <Container>
-    <Header>{title}</Header>
-    <Description>{description}</Description>
-    <DropDown
-      id="connection-selection"
-      value={name}
-      values={connections.map((item) => ({
-        id: item.id,
-        title: `${item.theirLabel} (${item.id})`,
-      }))}
-      onValueChange={onSetName}
-      label={name ? 'Connection' : 'Select connection'}
-    />
-    <Content id="pairwise-content" visible={name} hidden={contentHidden}>
-      {children}
-    </Content>
-  </Container>
-);
+}) {
+  return (
+    <Container>
+      <Header>{title}</Header>
+      <Description>{description}</Description>
+      <DropDown
+        id="connection-selection"
+        value={name}
+        values={connections.map((item) => ({
+          id: item.id,
+          title: `${item.theirLabel} (${item.id})`,
+        }))}
+        onValueChange={onSetName}
+        label={name ? 'Connection' : 'Select connection'}
+      />
+      <Content id="pairwise-content" visible={name} hidden={contentHidden}>
+        {children}
+      </Content>
+    </Container>
+  );
+}
 
 PairwiseEditor.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.object).isRequired,

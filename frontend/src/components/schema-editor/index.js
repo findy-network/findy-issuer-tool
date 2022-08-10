@@ -40,7 +40,7 @@ const Header = styled(Typography)`
   font-weight: bold !important;
 `;
 
-const SchemaEditor = ({
+function SchemaEditor({
   doSaveEditorItem,
   txnType,
   title,
@@ -48,7 +48,7 @@ const SchemaEditor = ({
   items,
   value: result,
   sending,
-}) => {
+}) {
   const defaultValue = {
     attrs: [],
     name: '',
@@ -153,7 +153,7 @@ const SchemaEditor = ({
       </div>
     </Container>
   );
-};
+}
 
 SchemaEditor.propTypes = {
   doSaveEditorItem: PropTypes.func.isRequired,

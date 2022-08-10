@@ -24,29 +24,31 @@ const CodeContainer = styled.div`
   justify-content: center;
 `;
 
-const QRInfo = ({ value, title }) => (
-  <div>
-    <Typography>{title}</Typography>
-    <TextContainer id="invitation-raw">{value}</TextContainer>
-    {Object.keys(CONFIG.wallets).map((key) => {
-      const item = CONFIG.wallets[key];
-      return (
-        <LinkContainer key={item.label}>
-          <a
-            href={`${item.url}${btoa(encodeURIComponent(value))}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open in {item.label}
-          </a>
-        </LinkContainer>
-      );
-    })}
-    <CodeContainer>
-      <QRCode value={value} size={256} renderAs="svg" />
-    </CodeContainer>
-  </div>
-);
+function QRInfo({ value, title }) {
+  return (
+    <div>
+      <Typography>{title}</Typography>
+      <TextContainer id="invitation-raw">{value}</TextContainer>
+      {Object.keys(CONFIG.wallets).map((key) => {
+        const item = CONFIG.wallets[key];
+        return (
+          <LinkContainer key={item.label}>
+            <a
+              href={`${item.url}${btoa(encodeURIComponent(value))}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open in {item.label}
+            </a>
+          </LinkContainer>
+        );
+      })}
+      <CodeContainer>
+        <QRCode value={value} size={256} renderAs="svg" />
+      </CodeContainer>
+    </div>
+  );
+}
 
 QRInfo.propTypes = {
   value: PropTypes.string.isRequired,

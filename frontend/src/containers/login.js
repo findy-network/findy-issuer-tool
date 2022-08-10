@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 
 import LoginComponent from '../components/login';
 
-const Login = ({ config }) => {
+function Login({ config }) {
   if (config) {
     return <LoginComponent config={config ? config.auth : {}} />;
   }
-  return <></>;
-};
+  return <div />;
+}
 
 const mapStateToProps = ({ config }) => ({
   config,

@@ -7,13 +7,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { Link, ListItem } from './style';
 
-const LinkItem = ({ path, activePath, label, id }) => (
-  <Link to={path} id={id}>
-    <ListItem button activeItem={path === activePath}>
-      <ListItemText primary={label} />
-    </ListItem>
-  </Link>
-);
+function LinkItem({ path, activePath, label, id }) {
+  return (
+    <Link to={path} id={id}>
+      <ListItem button activeItem={path === activePath}>
+        <ListItemText primary={label} />
+      </ListItem>
+    </Link>
+  );
+}
 
 LinkItem.propTypes = {
   path: PropTypes.string.isRequired,
@@ -22,43 +24,45 @@ LinkItem.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
-const NavMenu = (props) => (
-  <Paper>
-    <List>
-      <LinkItem
-        id="events-link-item"
-        path="/events"
-        label="Events"
-        {...props}
-      />
-      <LinkItem
-        id="connect-link-item"
-        path="/connect"
-        label="Connect"
-        {...props}
-      />
-      <LinkItem
-        id="message-link-item"
-        path="/message"
-        label="Message"
-        {...props}
-      />
-      <LinkItem id="issue-link-item" path="/issue" label="Issue" {...props} />
-      <LinkItem
-        id="verify-link-item"
-        path="/verify"
-        label="Verify"
-        {...props}
-      />
-      <LinkItem id="tools-link-item" path="/tools" label="Tools" {...props} />
-      <LinkItem
-        id="my-creds-link-item"
-        path="/me"
-        label="My creds"
-        {...props}
-      />
-    </List>
-  </Paper>
-);
+function NavMenu(props) {
+  return (
+    <Paper>
+      <List>
+        <LinkItem
+          id="events-link-item"
+          path="/events"
+          label="Events"
+          {...props}
+        />
+        <LinkItem
+          id="connect-link-item"
+          path="/connect"
+          label="Connect"
+          {...props}
+        />
+        <LinkItem
+          id="message-link-item"
+          path="/message"
+          label="Message"
+          {...props}
+        />
+        <LinkItem id="issue-link-item" path="/issue" label="Issue" {...props} />
+        <LinkItem
+          id="verify-link-item"
+          path="/verify"
+          label="Verify"
+          {...props}
+        />
+        <LinkItem id="tools-link-item" path="/tools" label="Tools" {...props} />
+        <LinkItem
+          id="my-creds-link-item"
+          path="/me"
+          label="My creds"
+          {...props}
+        />
+      </List>
+    </Paper>
+  );
+}
 
 export default NavMenu;
