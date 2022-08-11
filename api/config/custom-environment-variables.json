@@ -1,5 +1,6 @@
 {
   "ourHost": "ISSUER_TOOL_OUR_HOST",
+  "onboardWaitTime": "ISSUER_TOOL_ONBOARD_WAIT_TIME",
   "skipDefaultCredDefs": "ISSUER_TOOL_SKIP_DEFAULT_CRED_DEFS",
   "defaultWalletUrl": "ISSUER_TOOL_DEFAULT_WALLET_URL",
   "storage": {
