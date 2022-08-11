@@ -14,6 +14,8 @@ import { writeFileSync, mkdirSync } from "fs";
 import { execSync } from "child_process";
 
 import { InfraPipelineStage } from "./pipeline-stage";
+import { NotificationRule } from "aws-cdk-lib/aws-codestarnotifications";
+import { Topic } from "aws-cdk-lib/aws-sns";
 
 interface InfraPipelineProperties extends cdk.StackProps {
   skipConfigCopy?: boolean;
@@ -65,8 +67,23 @@ export class InfraPipelineStack extends cdk.Stack {
     // Add deployment test step
     deployStage.addPost(this.createPostDeploymentTestStep(frontDeployStep));
 
+    // need this to add the notification rule
+    pipeline.buildPipeline();
+
+    new NotificationRule(this, "FindyIssuerToolPipelineNotificationRule", {
+      source: pipeline.pipeline,
+      events: [
+        "codepipeline-pipeline-pipeline-execution-failed",
+        "codepipeline-pipeline-pipeline-execution-canceled",
+        "codepipeline-pipeline-pipeline-execution-started",
+        "codepipeline-pipeline-pipeline-execution-resumed",
+        "codepipeline-pipeline-pipeline-execution-succeeded",
+      ],
+      targets: [new Topic(this, "FindyIssuerToolPipelineNotificationTopic")],
+    });
+
     // manually adjust logs retention
-    pipeline.node.findAll().forEach((construct, index) => {
+    this.node.findAll().forEach((construct, index) => {
       if (construct instanceof codebuild.Project) {
         new logs.LogRetention(this, `LogRetention${index}`, {
           logGroupName: `/aws/codebuild/${construct.projectName}`,
@@ -200,8 +217,8 @@ export class InfraPipelineStack extends cdk.Stack {
     ebPolicy.addResources("*");
     deployRole.addToPolicy(ebPolicy);
 
-    return new CodeBuildStep("DeployBackendStep", {
-      projectName: "DeployBackend",
+    return new CodeBuildStep("FindyIssuerToolDeployBackendStep", {
+      projectName: "FindyIssuerToolDeployBackend",
       commands: [
         `VERSION="$(./infra/tools/version.sh ./api)-$(date +%s)"`,
         `aws elasticbeanstalk create-application-version --application-name $APP_NAME --version-label $VERSION --source-bundle S3Bucket=$CONF_BUCKET_NAME,S3Key=Dockerrun.zip`,
@@ -216,8 +233,8 @@ export class InfraPipelineStack extends cdk.Stack {
   }
 
   createFrontendBuildStep() {
-    return new CodeBuildStep("BuildFrontendStep", {
-      projectName: "BuildFrontend",
+    return new CodeBuildStep("FindyIssuerToolBuildFrontendStep", {
+      projectName: "FindyIssuerToolBuildFrontend",
       commands: [
         "apk add bash",
         "cd frontend",
@@ -248,9 +265,9 @@ export class InfraPipelineStack extends cdk.Stack {
   }
 
   createFrontendDeployStep(frontBuildStep: CodeBuildStep) {
-    return new CodeBuildStep("DeployFrontendStep", {
+    return new CodeBuildStep("FindyIssuerToolDeployFrontendStep", {
       input: frontBuildStep.primaryOutput,
-      projectName: "DeployFrontend",
+      projectName: "FindyIssuerToolDeployFrontend",
       commands: [
         `V1=$(curl https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt)`,
         `V2=$(cat ./version.txt)`,
@@ -267,9 +284,9 @@ export class InfraPipelineStack extends cdk.Stack {
   }
 
   createPostDeploymentTestStep(frontDeployStep: CodeBuildStep) {
-    return new CodeBuildStep("DeploymentTest", {
+    return new CodeBuildStep("FindyIssuerToolDeploymentTest", {
       input: frontDeployStep.primaryOutput,
-      projectName: "DeploymentTest",
+      projectName: "FindyIssuerToolDeploymentTest",
       // TODO: make more extensive tests
       commands: [
         `curl -sI https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt | grep "HTTP/2 200"`,
