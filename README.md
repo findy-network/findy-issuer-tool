@@ -55,7 +55,7 @@ App authenticates to [agency](https://github.com/findy-network/findy-agent) usin
 
    1. Declare agency configuration using environment variables or configuration file (check ./config/default.json).
 
-      Following settings are mandatory for successful agency connection:
+      Following settings are mandatory for a successful connection to cloud agency:
 
       ```sh
       export ISSUER_TOOL_AGENCY_AUTH_URL=<agency auth service URL e.g. https://agency.example.com>
@@ -77,18 +77,23 @@ App authenticates to [agency](https://github.com/findy-network/findy-agent) usin
          "key": "15308490f1e4026284594dd08d31291bc8ef2aeac730d0daf6ff87bb92d4336c",
          "serverAddress": "localhost",
          "serverPort": 50052,
-         "certPath": "../tools/local-cert",
          "verifyServerIdentity": true
       }
       ```
 
-      Note:
+      Note that the cert path needs to be set explicitly when connecting to the local agency:
+
+      ```sh
+      export ISSUER_TOOL_SERVER_CERT_PATH="../tools/local-cert"
+      ```
+
+      Also note:
 
       - the key value is your agency authenticator master key and should be kept secret in production environment.
       - the auth origin is usually needed only in development setup where wallet app and authentication service resides in different domains
       - more info for GRPC errors can be revealed setting following env variables:
 
-        ```shell
+        ```sh
         export GRPC_VERBOSITY=debug
         export GRPC_TRACE=all
         ```

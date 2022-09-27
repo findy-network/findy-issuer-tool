@@ -26,7 +26,6 @@ describe("Issuer Tool", function () {
       .click("#dev-login-button")
       .waitForElementVisible("#events-link-item")
       .assert.textContains("h6", "Issuer Tool")
-      .end();
   });
 
   it("pairwise is done", function (browser) {
@@ -58,7 +57,6 @@ describe("Issuer Tool", function () {
           .waitForElementVisible(confirmBtn)
           .click(confirmBtn)
           .waitForElementVisible(issuerToolLabel)
-          .end();
       });
   });
 
@@ -90,7 +88,6 @@ describe("Issuer Tool", function () {
           .setValue("#cred-def-tag", "issuer-tool")
           .click("#cred-def-save-button")
           .waitForElementVisible("#cred-def-link", 60000)
-          .end();
       });
   });
 
@@ -132,7 +129,6 @@ describe("Issuer Tool", function () {
       .click(walletLink)
       .useCss()
       .waitForElementVisible(credIcon)
-      .end();
   });
 
   it("cred is verified", function (browser) {
@@ -169,6 +165,5 @@ describe("Issuer Tool", function () {
       .click(acceptBtn)
       .useXpath()
       .waitForElementVisible(proofSuccess)
-      .end();
   });
 });
