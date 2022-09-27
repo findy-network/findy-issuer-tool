@@ -181,4 +181,4 @@ for acquiring the login credential.
 
 ## Infra
 
-See folder [./infra](./infra/README.md) for AWS setup scripts.
+See folder [./infra](./infra/README.md) for AWS setup scripts with AWS CDK.
