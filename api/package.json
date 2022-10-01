@@ -57,7 +57,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.18.10",
+    "@babel/cli": "^7.19.3",
     "@babel/core": "^7.18.10",
     "@babel/node": "^7.19.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.17.3",
