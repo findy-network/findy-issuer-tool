@@ -43,7 +43,6 @@ jobs:
           context: ./api
           file: ./api/Dockerfile
           build-args: |
-            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
             ISSUER_TOOL_SERVER_CERT_PATH=
 
   merge:

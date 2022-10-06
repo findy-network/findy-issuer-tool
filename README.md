@@ -43,13 +43,10 @@ App authenticates to [agency](https://github.com/findy-network/findy-agent) usin
 
 1. **Start backend server**
 
-   1. [Setup](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token) GitHub package registry authentication
-
    1. Install dependencies
 
       ```sh
       cd api
-      echo "@findy-network:registry=https://npm.pkg.github.com" >> .npmrc
       npm install
       ```
 
