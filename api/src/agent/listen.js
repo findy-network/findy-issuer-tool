@@ -69,6 +69,9 @@ export default async (agentClient, protocolClient, storage, ftnService) => {
   };
 
   const saveEvent = async (status) => {
+    const getValueName = (obj, code) =>
+      Object.keys(obj).find((item) => obj[item] === code);
+
     const notification = status.agent.getNotification();
     const protocolStatus = status.protocol;
     const state = protocolStatus.getState().getState();
@@ -89,20 +92,20 @@ export default async (agentClient, protocolClient, storage, ftnService) => {
       id: notification.getProtocolid(),
       status: statusName,
     });
-  }
-
-  const getValueName = (obj, code) =>
-    Object.keys(obj).find((item) => obj[item] === code);
+  };
 
   // infinite listener
   await agentClient.startListening(
     async (status) => {
-      saveEvent(status)
-      statusParser({
-        DIDExchangeDone: (info, didExchange) => handlePairwise(didExchange),
-        PresentProofPaused: handleProofPaused,
-        IssueCredentialDone: (info) => handleCredentialDone(info),
-      }, status);
+      await saveEvent(status);
+      statusParser(
+        {
+          DIDExchangeDone: (info, didExchange) => handlePairwise(didExchange),
+          PresentProofPaused: handleProofPaused,
+          IssueCredentialDone: (info) => handleCredentialDone(info),
+        },
+        status,
+      );
     },
     {
       protocolClient,
