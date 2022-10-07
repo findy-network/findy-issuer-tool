@@ -849,11 +849,15 @@ Object {
                   "Version": "1",
                 },
                 "Configuration": Object {
+                  "PrimarySource": "findy_network_findy_issuer_tool_Source",
                   "ProjectName": Object {
                     "Ref": "PipelineDeployFindyIssuerToolDeploymentTest826DD53C",
                   },
                 },
                 "InputArtifacts": Array [
+                  Object {
+                    "Name": "findy_network_findy_issuer_tool_Source",
+                  },
                   Object {
                     "Name": "FindyIssuerToolDeployFrontendStep_Output",
                   },
@@ -2367,10 +2371,15 @@ Object {
           "BuildSpec": "{
   \\"version\\": \\"0.2\\",
   \\"phases\\": {
+    \\"install\\": {
+      \\"commands\\": [
+        \\"[ ! -d \\\\\\"out\\\\\\" ] || { echo 'additionalInputs: \\\\\\"out\\\\\\" must not exist yet. If you want to merge multiple artifacts, use a \\\\\\"cp\\\\\\" command.'; exit 1; } && ln -s -- \\\\\\"$CODEBUILD_SRC_DIR_FindyIssuerToolDeployFrontendStep_Output\\\\\\" \\\\\\"out\\\\\\"\\"
+      ]
+    },
     \\"build\\": {
       \\"commands\\": [
         \\"curl -sI https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt | grep \\\\\\"HTTP/2 200\\\\\\"\\",
-        \\"curl -sI https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/user | grep \\\\\\"HTTP/2 401\\\\\\"\\"
+        \\"./infra/tools/wait-for-ready.sh\\"
       ]
     }
   }

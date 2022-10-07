@@ -22,30 +22,42 @@ interface InfraPipelineProperties extends cdk.StackProps {
 }
 
 const environmentVariables: Record<string, codebuild.BuildEnvironmentVariable> =
-  {
-    DOMAIN_NAME: {
-      type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
-      value: "/findy-issuer-tool/domain-name",
-    },
-    SUB_DOMAIN_NAME: {
-      type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
-      value: "/findy-issuer-tool/sub-domain-name",
-    },
-    WALLET_DOMAIN_NAME: {
-      type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
-      value: "/findy-issuer-tool/wallet-domain-name",
-    },
-  };
+{
+  DOMAIN_NAME: {
+    type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
+    value: "/findy-issuer-tool/domain-name",
+  },
+  SUB_DOMAIN_NAME: {
+    type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
+    value: "/findy-issuer-tool/sub-domain-name",
+  },
+  WALLET_DOMAIN_NAME: {
+    type: codebuild.BuildEnvironmentVariableType.PARAMETER_STORE,
+    value: "/findy-issuer-tool/wallet-domain-name",
+  },
+};
 
 export class InfraPipelineStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: InfraPipelineProperties) {
     super(scope, id, props);
 
+    const githubConnectionArn = StringParameter.valueForStringParameter(
+      this,
+      "/findy-issuer-tool/github-connection-arn"
+    );
+    const source = CodePipelineSource.connection(
+      "findy-network/findy-issuer-tool",
+      "master",
+      {
+        connectionArn: githubConnectionArn, // Created using the AWS console
+      }
+    )
+
     // Create configuration bucket for storing EB configuration files
     const confBucket = this.createConfigBucket(id, props.skipConfigCopy);
 
     // Create pipeline
-    const pipeline = this.createPipeline(confBucket);
+    const pipeline = this.createPipeline(confBucket, source);
 
     // Add app to pipeline
     const deploy = new InfraPipelineStage(this, "Deploy", {
@@ -65,7 +77,7 @@ export class InfraPipelineStack extends cdk.Stack {
     deployStage.addPost(frontDeployStep);
 
     // Add deployment test step
-    deployStage.addPost(this.createPostDeploymentTestStep(frontDeployStep));
+    deployStage.addPost(this.createPostDeploymentTestStep(frontDeployStep, source));
 
     // need this to add the notification rule
     pipeline.buildPipeline();
@@ -129,22 +141,11 @@ export class InfraPipelineStack extends cdk.Stack {
     return confBucket;
   }
 
-  createPipeline(confBucket: IBucket) {
-    const githubConnectionArn = StringParameter.valueForStringParameter(
-      this,
-      "/findy-issuer-tool/github-connection-arn"
-    );
-
+  createPipeline(confBucket: IBucket, source: CodePipelineSource) {
     const pipeline = new CodePipeline(this, "Pipeline", {
       pipelineName: "FindyIssuerToolPipeline",
       synth: new CodeBuildStep("SynthStep", {
-        input: CodePipelineSource.connection(
-          "findy-network/findy-issuer-tool",
-          "master",
-          {
-            connectionArn: githubConnectionArn, // Created using the AWS console
-          }
-        ),
+        input: source,
         installCommands: ["npm install -g aws-cdk"],
         buildEnvironment: {
           environmentVariables: {
@@ -283,14 +284,15 @@ export class InfraPipelineStack extends cdk.Stack {
     });
   }
 
-  createPostDeploymentTestStep(frontDeployStep: CodeBuildStep) {
+  createPostDeploymentTestStep(frontDeployStep: CodeBuildStep, source: CodePipelineSource) {
     return new CodeBuildStep("FindyIssuerToolDeploymentTest", {
-      input: frontDeployStep.primaryOutput,
+      input: source,
+      additionalInputs: { out: frontDeployStep.primaryOutput! },
       projectName: "FindyIssuerToolDeploymentTest",
       // TODO: make more extensive tests
       commands: [
         `curl -sI https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt | grep "HTTP/2 200"`,
-        `curl -sI https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/user | grep "HTTP/2 401"`, // User should be unauthorized
+        `./infra/tools/wait-for-ready.sh`,
       ],
     });
   }
