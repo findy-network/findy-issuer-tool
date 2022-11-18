@@ -87,5 +87,6 @@ const scan = async (packageJsonPath, reportPath) => {
   } else {
     await scan("./api/package.json");
     await scan("./frontend/package.json");
+    await scan("./infra/package.json");
   }
 })();
