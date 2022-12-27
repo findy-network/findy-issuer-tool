@@ -80,7 +80,7 @@ Object {
       },
       "Type": "AWS::SNS::TopicPolicy",
     },
-    "LogRetention24A64A1B58": Object {
+    "LogRetention260F545388": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -103,7 +103,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention3872C4DCFD": Object {
+    "LogRetention4129643683": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -126,7 +126,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention45623AAC83": Object {
+    "LogRetention497DA7D03A": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -149,7 +149,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention4868A8D056": Object {
+    "LogRetention5234559EEF": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -172,7 +172,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention551F0A7C82": Object {
+    "LogRetention6021F63EBB": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -195,7 +195,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention719F3AAC11": Object {
+    "LogRetention7861E85E38": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -218,7 +218,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention82BE3E71E1": Object {
+    "LogRetention9157B2F0C5": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
