@@ -83,7 +83,7 @@
     "prettier": "^2.5.1",
     "react-test-renderer": "^18.1.0",
     "rimraf": "3.0.2",
-    "source-map-loader": "^3.0.1",
+    "source-map-loader": "^4.0.1",
     "svg-url-loader": "^8.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.75.0",
