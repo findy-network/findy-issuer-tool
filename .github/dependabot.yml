@@ -3,20 +3,20 @@ updates:
   - package-ecosystem: npm
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "daily"
     target-branch: "dev"
   - package-ecosystem: npm
     directory: "/api"
     schedule:
-      interval: "monthly"
+      interval: "daily"
     target-branch: "dev"
   - package-ecosystem: npm
     directory: "/frontend"
     schedule:
-      interval: "monthly"
+      interval: "daily"
     target-branch: "dev"
   - package-ecosystem: npm
     directory: "/infra"
     schedule:
-      interval: "monthly"
+      interval: "daily"
     target-branch: "dev"
