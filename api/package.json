@@ -42,7 +42,7 @@
     "@babel/runtime": "^7.20.13",
     "@findy-network/findy-common-ts": "^0.2.6",
     "aws-sdk": "^2.1303.0",
-    "axios": "^1.2.5",
+    "axios": "^1.2.6",
     "config": "^3.3.9",
     "cors": "^2.8.5",
     "express": "^4.18.2",
