@@ -14,7 +14,7 @@
     "pipeline:context": "JSON=$(cat cdk.context.json) && aws ssm put-parameter --overwrite --name \"/findy-issuer-tool/cdk-context\" --value \"$JSON\" --type String"
   },
   "devDependencies": {
-    "aws-cdk": "2.63.2",
+    "aws-cdk": "2.64.0",
     "@types/jest": "^26.0.10",
     "@types/node": "18.13.0",
     "jest": "^26.4.2",
