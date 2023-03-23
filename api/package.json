@@ -72,6 +72,6 @@
     "jest": "^29.5.0",
     "npm-outdated-to-latest": "^1.0.6",
     "prettier": "^2.8.6",
-    "rimraf": "^4.4.0"
+    "rimraf": "^4.4.1"
   }
 }
