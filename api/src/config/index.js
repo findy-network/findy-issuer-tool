@@ -1,6 +1,6 @@
+import { writeFileSync } from 'fs';
 import defaultConfig from 'config';
 import AWS from 'aws-sdk';
-import { writeFileSync } from 'fs';
 import log from '../log';
 
 export default async () => {

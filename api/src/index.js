@@ -1,10 +1,10 @@
+import crypto from 'crypto';
 import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
 import { expressjwt as jwt } from 'express-jwt';
 import { Validator } from 'express-json-validator-middleware';
 import session from 'express-session';
-import crypto from 'crypto';
 
 import log from './log';
 import agent from './agent';
