@@ -13,7 +13,7 @@ export default () => {
   const store = createStore(
     createRootReducer(),
     /* preloadedState, */
-    composeEnhancers(applyMiddleware(epicMiddleware))
+    composeEnhancers(applyMiddleware(epicMiddleware)),
   );
 
   epicMiddleware.run(rootEpic);

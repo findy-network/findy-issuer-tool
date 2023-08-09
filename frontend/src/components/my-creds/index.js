@@ -16,7 +16,7 @@ function MyCreds(props) {
 
   const [pairwiseName, setPairwiseName] = useState('');
   const credDefId = credDefs.find((item) =>
-    item.toLowerCase().includes('github')
+    item.toLowerCase().includes('github'),
   );
   const { name, id, email } = user;
   return (

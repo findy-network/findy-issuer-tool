@@ -8,7 +8,7 @@ function LedgerLink({ value, txnType, id }) {
       href={`${
         CONFIG.ledger.browserUrl
       }/browse/domain?page=1&query=${encodeURIComponent(
-        value
+        value,
       )}&txn_type=${txnType}`}
       target="_blank"
       rel="noopener noreferrer"

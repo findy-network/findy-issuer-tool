@@ -13,7 +13,7 @@ const FormControl = styled(FormControlComponent)`
 
 function DropDown({ label, value, onValueChange, values, id }) {
   const selectValues = values.map((item) =>
-    item.id ? item : { id: item, title: item }
+    item.id ? item : { id: item, title: item },
   );
 
   return (

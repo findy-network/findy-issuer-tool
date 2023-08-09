@@ -90,7 +90,7 @@ function SchemaEditor({
                 setValue({
                   ...value,
                   attrs: value.attrs.map((attrItem, itemIndex) =>
-                    itemIndex === index ? attr : attrItem
+                    itemIndex === index ? attr : attrItem,
                   ),
                 })
               }
@@ -114,7 +114,7 @@ function SchemaEditor({
                   schema.version !== defaultValue.version ||
                   schema.attrs.length !== 0 ||
                   schema.attrs.find(
-                    (item, index) => item !== defaultValue.attrs[index]
+                    (item, index) => item !== defaultValue.attrs[index],
                   )
                 );
               })() || false
