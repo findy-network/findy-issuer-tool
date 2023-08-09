@@ -1,5 +1,5 @@
-import { Issuer, generators } from 'openid-client';
 import { createHash } from 'crypto';
+import { Issuer, generators } from 'openid-client';
 
 import log from '../../log';
 
