@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import QRCode from 'qrcode.react';
 import styled from 'styled-components';
 
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 const LinkContainer = styled(Typography)`
   text-align: center;

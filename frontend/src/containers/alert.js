@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Alert as AlertContainer } from '@material-ui/lab';
+import { Alert as AlertContainer } from '@mui/lab';
 import styled from 'styled-components';
 
 const AlertComponent = styled(AlertContainer)`
@@ -20,9 +20,8 @@ function Alert({ alert }) {
           variant="filled"
           severity={alert.severity}
         >
-          {`${alert.description} ${
-            alert.reason ? `(${JSON.stringify(alert.reason)})` : ''
-          }`}
+          {`${alert.description} ${alert.reason ? `(${JSON.stringify(alert.reason)})` : ''
+            }`}
         </AlertComponent>
       )}
     </div>

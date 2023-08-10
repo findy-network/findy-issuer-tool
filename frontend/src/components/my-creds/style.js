@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Typography, Button as BaseButton } from '@material-ui/core';
+import { Typography, Button as BaseButton } from '@mui/material';
 
 export const Header = styled(Typography)`
   margin: 1rem 0 !important;

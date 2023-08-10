@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import MUIContainer from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
+import MUIContainer from '@mui/material/Container';
+import Button from '@mui/material/Button';
 
 export const Container = styled(MUIContainer)`
   margin-top: 3rem;

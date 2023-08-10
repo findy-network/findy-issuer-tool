@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import PaperComponent from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import PaperComponent from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 const Paper = styled(PaperComponent)`
   display: flex;

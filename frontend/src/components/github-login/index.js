@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import { Container, ButtonImage, ExternalLink } from './style';
 
 import ghLogo from '../../../assets/GitHub-Mark-Light-120px-plus.png';

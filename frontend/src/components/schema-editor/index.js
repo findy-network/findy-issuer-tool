@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import LedgerLink from '../ledger-link';
 import TextField from '../text-input';
 import EditorButtons from '../editor-buttons';

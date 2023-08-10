@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import TextFieldComponent from '@material-ui/core/TextField';
+import TextFieldComponent from '@mui/material/TextField';
 
 const TextField = styled(TextFieldComponent)`
   width: 30rem;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import MUIContainer from '@material-ui/core/Container';
+import MUIContainer from '@mui/material/Container';
 
 export const Container = styled(MUIContainer)`
   margin-top: 3rem;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import BaseButton from '@material-ui/core/Button';
+import BaseButton from '@mui/material/Button';
 
 const ButtonContainer = styled.div`
   margin-bottom: 1rem;
