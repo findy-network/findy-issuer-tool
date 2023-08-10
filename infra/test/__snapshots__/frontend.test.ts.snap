@@ -1,38 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Frontend Created 1`] = `
-Object {
-  "Mappings": Object {
-    "AWSCloudFrontPartitionHostedZoneIdMap": Object {
-      "aws": Object {
+{
+  "Mappings": {
+    "AWSCloudFrontPartitionHostedZoneIdMap": {
+      "aws": {
         "zoneId": "Z2FDTNDATAQYW2",
       },
-      "aws-cn": Object {
+      "aws-cn": {
         "zoneId": "Z3RFFRIM2A3IF5",
       },
     },
   },
-  "Parameters": Object {
-    "BootstrapVersion": Object {
+  "Parameters": {
+    "BootstrapVersion": {
       "Default": "/cdk-bootstrap/hnb659fds/version",
       "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
       "Type": "AWS::SSM::Parameter::Value<String>",
     },
   },
-  "Resources": Object {
-    "MyTestFrontendMyTestFrontendarecord2122C282": Object {
-      "Properties": Object {
-        "AliasTarget": Object {
-          "DNSName": Object {
-            "Fn::GetAtt": Array [
+  "Resources": {
+    "MyTestFrontendMyTestFrontendarecord2122C282": {
+      "Properties": {
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
               "MyTestFrontendMyTestFrontenddistributionCFDistributionE6F8BA69",
               "DomainName",
             ],
           },
-          "HostedZoneId": Object {
-            "Fn::FindInMap": Array [
+          "HostedZoneId": {
+            "Fn::FindInMap": [
               "AWSCloudFrontPartitionHostedZoneIdMap",
-              Object {
+              {
                 "Ref": "AWS::Partition",
               },
               "zoneId",
@@ -45,17 +45,17 @@ Object {
       },
       "Type": "AWS::Route53::RecordSet",
     },
-    "MyTestFrontendMyTestFrontendbucketE6268FCD": Object {
+    "MyTestFrontendMyTestFrontendbucketE6268FCD": {
       "DeletionPolicy": "Delete",
-      "Properties": Object {
+      "Properties": {
         "BucketName": "myapp.example.com",
-        "PublicAccessBlockConfiguration": Object {
+        "PublicAccessBlockConfiguration": {
           "BlockPublicAcls": true,
           "BlockPublicPolicy": true,
           "IgnorePublicAcls": true,
           "RestrictPublicBuckets": true,
         },
-        "WebsiteConfiguration": Object {
+        "WebsiteConfiguration": {
           "ErrorDocument": "index.html",
           "IndexDocument": "index.html",
         },
@@ -63,30 +63,30 @@ Object {
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Delete",
     },
-    "MyTestFrontendMyTestFrontendbucketPolicyEBF483A8": Object {
-      "Properties": Object {
-        "Bucket": Object {
+    "MyTestFrontendMyTestFrontendbucketPolicyEBF483A8": {
+      "Properties": {
+        "Bucket": {
           "Ref": "MyTestFrontendMyTestFrontendbucketE6268FCD",
         },
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "s3:GetObject*",
               "Effect": "Allow",
-              "Principal": Object {
-                "CanonicalUser": Object {
-                  "Fn::GetAtt": Array [
+              "Principal": {
+                "CanonicalUser": {
+                  "Fn::GetAtt": [
                     "MyTestFrontendMyTestFrontendoriginaccessidentity60A8D7A4",
                     "S3CanonicalUserId",
                   ],
                 },
               },
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
-                    Object {
-                      "Fn::GetAtt": Array [
+                  [
+                    {
+                      "Fn::GetAtt": [
                         "MyTestFrontendMyTestFrontendbucketE6268FCD",
                         "Arn",
                       ],
@@ -96,41 +96,41 @@ Object {
                 ],
               },
             },
-            Object {
+            {
               "Action": "s3:ListBucket",
               "Effect": "Allow",
-              "Principal": Object {
-                "CanonicalUser": Object {
-                  "Fn::GetAtt": Array [
+              "Principal": {
+                "CanonicalUser": {
+                  "Fn::GetAtt": [
                     "MyTestFrontendMyTestFrontendoriginaccessidentity60A8D7A4",
                     "S3CanonicalUserId",
                   ],
                 },
               },
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "MyTestFrontendMyTestFrontendbucketE6268FCD",
                   "Arn",
                 ],
               },
             },
-            Object {
+            {
               "Action": "s3:GetObject",
               "Effect": "Allow",
-              "Principal": Object {
-                "CanonicalUser": Object {
-                  "Fn::GetAtt": Array [
+              "Principal": {
+                "CanonicalUser": {
+                  "Fn::GetAtt": [
                     "MyTestFrontendMyTestFrontendoriginaccessidentity60A8D7A4",
                     "S3CanonicalUserId",
                   ],
                 },
               },
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
-                    Object {
-                      "Fn::GetAtt": Array [
+                  [
+                    {
+                      "Fn::GetAtt": [
                         "MyTestFrontendMyTestFrontendbucketE6268FCD",
                         "Arn",
                       ],
@@ -146,19 +146,19 @@ Object {
       },
       "Type": "AWS::S3::BucketPolicy",
     },
-    "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunction822D86CA": Object {
-      "DependsOn": Array [
+    "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunction822D86CA": {
+      "DependsOn": [
         "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunctionServiceRoleDefaultPolicy1719F132",
         "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunctionServiceRole586510A7",
       ],
-      "Properties": Object {
-        "Code": Object {
+      "Properties": {
+        "Code": {
           "S3Bucket": "cdk-hnb659fds-assets-123456789012-us-east-1",
           "S3Key": "861509f9607aa6bb9fd7034fb10fe6f0c60d91dfd7f010b9ef666869dec9bbd9.zip",
         },
         "Handler": "index.certificateRequestHandler",
-        "Role": Object {
-          "Fn::GetAtt": Array [
+        "Role": {
+          "Fn::GetAtt": [
             "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunctionServiceRole586510A7",
             "Arn",
           ],
@@ -168,27 +168,27 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunctionServiceRole586510A7": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunctionServiceRole586510A7": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
           ],
           "Version": "2012-10-17",
         },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "arn:",
-                Object {
+                {
                   "Ref": "AWS::Partition",
                 },
                 ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
@@ -199,12 +199,12 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunctionServiceRoleDefaultPolicy1719F132": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunctionServiceRoleDefaultPolicy1719F132": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "acm:RequestCertificate",
                 "acm:DescribeCertificate",
                 "acm:DeleteCertificate",
@@ -213,35 +213,35 @@ Object {
               "Effect": "Allow",
               "Resource": "*",
             },
-            Object {
+            {
               "Action": "route53:GetChange",
               "Effect": "Allow",
               "Resource": "*",
             },
-            Object {
+            {
               "Action": "route53:changeResourceRecordSets",
-              "Condition": Object {
-                "ForAllValues:StringEquals": Object {
-                  "route53:ChangeResourceRecordSetsActions": Array [
+              "Condition": {
+                "ForAllValues:StringEquals": {
+                  "route53:ChangeResourceRecordSetsActions": [
                     "UPSERT",
                   ],
-                  "route53:ChangeResourceRecordSetsRecordTypes": Array [
+                  "route53:ChangeResourceRecordSetsRecordTypes": [
                     "CNAME",
                   ],
                 },
-                "ForAllValues:StringLike": Object {
-                  "route53:ChangeResourceRecordSetsNormalizedRecordNames": Array [
+                "ForAllValues:StringLike": {
+                  "route53:ChangeResourceRecordSetsNormalizedRecordNames": [
                     "*.myapp.example.com",
                   ],
                 },
               },
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":route53:::hostedzone/DUMMY",
@@ -253,22 +253,22 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunctionServiceRoleDefaultPolicy1719F132",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunctionServiceRole586510A7",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "MyTestFrontendMyTestFrontendcertificateCertificateRequestorResource3D675D18": Object {
+    "MyTestFrontendMyTestFrontendcertificateCertificateRequestorResource3D675D18": {
       "DeletionPolicy": "Delete",
-      "Properties": Object {
+      "Properties": {
         "DomainName": "myapp.example.com",
         "HostedZoneId": "DUMMY",
         "Region": "us-east-1",
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
+        "ServiceToken": {
+          "Fn::GetAtt": [
             "MyTestFrontendMyTestFrontendcertificateCertificateRequestorFunction822D86CA",
             "Arn",
           ],
@@ -277,26 +277,26 @@ Object {
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
     },
-    "MyTestFrontendMyTestFrontenddistributionCFDistributionE6F8BA69": Object {
-      "Properties": Object {
-        "DistributionConfig": Object {
-          "Aliases": Array [
+    "MyTestFrontendMyTestFrontenddistributionCFDistributionE6F8BA69": {
+      "Properties": {
+        "DistributionConfig": {
+          "Aliases": [
             "myapp.example.com",
           ],
-          "CacheBehaviors": Array [
-            Object {
-              "AllowedMethods": Array [
+          "CacheBehaviors": [
+            {
+              "AllowedMethods": [
                 "GET",
                 "HEAD",
               ],
-              "CachedMethods": Array [
+              "CachedMethods": [
                 "GET",
                 "HEAD",
               ],
               "Compress": true,
               "DefaultTTL": 0,
-              "ForwardedValues": Object {
-                "Cookies": Object {
+              "ForwardedValues": {
+                "Cookies": {
                   "Forward": "none",
                 },
                 "QueryString": false,
@@ -307,19 +307,19 @@ Object {
               "TargetOriginId": "origin1",
               "ViewerProtocolPolicy": "redirect-to-https",
             },
-            Object {
-              "AllowedMethods": Array [
+            {
+              "AllowedMethods": [
                 "GET",
                 "HEAD",
               ],
-              "CachedMethods": Array [
+              "CachedMethods": [
                 "GET",
                 "HEAD",
               ],
               "Compress": true,
               "DefaultTTL": 0,
-              "ForwardedValues": Object {
-                "Cookies": Object {
+              "ForwardedValues": {
+                "Cookies": {
                   "Forward": "none",
                 },
                 "QueryString": false,
@@ -330,8 +330,8 @@ Object {
               "TargetOriginId": "origin1",
               "ViewerProtocolPolicy": "redirect-to-https",
             },
-            Object {
-              "AllowedMethods": Array [
+            {
+              "AllowedMethods": [
                 "DELETE",
                 "GET",
                 "HEAD",
@@ -340,16 +340,16 @@ Object {
                 "POST",
                 "PUT",
               ],
-              "CachedMethods": Array [
+              "CachedMethods": [
                 "GET",
                 "HEAD",
               ],
               "Compress": true,
-              "ForwardedValues": Object {
-                "Cookies": Object {
+              "ForwardedValues": {
+                "Cookies": {
                   "Forward": "all",
                 },
-                "Headers": Array [
+                "Headers": [
                   "*",
                 ],
                 "QueryString": true,
@@ -359,26 +359,26 @@ Object {
               "ViewerProtocolPolicy": "redirect-to-https",
             },
           ],
-          "CustomErrorResponses": Array [
-            Object {
+          "CustomErrorResponses": [
+            {
               "ErrorCachingMinTTL": 0,
               "ErrorCode": 404,
               "ResponseCode": 200,
               "ResponsePagePath": "/index.html",
             },
           ],
-          "DefaultCacheBehavior": Object {
-            "AllowedMethods": Array [
+          "DefaultCacheBehavior": {
+            "AllowedMethods": [
               "GET",
               "HEAD",
             ],
-            "CachedMethods": Array [
+            "CachedMethods": [
               "GET",
               "HEAD",
             ],
             "Compress": true,
-            "ForwardedValues": Object {
-              "Cookies": Object {
+            "ForwardedValues": {
+              "Cookies": {
                 "Forward": "none",
               },
               "QueryString": false,
@@ -390,24 +390,24 @@ Object {
           "Enabled": true,
           "HttpVersion": "http2",
           "IPV6Enabled": true,
-          "Origins": Array [
-            Object {
+          "Origins": [
+            {
               "ConnectionAttempts": 3,
               "ConnectionTimeout": 10,
-              "DomainName": Object {
-                "Fn::GetAtt": Array [
+              "DomainName": {
+                "Fn::GetAtt": [
                   "MyTestFrontendMyTestFrontendbucketE6268FCD",
                   "RegionalDomainName",
                 ],
               },
               "Id": "origin1",
-              "S3OriginConfig": Object {
-                "OriginAccessIdentity": Object {
-                  "Fn::Join": Array [
+              "S3OriginConfig": {
+                "OriginAccessIdentity": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "origin-access-identity/cloudfront/",
-                      Object {
+                      {
                         "Ref": "MyTestFrontendMyTestFrontendoriginaccessidentity60A8D7A4",
                       },
                     ],
@@ -415,16 +415,16 @@ Object {
                 },
               },
             },
-            Object {
+            {
               "ConnectionAttempts": 3,
               "ConnectionTimeout": 10,
-              "CustomOriginConfig": Object {
+              "CustomOriginConfig": {
                 "HTTPPort": 80,
                 "HTTPSPort": 443,
                 "OriginKeepaliveTimeout": 60,
                 "OriginProtocolPolicy": "http-only",
                 "OriginReadTimeout": 60,
-                "OriginSSLProtocols": Array [
+                "OriginSSLProtocols": [
                   "TLSv1.2",
                 ],
               },
@@ -433,9 +433,9 @@ Object {
             },
           ],
           "PriceClass": "PriceClass_100",
-          "ViewerCertificate": Object {
-            "AcmCertificateArn": Object {
-              "Fn::GetAtt": Array [
+          "ViewerCertificate": {
+            "AcmCertificateArn": {
+              "Fn::GetAtt": [
                 "MyTestFrontendMyTestFrontendcertificateCertificateRequestorResource3D675D18",
                 "Arn",
               ],
@@ -447,31 +447,31 @@ Object {
       },
       "Type": "AWS::CloudFront::Distribution",
     },
-    "MyTestFrontendMyTestFrontendoriginaccessidentity60A8D7A4": Object {
-      "Properties": Object {
-        "CloudFrontOriginAccessIdentityConfig": Object {
+    "MyTestFrontendMyTestFrontendoriginaccessidentity60A8D7A4": {
+      "Properties": {
+        "CloudFrontOriginAccessIdentityConfig": {
           "Comment": "Access bucket myapp.example.com only from Cloudfront",
         },
       },
       "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
     },
   },
-  "Rules": Object {
-    "CheckBootstrapVersion": Object {
-      "Assertions": Array [
-        Object {
-          "Assert": Object {
-            "Fn::Not": Array [
-              Object {
-                "Fn::Contains": Array [
-                  Array [
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
                     "1",
                     "2",
                     "3",
                     "4",
                     "5",
                   ],
-                  Object {
+                  {
                     "Ref": "BootstrapVersion",
                   },
                 ],
