@@ -20,8 +20,9 @@ function Alert({ alert }) {
           variant="filled"
           severity={alert.severity}
         >
-          {`${alert.description} ${alert.reason ? `(${JSON.stringify(alert.reason)})` : ''
-            }`}
+          {`${alert.description} ${
+            alert.reason ? `(${JSON.stringify(alert.reason)})` : ''
+          }`}
         </AlertComponent>
       )}
     </div>
