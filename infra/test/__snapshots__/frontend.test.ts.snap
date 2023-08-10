@@ -154,7 +154,7 @@ exports[`Frontend Created 1`] = `
       "Properties": {
         "Code": {
           "S3Bucket": "cdk-hnb659fds-assets-123456789012-us-east-1",
-          "S3Key": "861509f9607aa6bb9fd7034fb10fe6f0c60d91dfd7f010b9ef666869dec9bbd9.zip",
+          "S3Key": "d4c47643615e33c32aac58169698a692fa1d1f3e0da0dd6c4bf1c0e6af68d757.zip",
         },
         "Handler": "index.certificateRequestHandler",
         "Role": {
@@ -163,7 +163,7 @@ exports[`Frontend Created 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",

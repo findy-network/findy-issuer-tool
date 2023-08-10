@@ -249,7 +249,7 @@ exports[`Pipeline Created 1`] = `
       "Properties": {
         "Code": {
           "S3Bucket": "cdk-hnb659fds-assets-123456789012-us-east-1",
-          "S3Key": "e45ee2082d227db1b6f0292696ce5ce2b061c105d15efb341925ca040d1feb68.zip",
+          "S3Key": "5cc92ed0cea39e2b8de2dbc527dfb5980a3af9564bd1084d840b9787c7d0467e.zip",
         },
         "Handler": "index.handler",
         "Role": {
@@ -258,7 +258,7 @@ exports[`Pipeline Created 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs14.x",
+        "Runtime": "nodejs18.x",
       },
       "Type": "AWS::Lambda::Function",
     },
@@ -586,7 +586,7 @@ exports[`Pipeline Created 1`] = `
                   "Version": "1",
                 },
                 "Configuration": {
-                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"23c75891ff0c166e9f8fb953a323d288316933058cf9089775b034cd9a7baffd"}]",
+                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"510e61700e74754b5bae2919a09bf35428ea229e9b3f365d3bd96a131b37c624"}]",
                   "ProjectName": {
                     "Ref": "PipelineBuildSynthStepCdkBuildProject7FBB5116",
                   },
@@ -623,7 +623,7 @@ exports[`Pipeline Created 1`] = `
                   "Version": "1",
                 },
                 "Configuration": {
-                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"14acd4fdbdcea77081957633fe5e486757babea9a34fd8635ca76d3a8b489a9b"}]",
+                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"a3a68653c9c3eeb9114a64976934780e7e207f3be9ebdbd21545e0a90b730f26"}]",
                   "ProjectName": {
                     "Ref": "PipelineUpdatePipelineSelfMutationDAA41400",
                   },
@@ -1037,7 +1037,7 @@ exports[`Pipeline Created 1`] = `
               },
             },
           ],
-          "Image": "aws/codebuild/standard:5.0",
+          "Image": "aws/codebuild/standard:6.0",
           "ImagePullCredentialsType": "CODEBUILD",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
@@ -1059,7 +1059,7 @@ exports[`Pipeline Created 1`] = `
     },
     "build": {
       "commands": [
-        "cdk-assets --path \\"assembly-MyTestStack-Deploy/MyTestStackDeployFindyIssuerToolInfraStack703E1CDB.assets.json\\" --verbose publish \\"861509f9607aa6bb9fd7034fb10fe6f0c60d91dfd7f010b9ef666869dec9bbd9:123456789012-us-east-1\\""
+        "cdk-assets --path \\"assembly-MyTestStack-Deploy/MyTestStackDeployFindyIssuerToolInfraStack703E1CDB.assets.json\\" --verbose publish \\"d4c47643615e33c32aac58169698a692fa1d1f3e0da0dd6c4bf1c0e6af68d757:123456789012-us-east-1\\""
       ]
     }
   }
@@ -1301,7 +1301,7 @@ exports[`Pipeline Created 1`] = `
               "Value": "/findy-issuer-tool/cdk-context",
             },
           ],
-          "Image": "aws/codebuild/standard:5.0",
+          "Image": "aws/codebuild/standard:6.0",
           "ImagePullCredentialsType": "CODEBUILD",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
@@ -1545,23 +1545,12 @@ exports[`Pipeline Created 1`] = `
           "Statement": [
             {
               "Action": "sts:AssumeRole",
-              "Condition": {
-                "Bool": {
-                  "aws:ViaAWSService": "codepipeline.amazonaws.com",
-                },
-              },
               "Effect": "Allow",
               "Principal": {
                 "AWS": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":iam::123456789012:root",
-                    ],
+                  "Fn::GetAtt": [
+                    "PipelineRoleB27FAA37",
+                    "Arn",
                   ],
                 },
               },
@@ -2010,7 +1999,7 @@ exports[`Pipeline Created 1`] = `
               },
             },
           ],
-          "Image": "aws/codebuild/standard:5.0",
+          "Image": "aws/codebuild/standard:6.0",
           "ImagePullCredentialsType": "CODEBUILD",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
@@ -2086,7 +2075,7 @@ exports[`Pipeline Created 1`] = `
               },
             },
           ],
-          "Image": "aws/codebuild/standard:5.0",
+          "Image": "aws/codebuild/standard:6.0",
           "ImagePullCredentialsType": "CODEBUILD",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
@@ -2355,7 +2344,7 @@ exports[`Pipeline Created 1`] = `
               },
             },
           ],
-          "Image": "aws/codebuild/standard:5.0",
+          "Image": "aws/codebuild/standard:6.0",
           "ImagePullCredentialsType": "CODEBUILD",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
@@ -2822,7 +2811,7 @@ exports[`Pipeline Created 1`] = `
               },
             },
           ],
-          "Image": "aws/codebuild/standard:5.0",
+          "Image": "aws/codebuild/standard:6.0",
           "ImagePullCredentialsType": "CODEBUILD",
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
