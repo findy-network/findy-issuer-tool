@@ -1,23 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Pipeline Created 1`] = `
-Object {
-  "Parameters": Object {
-    "BootstrapVersion": Object {
+{
+  "Parameters": {
+    "BootstrapVersion": {
       "Default": "/cdk-bootstrap/hnb659fds/version",
       "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
       "Type": "AWS::SSM::Parameter::Value<String>",
     },
-    "SsmParameterValuefindyissuertoolgithubconnectionarnC96584B6F00A464EAD1953AFF4B05118Parameter": Object {
+    "SsmParameterValuefindyissuertoolgithubconnectionarnC96584B6F00A464EAD1953AFF4B05118Parameter": {
       "Default": "/findy-issuer-tool/github-connection-arn",
       "Type": "AWS::SSM::Parameter::Value<String>",
     },
   },
-  "Resources": Object {
-    "FindyIssuerToolPipelineNotificationRule81DF5240": Object {
-      "Properties": Object {
+  "Resources": {
+    "FindyIssuerToolPipelineNotificationRule81DF5240": {
+      "Properties": {
         "DetailType": "FULL",
-        "EventTypeIds": Array [
+        "EventTypeIds": [
           "codepipeline-pipeline-pipeline-execution-failed",
           "codepipeline-pipeline-pipeline-execution-canceled",
           "codepipeline-pipeline-pipeline-execution-started",
@@ -25,24 +25,24 @@ Object {
           "codepipeline-pipeline-pipeline-execution-succeeded",
         ],
         "Name": "MyTestStackFindyIssuerToolPipelineNotificationRuleCFB3AA64",
-        "Resource": Object {
-          "Fn::Join": Array [
+        "Resource": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "arn:",
-              Object {
+              {
                 "Ref": "AWS::Partition",
               },
               ":codepipeline:us-east-1:123456789012:",
-              Object {
+              {
                 "Ref": "Pipeline9850B417",
               },
             ],
           ],
         },
-        "Targets": Array [
-          Object {
-            "TargetAddress": Object {
+        "Targets": [
+          {
+            "TargetAddress": {
               "Ref": "FindyIssuerToolPipelineNotificationTopic5F221E09",
             },
             "TargetType": "SNS",
@@ -51,20 +51,20 @@ Object {
       },
       "Type": "AWS::CodeStarNotifications::NotificationRule",
     },
-    "FindyIssuerToolPipelineNotificationTopic5F221E09": Object {
+    "FindyIssuerToolPipelineNotificationTopic5F221E09": {
       "Type": "AWS::SNS::Topic",
     },
-    "FindyIssuerToolPipelineNotificationTopicPolicy16A99F54": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "FindyIssuerToolPipelineNotificationTopicPolicy16A99F54": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "sns:Publish",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codestar-notifications.amazonaws.com",
               },
-              "Resource": Object {
+              "Resource": {
                 "Ref": "FindyIssuerToolPipelineNotificationTopic5F221E09",
               },
               "Sid": "0",
@@ -72,30 +72,30 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "Topics": Array [
-          Object {
+        "Topics": [
+          {
             "Ref": "FindyIssuerToolPipelineNotificationTopic5F221E09",
           },
         ],
       },
       "Type": "AWS::SNS::TopicPolicy",
     },
-    "LogRetention260F545388": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
+    "LogRetention260F545388": {
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "/aws/codebuild/",
-              Object {
+              {
                 "Ref": "PipelineBuildSynthStepCdkBuildProject7FBB5116",
               },
             ],
           ],
         },
         "RetentionInDays": 30,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
+        "ServiceToken": {
+          "Fn::GetAtt": [
             "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
             "Arn",
           ],
@@ -103,22 +103,22 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention4129643683": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
+    "LogRetention4129643683": {
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "/aws/codebuild/",
-              Object {
+              {
                 "Ref": "PipelineDeployFindyIssuerToolBuildFrontendStepEB1DDBA3",
               },
             ],
           ],
         },
         "RetentionInDays": 30,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
+        "ServiceToken": {
+          "Fn::GetAtt": [
             "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
             "Arn",
           ],
@@ -126,22 +126,22 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention497DA7D03A": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
+    "LogRetention497DA7D03A": {
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "/aws/codebuild/",
-              Object {
+              {
                 "Ref": "PipelineDeployFindyIssuerToolDeployBackendStepF56DD232",
               },
             ],
           ],
         },
         "RetentionInDays": 30,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
+        "ServiceToken": {
+          "Fn::GetAtt": [
             "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
             "Arn",
           ],
@@ -149,22 +149,22 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention5234559EEF": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
+    "LogRetention5234559EEF": {
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "/aws/codebuild/",
-              Object {
+              {
                 "Ref": "PipelineDeployFindyIssuerToolDeployFrontendStepF2CCADA2",
               },
             ],
           ],
         },
         "RetentionInDays": 30,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
+        "ServiceToken": {
+          "Fn::GetAtt": [
             "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
             "Arn",
           ],
@@ -172,22 +172,22 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention6021F63EBB": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
+    "LogRetention6021F63EBB": {
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "/aws/codebuild/",
-              Object {
+              {
                 "Ref": "PipelineDeployFindyIssuerToolDeploymentTest826DD53C",
               },
             ],
           ],
         },
         "RetentionInDays": 30,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
+        "ServiceToken": {
+          "Fn::GetAtt": [
             "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
             "Arn",
           ],
@@ -195,22 +195,22 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention7861E85E38": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
+    "LogRetention7861E85E38": {
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "/aws/codebuild/",
-              Object {
+              {
                 "Ref": "PipelineUpdatePipelineSelfMutationDAA41400",
               },
             ],
           ],
         },
         "RetentionInDays": 30,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
+        "ServiceToken": {
+          "Fn::GetAtt": [
             "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
             "Arn",
           ],
@@ -218,22 +218,22 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetention9157B2F0C5": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
+    "LogRetention9157B2F0C5": {
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Join": [
             "",
-            Array [
+            [
               "/aws/codebuild/",
-              Object {
+              {
                 "Ref": "PipelineAssetsFileAsset185A67CB4",
               },
             ],
           ],
         },
         "RetentionInDays": 30,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
+        "ServiceToken": {
+          "Fn::GetAtt": [
             "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
             "Arn",
           ],
@@ -241,19 +241,19 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A": Object {
-      "DependsOn": Array [
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A": {
+      "DependsOn": [
         "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
         "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
       ],
-      "Properties": Object {
-        "Code": Object {
+      "Properties": {
+        "Code": {
           "S3Bucket": "cdk-hnb659fds-assets-123456789012-us-east-1",
           "S3Key": "e45ee2082d227db1b6f0292696ce5ce2b061c105d15efb341925ca040d1feb68.zip",
         },
         "Handler": "index.handler",
-        "Role": Object {
-          "Fn::GetAtt": Array [
+        "Role": {
+          "Fn::GetAtt": [
             "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
             "Arn",
           ],
@@ -262,27 +262,27 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "lambda.amazonaws.com",
               },
             },
           ],
           "Version": "2012-10-17",
         },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
               "",
-              Array [
+              [
                 "arn:",
-                Object {
+                {
                   "Ref": "AWS::Partition",
                 },
                 ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
@@ -293,12 +293,12 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "logs:PutRetentionPolicy",
                 "logs:DeleteRetentionPolicy",
               ],
@@ -309,19 +309,19 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "MyTestStackconfbucket3F056BA4": Object {
+    "MyTestStackconfbucket3F056BA4": {
       "DeletionPolicy": "Delete",
-      "Properties": Object {
+      "Properties": {
         "BucketName": "myteststack-conf-bucket",
-        "PublicAccessBlockConfiguration": Object {
+        "PublicAccessBlockConfiguration": {
           "BlockPublicAcls": true,
           "BlockPublicPolicy": true,
           "IgnorePublicAcls": true,
@@ -331,14 +331,14 @@ Object {
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Delete",
     },
-    "MyTestStackdeployroleB4A9E465": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "MyTestStackdeployroleB4A9E465": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codebuild.amazonaws.com",
               },
             },
@@ -348,12 +348,12 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "MyTestStackdeployroleDefaultPolicy4A926C3A": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "MyTestStackdeployroleDefaultPolicy4A926C3A": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "elasticbeanstalk:*",
                 "ec2:*",
                 "ecr:*",
@@ -371,40 +371,40 @@ Object {
               "Effect": "Allow",
               "Resource": "*",
             },
-            Object {
+            {
               "Action": "ssm:GetParameters",
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
@@ -413,39 +413,39 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineDeployFindyIssuerToolDeployBackendStepF56DD232",
                       },
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineDeployFindyIssuerToolDeployBackendStepF56DD232",
                       },
                       ":*",
@@ -454,8 +454,8 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:CreateReportGroup",
                 "codebuild:CreateReport",
                 "codebuild:UpdateReport",
@@ -463,16 +463,16 @@ Object {
                 "codebuild:BatchPutCodeCoverages",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":codebuild:us-east-1:123456789012:report-group/",
-                    Object {
+                    {
                       "Ref": "PipelineDeployFindyIssuerToolDeployBackendStepF56DD232",
                     },
                     "-*",
@@ -480,26 +480,26 @@ Object {
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineArtifactsBucketAEA9A052",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineArtifactsBucketAEA9A052",
                           "Arn",
                         ],
@@ -514,59 +514,59 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "MyTestStackdeployroleDefaultPolicy4A926C3A",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "MyTestStackdeployroleB4A9E465",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "Pipeline9850B417": Object {
-      "DependsOn": Array [
+    "Pipeline9850B417": {
+      "DependsOn": [
         "PipelineRoleDefaultPolicy7BDC1ABB",
         "PipelineRoleB27FAA37",
       ],
-      "Properties": Object {
-        "ArtifactStore": Object {
-          "Location": Object {
+      "Properties": {
+        "ArtifactStore": {
+          "Location": {
             "Ref": "PipelineArtifactsBucketAEA9A052",
           },
           "Type": "S3",
         },
         "Name": "FindyIssuerToolPipeline",
         "RestartExecutionOnUpdate": true,
-        "RoleArn": Object {
-          "Fn::GetAtt": Array [
+        "RoleArn": {
+          "Fn::GetAtt": [
             "PipelineRoleB27FAA37",
             "Arn",
           ],
         },
-        "Stages": Array [
-          Object {
-            "Actions": Array [
-              Object {
-                "ActionTypeId": Object {
+        "Stages": [
+          {
+            "Actions": [
+              {
+                "ActionTypeId": {
                   "Category": "Source",
                   "Owner": "AWS",
                   "Provider": "CodeStarSourceConnection",
                   "Version": "1",
                 },
-                "Configuration": Object {
+                "Configuration": {
                   "BranchName": "master",
-                  "ConnectionArn": Object {
+                  "ConnectionArn": {
                     "Ref": "SsmParameterValuefindyissuertoolgithubconnectionarnC96584B6F00A464EAD1953AFF4B05118Parameter",
                   },
                   "FullRepositoryId": "findy-network/findy-issuer-tool",
                 },
                 "Name": "findy-network_findy-issuer-tool",
-                "OutputArtifacts": Array [
-                  Object {
+                "OutputArtifacts": [
+                  {
                     "Name": "findy_network_findy_issuer_tool_Source",
                   },
                 ],
-                "RoleArn": Object {
-                  "Fn::GetAtt": Array [
+                "RoleArn": {
+                  "Fn::GetAtt": [
                     "PipelineSourcefindynetworkfindyissuertoolCodePipelineActionRole8D8B732F",
                     "Arn",
                   ],
@@ -576,34 +576,34 @@ Object {
             ],
             "Name": "Source",
           },
-          Object {
-            "Actions": Array [
-              Object {
-                "ActionTypeId": Object {
+          {
+            "Actions": [
+              {
+                "ActionTypeId": {
                   "Category": "Build",
                   "Owner": "AWS",
                   "Provider": "CodeBuild",
                   "Version": "1",
                 },
-                "Configuration": Object {
-                  "EnvironmentVariables": "[{\\"name\\":\\"_PROJECT_CONFIG_HASH\\",\\"type\\":\\"PLAINTEXT\\",\\"value\\":\\"23c75891ff0c166e9f8fb953a323d288316933058cf9089775b034cd9a7baffd\\"}]",
-                  "ProjectName": Object {
+                "Configuration": {
+                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"23c75891ff0c166e9f8fb953a323d288316933058cf9089775b034cd9a7baffd"}]",
+                  "ProjectName": {
                     "Ref": "PipelineBuildSynthStepCdkBuildProject7FBB5116",
                   },
                 },
-                "InputArtifacts": Array [
-                  Object {
+                "InputArtifacts": [
+                  {
                     "Name": "findy_network_findy_issuer_tool_Source",
                   },
                 ],
                 "Name": "SynthStep",
-                "OutputArtifacts": Array [
-                  Object {
+                "OutputArtifacts": [
+                  {
                     "Name": "SynthStep_Output",
                   },
                 ],
-                "RoleArn": Object {
-                  "Fn::GetAtt": Array [
+                "RoleArn": {
+                  "Fn::GetAtt": [
                     "PipelineCodeBuildActionRole226DB0CB",
                     "Arn",
                   ],
@@ -613,29 +613,29 @@ Object {
             ],
             "Name": "Build",
           },
-          Object {
-            "Actions": Array [
-              Object {
-                "ActionTypeId": Object {
+          {
+            "Actions": [
+              {
+                "ActionTypeId": {
                   "Category": "Build",
                   "Owner": "AWS",
                   "Provider": "CodeBuild",
                   "Version": "1",
                 },
-                "Configuration": Object {
-                  "EnvironmentVariables": "[{\\"name\\":\\"_PROJECT_CONFIG_HASH\\",\\"type\\":\\"PLAINTEXT\\",\\"value\\":\\"14acd4fdbdcea77081957633fe5e486757babea9a34fd8635ca76d3a8b489a9b\\"}]",
-                  "ProjectName": Object {
+                "Configuration": {
+                  "EnvironmentVariables": "[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"14acd4fdbdcea77081957633fe5e486757babea9a34fd8635ca76d3a8b489a9b"}]",
+                  "ProjectName": {
                     "Ref": "PipelineUpdatePipelineSelfMutationDAA41400",
                   },
                 },
-                "InputArtifacts": Array [
-                  Object {
+                "InputArtifacts": [
+                  {
                     "Name": "SynthStep_Output",
                   },
                 ],
                 "Name": "SelfMutate",
-                "RoleArn": Object {
-                  "Fn::GetAtt": Array [
+                "RoleArn": {
+                  "Fn::GetAtt": [
                     "PipelineCodeBuildActionRole226DB0CB",
                     "Arn",
                   ],
@@ -645,28 +645,28 @@ Object {
             ],
             "Name": "UpdatePipeline",
           },
-          Object {
-            "Actions": Array [
-              Object {
-                "ActionTypeId": Object {
+          {
+            "Actions": [
+              {
+                "ActionTypeId": {
                   "Category": "Build",
                   "Owner": "AWS",
                   "Provider": "CodeBuild",
                   "Version": "1",
                 },
-                "Configuration": Object {
-                  "ProjectName": Object {
+                "Configuration": {
+                  "ProjectName": {
                     "Ref": "PipelineAssetsFileAsset185A67CB4",
                   },
                 },
-                "InputArtifacts": Array [
-                  Object {
+                "InputArtifacts": [
+                  {
                     "Name": "SynthStep_Output",
                   },
                 ],
                 "Name": "FileAsset1",
-                "RoleArn": Object {
-                  "Fn::GetAtt": Array [
+                "RoleArn": {
+                  "Fn::GetAtt": [
                     "PipelineCodeBuildActionRole226DB0CB",
                     "Arn",
                   ],
@@ -676,25 +676,25 @@ Object {
             ],
             "Name": "Assets",
           },
-          Object {
-            "Actions": Array [
-              Object {
-                "ActionTypeId": Object {
+          {
+            "Actions": [
+              {
+                "ActionTypeId": {
                   "Category": "Deploy",
                   "Owner": "AWS",
                   "Provider": "CloudFormation",
                   "Version": "1",
                 },
-                "Configuration": Object {
+                "Configuration": {
                   "ActionMode": "CHANGE_SET_REPLACE",
                   "Capabilities": "CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND",
                   "ChangeSetName": "PipelineChange",
-                  "RoleArn": Object {
-                    "Fn::Join": Array [
+                  "RoleArn": {
+                    "Fn::Join": [
                       "",
-                      Array [
+                      [
                         "arn:",
-                        Object {
+                        {
                           "Ref": "AWS::Partition",
                         },
                         ":iam::123456789012:role/cdk-hnb659fds-cfn-exec-role-123456789012-us-east-1",
@@ -704,18 +704,18 @@ Object {
                   "StackName": "Deploy-FindyIssuerToolInfraStack",
                   "TemplatePath": "SynthStep_Output::assembly-MyTestStack-Deploy/MyTestStackDeployFindyIssuerToolInfraStack703E1CDB.template.json",
                 },
-                "InputArtifacts": Array [
-                  Object {
+                "InputArtifacts": [
+                  {
                     "Name": "SynthStep_Output",
                   },
                 ],
                 "Name": "FindyIssuerToolInfraStack.Prepare",
-                "RoleArn": Object {
-                  "Fn::Join": Array [
+                "RoleArn": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":iam::123456789012:role/cdk-hnb659fds-deploy-role-123456789012-us-east-1",
@@ -724,26 +724,26 @@ Object {
                 },
                 "RunOrder": 1,
               },
-              Object {
-                "ActionTypeId": Object {
+              {
+                "ActionTypeId": {
                   "Category": "Deploy",
                   "Owner": "AWS",
                   "Provider": "CloudFormation",
                   "Version": "1",
                 },
-                "Configuration": Object {
+                "Configuration": {
                   "ActionMode": "CHANGE_SET_EXECUTE",
                   "ChangeSetName": "PipelineChange",
                   "StackName": "Deploy-FindyIssuerToolInfraStack",
                 },
                 "Name": "FindyIssuerToolInfraStack.Deploy",
                 "Namespace": "MyTestStackDeployFindyIssuerToolInfraStack703E1CDB",
-                "RoleArn": Object {
-                  "Fn::Join": Array [
+                "RoleArn": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":iam::123456789012:role/cdk-hnb659fds-deploy-role-123456789012-us-east-1",
@@ -752,119 +752,119 @@ Object {
                 },
                 "RunOrder": 2,
               },
-              Object {
-                "ActionTypeId": Object {
+              {
+                "ActionTypeId": {
                   "Category": "Build",
                   "Owner": "AWS",
                   "Provider": "CodeBuild",
                   "Version": "1",
                 },
-                "Configuration": Object {
-                  "ProjectName": Object {
+                "Configuration": {
+                  "ProjectName": {
                     "Ref": "PipelineDeployFindyIssuerToolBuildFrontendStepEB1DDBA3",
                   },
                 },
-                "InputArtifacts": Array [
-                  Object {
+                "InputArtifacts": [
+                  {
                     "Name": "findy_network_findy_issuer_tool_Source",
                   },
                 ],
                 "Name": "FindyIssuerToolBuildFrontendStep",
-                "OutputArtifacts": Array [
-                  Object {
+                "OutputArtifacts": [
+                  {
                     "Name": "FindyIssuerToolBuildFrontendStep_Output",
                   },
                 ],
-                "RoleArn": Object {
-                  "Fn::GetAtt": Array [
+                "RoleArn": {
+                  "Fn::GetAtt": [
                     "PipelineCodeBuildActionRole226DB0CB",
                     "Arn",
                   ],
                 },
                 "RunOrder": 3,
               },
-              Object {
-                "ActionTypeId": Object {
+              {
+                "ActionTypeId": {
                   "Category": "Build",
                   "Owner": "AWS",
                   "Provider": "CodeBuild",
                   "Version": "1",
                 },
-                "Configuration": Object {
-                  "EnvironmentVariables": "[{\\"name\\":\\"APP_NAME\\",\\"type\\":\\"PLAINTEXT\\",\\"value\\":\\"#{MyTestStackDeployFindyIssuerToolInfraStack703E1CDB.AppName}\\"},{\\"name\\":\\"ENV_NAME\\",\\"type\\":\\"PLAINTEXT\\",\\"value\\":\\"#{MyTestStackDeployFindyIssuerToolInfraStack703E1CDB.EnvName}\\"}]",
-                  "ProjectName": Object {
+                "Configuration": {
+                  "EnvironmentVariables": "[{"name":"APP_NAME","type":"PLAINTEXT","value":"#{MyTestStackDeployFindyIssuerToolInfraStack703E1CDB.AppName}"},{"name":"ENV_NAME","type":"PLAINTEXT","value":"#{MyTestStackDeployFindyIssuerToolInfraStack703E1CDB.EnvName}"}]",
+                  "ProjectName": {
                     "Ref": "PipelineDeployFindyIssuerToolDeployBackendStepF56DD232",
                   },
                 },
-                "InputArtifacts": Array [
-                  Object {
+                "InputArtifacts": [
+                  {
                     "Name": "findy_network_findy_issuer_tool_Source",
                   },
                 ],
                 "Name": "FindyIssuerToolDeployBackendStep",
-                "RoleArn": Object {
-                  "Fn::GetAtt": Array [
+                "RoleArn": {
+                  "Fn::GetAtt": [
                     "PipelineCodeBuildActionRole226DB0CB",
                     "Arn",
                   ],
                 },
                 "RunOrder": 3,
               },
-              Object {
-                "ActionTypeId": Object {
+              {
+                "ActionTypeId": {
                   "Category": "Build",
                   "Owner": "AWS",
                   "Provider": "CodeBuild",
                   "Version": "1",
                 },
-                "Configuration": Object {
-                  "ProjectName": Object {
+                "Configuration": {
+                  "ProjectName": {
                     "Ref": "PipelineDeployFindyIssuerToolDeployFrontendStepF2CCADA2",
                   },
                 },
-                "InputArtifacts": Array [
-                  Object {
+                "InputArtifacts": [
+                  {
                     "Name": "FindyIssuerToolBuildFrontendStep_Output",
                   },
                 ],
                 "Name": "FindyIssuerToolDeployFrontendStep",
-                "OutputArtifacts": Array [
-                  Object {
+                "OutputArtifacts": [
+                  {
                     "Name": "FindyIssuerToolDeployFrontendStep_Output",
                   },
                 ],
-                "RoleArn": Object {
-                  "Fn::GetAtt": Array [
+                "RoleArn": {
+                  "Fn::GetAtt": [
                     "PipelineCodeBuildActionRole226DB0CB",
                     "Arn",
                   ],
                 },
                 "RunOrder": 4,
               },
-              Object {
-                "ActionTypeId": Object {
+              {
+                "ActionTypeId": {
                   "Category": "Build",
                   "Owner": "AWS",
                   "Provider": "CodeBuild",
                   "Version": "1",
                 },
-                "Configuration": Object {
+                "Configuration": {
                   "PrimarySource": "findy_network_findy_issuer_tool_Source",
-                  "ProjectName": Object {
+                  "ProjectName": {
                     "Ref": "PipelineDeployFindyIssuerToolDeploymentTest826DD53C",
                   },
                 },
-                "InputArtifacts": Array [
-                  Object {
+                "InputArtifacts": [
+                  {
                     "Name": "findy_network_findy_issuer_tool_Source",
                   },
-                  Object {
+                  {
                     "Name": "FindyIssuerToolDeployFrontendStep_Output",
                   },
                 ],
                 "Name": "FindyIssuerToolDeploymentTest",
-                "RoleArn": Object {
-                  "Fn::GetAtt": Array [
+                "RoleArn": {
+                  "Fn::GetAtt": [
                     "PipelineCodeBuildActionRole226DB0CB",
                     "Arn",
                   ],
@@ -878,19 +878,19 @@ Object {
       },
       "Type": "AWS::CodePipeline::Pipeline",
     },
-    "PipelineArtifactsBucketAEA9A052": Object {
+    "PipelineArtifactsBucketAEA9A052": {
       "DeletionPolicy": "Retain",
-      "Properties": Object {
-        "BucketEncryption": Object {
-          "ServerSideEncryptionConfiguration": Array [
-            Object {
-              "ServerSideEncryptionByDefault": Object {
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
                 "SSEAlgorithm": "aws:kms",
               },
             },
           ],
         },
-        "PublicAccessBlockConfiguration": Object {
+        "PublicAccessBlockConfiguration": {
           "BlockPublicAcls": true,
           "BlockPublicPolicy": true,
           "IgnorePublicAcls": true,
@@ -900,37 +900,37 @@ Object {
       "Type": "AWS::S3::Bucket",
       "UpdateReplacePolicy": "Retain",
     },
-    "PipelineArtifactsBucketPolicyF53CCC52": Object {
-      "Properties": Object {
-        "Bucket": Object {
+    "PipelineArtifactsBucketPolicyF53CCC52": {
+      "Properties": {
+        "Bucket": {
           "Ref": "PipelineArtifactsBucketAEA9A052",
         },
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "s3:*",
-              "Condition": Object {
-                "Bool": Object {
+              "Condition": {
+                "Bool": {
                   "aws:SecureTransport": "false",
                 },
               },
               "Effect": "Deny",
-              "Principal": Object {
+              "Principal": {
                 "AWS": "*",
               },
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineArtifactsBucketAEA9A052",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineArtifactsBucketAEA9A052",
                           "Arn",
                         ],
@@ -941,20 +941,20 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
               ],
               "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::Join": Array [
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":iam::123456789012:role/cdk-hnb659fds-deploy-role-123456789012-us-east-1",
@@ -962,19 +962,19 @@ Object {
                   ],
                 },
               },
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineArtifactsBucketAEA9A052",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineArtifactsBucketAEA9A052",
                           "Arn",
                         ],
@@ -991,46 +991,46 @@ Object {
       },
       "Type": "AWS::S3::BucketPolicy",
     },
-    "PipelineAssetsFileAsset185A67CB4": Object {
-      "Properties": Object {
-        "Artifacts": Object {
+    "PipelineAssetsFileAsset185A67CB4": {
+      "Properties": {
+        "Artifacts": {
           "Type": "CODEPIPELINE",
         },
-        "Cache": Object {
+        "Cache": {
           "Type": "NO_CACHE",
         },
         "Description": "Pipeline step MyTestStack/Pipeline/Assets/FileAsset1",
         "EncryptionKey": "alias/aws/s3",
-        "Environment": Object {
+        "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "EnvironmentVariables": Array [
-            Object {
+          "EnvironmentVariables": [
+            {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/domain-name",
             },
-            Object {
+            {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/sub-domain-name",
             },
-            Object {
+            {
               "Name": "WALLET_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/wallet-domain-name",
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_NAME",
               "Type": "PLAINTEXT",
-              "Value": Object {
+              "Value": {
                 "Ref": "MyTestStackconfbucket3F056BA4",
               },
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_ARN",
               "Type": "PLAINTEXT",
-              "Value": Object {
-                "Fn::GetAtt": Array [
+              "Value": {
+                "Fn::GetAtt": [
                   "MyTestStackconfbucket3F056BA4",
                   "Arn",
                 ],
@@ -1042,24 +1042,24 @@ Object {
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
         },
-        "ServiceRole": Object {
-          "Fn::GetAtt": Array [
+        "ServiceRole": {
+          "Fn::GetAtt": [
             "PipelineAssetsFileRole59943A77",
             "Arn",
           ],
         },
-        "Source": Object {
+        "Source": {
           "BuildSpec": "{
-  \\"version\\": \\"0.2\\",
-  \\"phases\\": {
-    \\"install\\": {
-      \\"commands\\": [
-        \\"npm install -g cdk-assets@2\\"
+  "version": "0.2",
+  "phases": {
+    "install": {
+      "commands": [
+        "npm install -g cdk-assets@2"
       ]
     },
-    \\"build\\": {
-      \\"commands\\": [
-        \\"cdk-assets --path \\\\\\"assembly-MyTestStack-Deploy/MyTestStackDeployFindyIssuerToolInfraStack703E1CDB.assets.json\\\\\\" --verbose publish \\\\\\"861509f9607aa6bb9fd7034fb10fe6f0c60d91dfd7f010b9ef666869dec9bbd9:123456789012-us-east-1\\\\\\"\\"
+    "build": {
+      "commands": [
+        "cdk-assets --path \\"assembly-MyTestStack-Deploy/MyTestStackDeployFindyIssuerToolInfraStack703E1CDB.assets.json\\" --verbose publish \\"861509f9607aa6bb9fd7034fb10fe6f0c60d91dfd7f010b9ef666869dec9bbd9:123456789012-us-east-1\\""
       ]
     }
   }
@@ -1069,27 +1069,27 @@ Object {
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "PipelineAssetsFileRole59943A77": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineAssetsFileRole59943A77": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codebuild.amazonaws.com",
               },
             },
-            Object {
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::Join": Array [
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":iam::123456789012:root",
@@ -1104,23 +1104,23 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineAssetsFileRoleDefaultPolicy14DB8755": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "PipelineAssetsFileRoleDefaultPolicy14DB8755": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":logs:us-east-1:123456789012:log-group:/aws/codebuild/*",
@@ -1128,8 +1128,8 @@ Object {
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:CreateReportGroup",
                 "codebuild:CreateReport",
                 "codebuild:UpdateReport",
@@ -1137,12 +1137,12 @@ Object {
                 "codebuild:BatchPutCodeCoverages",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":codebuild:us-east-1:123456789012:report-group/*",
@@ -1150,8 +1150,8 @@ Object {
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:BatchGetBuilds",
                 "codebuild:StartBuild",
                 "codebuild:StopBuild",
@@ -1159,47 +1159,47 @@ Object {
               "Effect": "Allow",
               "Resource": "*",
             },
-            Object {
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Resource": Object {
+              "Resource": {
                 "Fn::Sub": "arn:\${AWS::Partition}:iam::123456789012:role/cdk-hnb659fds-file-publishing-role-123456789012-us-east-1",
               },
             },
-            Object {
+            {
               "Action": "ssm:GetParameters",
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
@@ -1208,26 +1208,26 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineArtifactsBucketAEA9A052",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineArtifactsBucketAEA9A052",
                           "Arn",
                         ],
@@ -1242,60 +1242,60 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineAssetsFileRoleDefaultPolicy14DB8755",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineAssetsFileRole59943A77",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineBuildSynthStepCdkBuildProject7FBB5116": Object {
-      "Properties": Object {
-        "Artifacts": Object {
+    "PipelineBuildSynthStepCdkBuildProject7FBB5116": {
+      "Properties": {
+        "Artifacts": {
           "Type": "CODEPIPELINE",
         },
-        "Cache": Object {
+        "Cache": {
           "Type": "NO_CACHE",
         },
         "Description": "Pipeline step MyTestStack/Pipeline/Build/SynthStep",
         "EncryptionKey": "alias/aws/s3",
-        "Environment": Object {
+        "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "EnvironmentVariables": Array [
-            Object {
+          "EnvironmentVariables": [
+            {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/domain-name",
             },
-            Object {
+            {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/sub-domain-name",
             },
-            Object {
+            {
               "Name": "WALLET_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/wallet-domain-name",
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_NAME",
               "Type": "PLAINTEXT",
-              "Value": Object {
+              "Value": {
                 "Ref": "MyTestStackconfbucket3F056BA4",
               },
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_ARN",
               "Type": "PLAINTEXT",
-              "Value": Object {
-                "Fn::GetAtt": Array [
+              "Value": {
+                "Fn::GetAtt": [
                   "MyTestStackconfbucket3F056BA4",
                   "Arn",
                 ],
               },
             },
-            Object {
+            {
               "Name": "CDK_CONTEXT_JSON",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/cdk-context",
@@ -1306,36 +1306,36 @@ Object {
           "PrivilegedMode": false,
           "Type": "LINUX_CONTAINER",
         },
-        "ServiceRole": Object {
-          "Fn::GetAtt": Array [
+        "ServiceRole": {
+          "Fn::GetAtt": [
             "PipelineBuildSynthStepCdkBuildProjectRole2407DBD0",
             "Arn",
           ],
         },
-        "Source": Object {
+        "Source": {
           "BuildSpec": "{
-  \\"version\\": \\"0.2\\",
-  \\"phases\\": {
-    \\"install\\": {
-      \\"commands\\": [
-        \\"npm install -g aws-cdk\\"
+  "version": "0.2",
+  "phases": {
+    "install": {
+      "commands": [
+        "npm install -g aws-cdk"
       ]
     },
-    \\"build\\": {
-      \\"commands\\": [
-        \\"cd infra\\",
-        \\"echo \\\\\\"$CDK_CONTEXT_JSON\\\\\\" > cdk.context.json\\",
-        \\"cat cdk.context.json\\",
-        \\"npm ci\\",
-        \\"npm run build\\",
-        \\"npx cdk synth\\",
-        \\"npm run pipeline:context\\"
+    "build": {
+      "commands": [
+        "cd infra",
+        "echo \\"$CDK_CONTEXT_JSON\\" > cdk.context.json",
+        "cat cdk.context.json",
+        "npm ci",
+        "npm run build",
+        "npx cdk synth",
+        "npm run pipeline:context"
       ]
     }
   },
-  \\"artifacts\\": {
-    \\"base-directory\\": \\"infra/cdk.out\\",
-    \\"files\\": \\"**/*\\"
+  "artifacts": {
+    "base-directory": "infra/cdk.out",
+    "files": "**/*"
   }
 }",
           "Type": "CODEPIPELINE",
@@ -1343,14 +1343,14 @@ Object {
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "PipelineBuildSynthStepCdkBuildProjectRole2407DBD0": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineBuildSynthStepCdkBuildProjectRole2407DBD0": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codebuild.amazonaws.com",
               },
             },
@@ -1360,56 +1360,56 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineBuildSynthStepCdkBuildProjectRoleDefaultPolicy3CD6B151": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineBuildSynthStepCdkBuildProjectRoleDefaultPolicy3CD6B151": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "ssm:GetParameters",
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/cdk-context",
@@ -1418,39 +1418,39 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineBuildSynthStepCdkBuildProject7FBB5116",
                       },
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineBuildSynthStepCdkBuildProject7FBB5116",
                       },
                       ":*",
@@ -1459,8 +1459,8 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:CreateReportGroup",
                 "codebuild:CreateReport",
                 "codebuild:UpdateReport",
@@ -1468,16 +1468,16 @@ Object {
                 "codebuild:BatchPutCodeCoverages",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":codebuild:us-east-1:123456789012:report-group/",
-                    Object {
+                    {
                       "Ref": "PipelineBuildSynthStepCdkBuildProject7FBB5116",
                     },
                     "-*",
@@ -1485,13 +1485,13 @@ Object {
                 ],
               },
             },
-            Object {
+            {
               "Action": "ssm:PutParameter",
               "Effect": "Allow",
               "Resource": "arn:aws:ssm:us-east-1:123456789012:parameter/findy-issuer-tool*",
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
@@ -1504,19 +1504,19 @@ Object {
                 "s3:Abort*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineArtifactsBucketAEA9A052",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineArtifactsBucketAEA9A052",
                           "Arn",
                         ],
@@ -1531,33 +1531,33 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineBuildSynthStepCdkBuildProjectRoleDefaultPolicy3CD6B151",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineBuildSynthStepCdkBuildProjectRole2407DBD0",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineCodeBuildActionRole226DB0CB": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineCodeBuildActionRole226DB0CB": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
-              "Condition": Object {
-                "Bool": Object {
+              "Condition": {
+                "Bool": {
                   "aws:ViaAWSService": "codepipeline.amazonaws.com",
                 },
               },
               "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::Join": Array [
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":iam::123456789012:root",
@@ -1572,103 +1572,103 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineCodeBuildActionRoleDefaultPolicy1D62A6FE": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "PipelineCodeBuildActionRoleDefaultPolicy1D62A6FE": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "codebuild:BatchGetBuilds",
                 "codebuild:StartBuild",
                 "codebuild:StopBuild",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineBuildSynthStepCdkBuildProject7FBB5116",
                   "Arn",
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:BatchGetBuilds",
                 "codebuild:StartBuild",
                 "codebuild:StopBuild",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineUpdatePipelineSelfMutationDAA41400",
                   "Arn",
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:BatchGetBuilds",
                 "codebuild:StartBuild",
                 "codebuild:StopBuild",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineAssetsFileAsset185A67CB4",
                   "Arn",
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:BatchGetBuilds",
                 "codebuild:StartBuild",
                 "codebuild:StopBuild",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineDeployFindyIssuerToolBuildFrontendStepEB1DDBA3",
                   "Arn",
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:BatchGetBuilds",
                 "codebuild:StartBuild",
                 "codebuild:StopBuild",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineDeployFindyIssuerToolDeployBackendStepF56DD232",
                   "Arn",
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:BatchGetBuilds",
                 "codebuild:StartBuild",
                 "codebuild:StopBuild",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineDeployFindyIssuerToolDeployFrontendStepF2CCADA2",
                   "Arn",
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:BatchGetBuilds",
                 "codebuild:StartBuild",
                 "codebuild:StopBuild",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineDeployFindyIssuerToolDeploymentTest826DD53C",
                   "Arn",
                 ],
@@ -1678,70 +1678,70 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineCodeBuildActionRoleDefaultPolicy1D62A6FE",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineCodeBuildActionRole226DB0CB",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineDeployFindyIssuerToolBuildFrontendStepEB1DDBA3": Object {
-      "Properties": Object {
-        "Artifacts": Object {
+    "PipelineDeployFindyIssuerToolBuildFrontendStepEB1DDBA3": {
+      "Properties": {
+        "Artifacts": {
           "Type": "CODEPIPELINE",
         },
-        "Cache": Object {
+        "Cache": {
           "Type": "NO_CACHE",
         },
         "Description": "Pipeline step MyTestStack/Pipeline/Deploy/FindyIssuerToolBuildFrontendStep",
         "EncryptionKey": "alias/aws/s3",
-        "Environment": Object {
+        "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "EnvironmentVariables": Array [
-            Object {
+          "EnvironmentVariables": [
+            {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/domain-name",
             },
-            Object {
+            {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/sub-domain-name",
             },
-            Object {
+            {
               "Name": "WALLET_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/wallet-domain-name",
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_NAME",
               "Type": "PLAINTEXT",
-              "Value": Object {
+              "Value": {
                 "Ref": "MyTestStackconfbucket3F056BA4",
               },
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_ARN",
               "Type": "PLAINTEXT",
-              "Value": Object {
-                "Fn::GetAtt": Array [
+              "Value": {
+                "Fn::GetAtt": [
                   "MyTestStackconfbucket3F056BA4",
                   "Arn",
                 ],
               },
             },
-            Object {
+            {
               "Name": "API_URL",
               "Type": "PLAINTEXT",
               "Value": "https://undefined.undefined",
             },
-            Object {
+            {
               "Name": "DEFAULT_WEB_WALLET_LABEL",
               "Type": "PLAINTEXT",
               "Value": "Findy Web Wallet",
             },
-            Object {
+            {
               "Name": "DEFAULT_WEB_WALLET_URL",
               "Type": "PLAINTEXT",
               "Value": "https://undefined/connect/",
@@ -1753,31 +1753,31 @@ Object {
           "Type": "LINUX_CONTAINER",
         },
         "Name": "FindyIssuerToolBuildFrontend",
-        "ServiceRole": Object {
-          "Fn::GetAtt": Array [
+        "ServiceRole": {
+          "Fn::GetAtt": [
             "PipelineDeployFindyIssuerToolBuildFrontendStepRole70963055",
             "Arn",
           ],
         },
-        "Source": Object {
+        "Source": {
           "BuildSpec": "{
-  \\"version\\": \\"0.2\\",
-  \\"phases\\": {
-    \\"build\\": {
-      \\"commands\\": [
-        \\"apk add bash\\",
-        \\"cd frontend\\",
-        \\"npm ci\\",
-        \\"npm run build\\",
-        \\"cd ..\\",
-        \\"npm ci\\",
-        \\"npm run licenses:report\\"
+  "version": "0.2",
+  "phases": {
+    "build": {
+      "commands": [
+        "apk add bash",
+        "cd frontend",
+        "npm ci",
+        "npm run build",
+        "cd ..",
+        "npm ci",
+        "npm run licenses:report"
       ]
     }
   },
-  \\"artifacts\\": {
-    \\"base-directory\\": \\"frontend/build\\",
-    \\"files\\": \\"**/*\\"
+  "artifacts": {
+    "base-directory": "frontend/build",
+    "files": "**/*"
   }
 }",
           "Type": "CODEPIPELINE",
@@ -1785,14 +1785,14 @@ Object {
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "PipelineDeployFindyIssuerToolBuildFrontendStepRole70963055": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineDeployFindyIssuerToolBuildFrontendStepRole70963055": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codebuild.amazonaws.com",
               },
             },
@@ -1802,44 +1802,44 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineDeployFindyIssuerToolBuildFrontendStepRoleDefaultPolicy2DD84389": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineDeployFindyIssuerToolBuildFrontendStepRoleDefaultPolicy2DD84389": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "ssm:GetParameters",
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
@@ -1848,39 +1848,39 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineDeployFindyIssuerToolBuildFrontendStepEB1DDBA3",
                       },
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineDeployFindyIssuerToolBuildFrontendStepEB1DDBA3",
                       },
                       ":*",
@@ -1889,8 +1889,8 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:CreateReportGroup",
                 "codebuild:CreateReport",
                 "codebuild:UpdateReport",
@@ -1898,16 +1898,16 @@ Object {
                 "codebuild:BatchPutCodeCoverages",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":codebuild:us-east-1:123456789012:report-group/",
-                    Object {
+                    {
                       "Ref": "PipelineDeployFindyIssuerToolBuildFrontendStepEB1DDBA3",
                     },
                     "-*",
@@ -1915,8 +1915,8 @@ Object {
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
@@ -1929,19 +1929,19 @@ Object {
                 "s3:Abort*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineArtifactsBucketAEA9A052",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineArtifactsBucketAEA9A052",
                           "Arn",
                         ],
@@ -1956,54 +1956,54 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineDeployFindyIssuerToolBuildFrontendStepRoleDefaultPolicy2DD84389",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineDeployFindyIssuerToolBuildFrontendStepRole70963055",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineDeployFindyIssuerToolDeployBackendStepF56DD232": Object {
-      "Properties": Object {
-        "Artifacts": Object {
+    "PipelineDeployFindyIssuerToolDeployBackendStepF56DD232": {
+      "Properties": {
+        "Artifacts": {
           "Type": "CODEPIPELINE",
         },
-        "Cache": Object {
+        "Cache": {
           "Type": "NO_CACHE",
         },
         "Description": "Pipeline step MyTestStack/Pipeline/Deploy/FindyIssuerToolDeployBackendStep",
         "EncryptionKey": "alias/aws/s3",
-        "Environment": Object {
+        "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "EnvironmentVariables": Array [
-            Object {
+          "EnvironmentVariables": [
+            {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/domain-name",
             },
-            Object {
+            {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/sub-domain-name",
             },
-            Object {
+            {
               "Name": "WALLET_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/wallet-domain-name",
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_NAME",
               "Type": "PLAINTEXT",
-              "Value": Object {
+              "Value": {
                 "Ref": "MyTestStackconfbucket3F056BA4",
               },
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_ARN",
               "Type": "PLAINTEXT",
-              "Value": Object {
-                "Fn::GetAtt": Array [
+              "Value": {
+                "Fn::GetAtt": [
                   "MyTestStackconfbucket3F056BA4",
                   "Arn",
                 ],
@@ -2016,21 +2016,21 @@ Object {
           "Type": "LINUX_CONTAINER",
         },
         "Name": "FindyIssuerToolDeployBackend",
-        "ServiceRole": Object {
-          "Fn::GetAtt": Array [
+        "ServiceRole": {
+          "Fn::GetAtt": [
             "MyTestStackdeployroleB4A9E465",
             "Arn",
           ],
         },
-        "Source": Object {
+        "Source": {
           "BuildSpec": "{
-  \\"version\\": \\"0.2\\",
-  \\"phases\\": {
-    \\"build\\": {
-      \\"commands\\": [
-        \\"VERSION=\\\\\\"$(./infra/tools/version.sh ./api)-$(date +%s)\\\\\\"\\",
-        \\"aws elasticbeanstalk create-application-version --application-name $APP_NAME --version-label $VERSION --source-bundle S3Bucket=$CONF_BUCKET_NAME,S3Key=Dockerrun.zip\\",
-        \\"aws elasticbeanstalk update-environment --environment-name $ENV_NAME --version-label $VERSION\\"
+  "version": "0.2",
+  "phases": {
+    "build": {
+      "commands": [
+        "VERSION=\\"$(./infra/tools/version.sh ./api)-$(date +%s)\\"",
+        "aws elasticbeanstalk create-application-version --application-name $APP_NAME --version-label $VERSION --source-bundle S3Bucket=$CONF_BUCKET_NAME,S3Key=Dockerrun.zip",
+        "aws elasticbeanstalk update-environment --environment-name $ENV_NAME --version-label $VERSION"
       ]
     }
   }
@@ -2040,46 +2040,46 @@ Object {
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "PipelineDeployFindyIssuerToolDeployFrontendStepF2CCADA2": Object {
-      "Properties": Object {
-        "Artifacts": Object {
+    "PipelineDeployFindyIssuerToolDeployFrontendStepF2CCADA2": {
+      "Properties": {
+        "Artifacts": {
           "Type": "CODEPIPELINE",
         },
-        "Cache": Object {
+        "Cache": {
           "Type": "NO_CACHE",
         },
         "Description": "Pipeline step MyTestStack/Pipeline/Deploy/FindyIssuerToolDeployFrontendStep",
         "EncryptionKey": "alias/aws/s3",
-        "Environment": Object {
+        "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "EnvironmentVariables": Array [
-            Object {
+          "EnvironmentVariables": [
+            {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/domain-name",
             },
-            Object {
+            {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/sub-domain-name",
             },
-            Object {
+            {
               "Name": "WALLET_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/wallet-domain-name",
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_NAME",
               "Type": "PLAINTEXT",
-              "Value": Object {
+              "Value": {
                 "Ref": "MyTestStackconfbucket3F056BA4",
               },
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_ARN",
               "Type": "PLAINTEXT",
-              "Value": Object {
-                "Fn::GetAtt": Array [
+              "Value": {
+                "Fn::GetAtt": [
                   "MyTestStackconfbucket3F056BA4",
                   "Arn",
                 ],
@@ -2092,27 +2092,27 @@ Object {
           "Type": "LINUX_CONTAINER",
         },
         "Name": "FindyIssuerToolDeployFrontend",
-        "ServiceRole": Object {
-          "Fn::GetAtt": Array [
+        "ServiceRole": {
+          "Fn::GetAtt": [
             "PipelineDeployFindyIssuerToolDeployFrontendStepRole094B037C",
             "Arn",
           ],
         },
-        "Source": Object {
+        "Source": {
           "BuildSpec": "{
-  \\"version\\": \\"0.2\\",
-  \\"phases\\": {
-    \\"build\\": {
-      \\"commands\\": [
-        \\"V1=$(curl https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt)\\",
-        \\"V2=$(cat ./version.txt)\\",
-        \\"if [ \\\\\\"$V1\\\\\\" != \\\\\\"$V2\\\\\\" ]; then aws s3 sync --delete . s3://$SUB_DOMAIN_NAME.$DOMAIN_NAME; fi\\"
+  "version": "0.2",
+  "phases": {
+    "build": {
+      "commands": [
+        "V1=$(curl https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt)",
+        "V2=$(cat ./version.txt)",
+        "if [ \\"$V1\\" != \\"$V2\\" ]; then aws s3 sync --delete . s3://$SUB_DOMAIN_NAME.$DOMAIN_NAME; fi"
       ]
     }
   },
-  \\"artifacts\\": {
-    \\"base-directory\\": \\".\\",
-    \\"files\\": \\"**/*\\"
+  "artifacts": {
+    "base-directory": ".",
+    "files": "**/*"
   }
 }",
           "Type": "CODEPIPELINE",
@@ -2120,14 +2120,14 @@ Object {
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "PipelineDeployFindyIssuerToolDeployFrontendStepRole094B037C": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineDeployFindyIssuerToolDeployFrontendStepRole094B037C": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codebuild.amazonaws.com",
               },
             },
@@ -2137,44 +2137,44 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineDeployFindyIssuerToolDeployFrontendStepRoleDefaultPolicy42B4FA00": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineDeployFindyIssuerToolDeployFrontendStepRoleDefaultPolicy42B4FA00": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "ssm:GetParameters",
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
@@ -2183,39 +2183,39 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineDeployFindyIssuerToolDeployFrontendStepF2CCADA2",
                       },
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineDeployFindyIssuerToolDeployFrontendStepF2CCADA2",
                       },
                       ":*",
@@ -2224,8 +2224,8 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:CreateReportGroup",
                 "codebuild:CreateReport",
                 "codebuild:UpdateReport",
@@ -2233,16 +2233,16 @@ Object {
                 "codebuild:BatchPutCodeCoverages",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":codebuild:us-east-1:123456789012:report-group/",
-                    Object {
+                    {
                       "Ref": "PipelineDeployFindyIssuerToolDeployFrontendStepF2CCADA2",
                     },
                     "-*",
@@ -2250,8 +2250,8 @@ Object {
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:Put*",
                 "s3:Delete*",
                 "s3:Get*",
@@ -2260,8 +2260,8 @@ Object {
               "Effect": "Allow",
               "Resource": "*",
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
@@ -2274,19 +2274,19 @@ Object {
                 "s3:Abort*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineArtifactsBucketAEA9A052",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineArtifactsBucketAEA9A052",
                           "Arn",
                         ],
@@ -2301,54 +2301,54 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineDeployFindyIssuerToolDeployFrontendStepRoleDefaultPolicy42B4FA00",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineDeployFindyIssuerToolDeployFrontendStepRole094B037C",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineDeployFindyIssuerToolDeploymentTest826DD53C": Object {
-      "Properties": Object {
-        "Artifacts": Object {
+    "PipelineDeployFindyIssuerToolDeploymentTest826DD53C": {
+      "Properties": {
+        "Artifacts": {
           "Type": "CODEPIPELINE",
         },
-        "Cache": Object {
+        "Cache": {
           "Type": "NO_CACHE",
         },
         "Description": "Pipeline step MyTestStack/Pipeline/Deploy/FindyIssuerToolDeploymentTest",
         "EncryptionKey": "alias/aws/s3",
-        "Environment": Object {
+        "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "EnvironmentVariables": Array [
-            Object {
+          "EnvironmentVariables": [
+            {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/domain-name",
             },
-            Object {
+            {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/sub-domain-name",
             },
-            Object {
+            {
               "Name": "WALLET_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/wallet-domain-name",
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_NAME",
               "Type": "PLAINTEXT",
-              "Value": Object {
+              "Value": {
                 "Ref": "MyTestStackconfbucket3F056BA4",
               },
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_ARN",
               "Type": "PLAINTEXT",
-              "Value": Object {
-                "Fn::GetAtt": Array [
+              "Value": {
+                "Fn::GetAtt": [
                   "MyTestStackconfbucket3F056BA4",
                   "Arn",
                 ],
@@ -2361,25 +2361,25 @@ Object {
           "Type": "LINUX_CONTAINER",
         },
         "Name": "FindyIssuerToolDeploymentTest",
-        "ServiceRole": Object {
-          "Fn::GetAtt": Array [
+        "ServiceRole": {
+          "Fn::GetAtt": [
             "PipelineDeployFindyIssuerToolDeploymentTestRoleE9EF3A91",
             "Arn",
           ],
         },
-        "Source": Object {
+        "Source": {
           "BuildSpec": "{
-  \\"version\\": \\"0.2\\",
-  \\"phases\\": {
-    \\"install\\": {
-      \\"commands\\": [
-        \\"[ ! -d \\\\\\"out\\\\\\" ] || { echo 'additionalInputs: \\\\\\"out\\\\\\" must not exist yet. If you want to merge multiple artifacts, use a \\\\\\"cp\\\\\\" command.'; exit 1; } && ln -s -- \\\\\\"$CODEBUILD_SRC_DIR_FindyIssuerToolDeployFrontendStep_Output\\\\\\" \\\\\\"out\\\\\\"\\"
+  "version": "0.2",
+  "phases": {
+    "install": {
+      "commands": [
+        "[ ! -d \\"out\\" ] || { echo 'additionalInputs: \\"out\\" must not exist yet. If you want to merge multiple artifacts, use a \\"cp\\" command.'; exit 1; } && ln -s -- \\"$CODEBUILD_SRC_DIR_FindyIssuerToolDeployFrontendStep_Output\\" \\"out\\""
       ]
     },
-    \\"build\\": {
-      \\"commands\\": [
-        \\"curl -sI https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt | grep \\\\\\"HTTP/2 200\\\\\\"\\",
-        \\"./infra/tools/wait-for-ready.sh\\"
+    "build": {
+      "commands": [
+        "curl -sI https://$SUB_DOMAIN_NAME.$DOMAIN_NAME/version.txt | grep \\"HTTP/2 200\\"",
+        "./infra/tools/wait-for-ready.sh"
       ]
     }
   }
@@ -2389,44 +2389,44 @@ Object {
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "PipelineDeployFindyIssuerToolDeploymentTestRoleDefaultPolicy973B6B71": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineDeployFindyIssuerToolDeploymentTestRoleDefaultPolicy973B6B71": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "ssm:GetParameters",
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
@@ -2435,39 +2435,39 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineDeployFindyIssuerToolDeploymentTest826DD53C",
                       },
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineDeployFindyIssuerToolDeploymentTest826DD53C",
                       },
                       ":*",
@@ -2476,8 +2476,8 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:CreateReportGroup",
                 "codebuild:CreateReport",
                 "codebuild:UpdateReport",
@@ -2485,16 +2485,16 @@ Object {
                 "codebuild:BatchPutCodeCoverages",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":codebuild:us-east-1:123456789012:report-group/",
-                    Object {
+                    {
                       "Ref": "PipelineDeployFindyIssuerToolDeploymentTest826DD53C",
                     },
                     "-*",
@@ -2502,26 +2502,26 @@ Object {
                 ],
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineArtifactsBucketAEA9A052",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineArtifactsBucketAEA9A052",
                           "Arn",
                         ],
@@ -2536,22 +2536,22 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineDeployFindyIssuerToolDeploymentTestRoleDefaultPolicy973B6B71",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineDeployFindyIssuerToolDeploymentTestRoleE9EF3A91",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineDeployFindyIssuerToolDeploymentTestRoleE9EF3A91": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineDeployFindyIssuerToolDeploymentTestRoleE9EF3A91": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codebuild.amazonaws.com",
               },
             },
@@ -2561,14 +2561,14 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineRoleB27FAA37": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineRoleB27FAA37": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codepipeline.amazonaws.com",
               },
             },
@@ -2578,12 +2578,12 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineRoleDefaultPolicy7BDC1ABB": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
+    "PipelineRoleDefaultPolicy7BDC1ABB": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
@@ -2596,19 +2596,19 @@ Object {
                 "s3:Abort*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineArtifactsBucketAEA9A052",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineArtifactsBucketAEA9A052",
                           "Arn",
                         ],
@@ -2619,35 +2619,35 @@ Object {
                 },
               ],
             },
-            Object {
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineSourcefindynetworkfindyissuertoolCodePipelineActionRole8D8B732F",
                   "Arn",
                 ],
               },
             },
-            Object {
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineCodeBuildActionRole226DB0CB",
                   "Arn",
                 ],
               },
             },
-            Object {
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":iam::123456789012:role/cdk-hnb659fds-deploy-role-123456789012-us-east-1",
@@ -2659,28 +2659,28 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineRoleDefaultPolicy7BDC1ABB",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineRoleB27FAA37",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineSourcefindynetworkfindyissuertoolCodePipelineActionRole8D8B732F": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineSourcefindynetworkfindyissuertoolCodePipelineActionRole8D8B732F": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
-                "AWS": Object {
-                  "Fn::Join": Array [
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":iam::123456789012:root",
@@ -2695,19 +2695,19 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineSourcefindynetworkfindyissuertoolCodePipelineActionRoleDefaultPolicy1202AE0F": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineSourcefindynetworkfindyissuertoolCodePipelineActionRoleDefaultPolicy1202AE0F": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "codestar-connections:UseConnection",
               "Effect": "Allow",
-              "Resource": Object {
+              "Resource": {
                 "Ref": "SsmParameterValuefindyissuertoolgithubconnectionarnC96584B6F00A464EAD1953AFF4B05118Parameter",
               },
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
@@ -2720,19 +2720,19 @@ Object {
                 "s3:Abort*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineArtifactsBucketAEA9A052",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineArtifactsBucketAEA9A052",
                           "Arn",
                         ],
@@ -2743,18 +2743,18 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:PutObjectAcl",
                 "s3:PutObjectVersionAcl",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
-                    Object {
-                      "Fn::GetAtt": Array [
+                  [
+                    {
+                      "Fn::GetAtt": [
                         "PipelineArtifactsBucketAEA9A052",
                         "Arn",
                       ],
@@ -2768,54 +2768,54 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineSourcefindynetworkfindyissuertoolCodePipelineActionRoleDefaultPolicy1202AE0F",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineSourcefindynetworkfindyissuertoolCodePipelineActionRole8D8B732F",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "PipelineUpdatePipelineSelfMutationDAA41400": Object {
-      "Properties": Object {
-        "Artifacts": Object {
+    "PipelineUpdatePipelineSelfMutationDAA41400": {
+      "Properties": {
+        "Artifacts": {
           "Type": "CODEPIPELINE",
         },
-        "Cache": Object {
+        "Cache": {
           "Type": "NO_CACHE",
         },
         "Description": "Pipeline step MyTestStack/Pipeline/UpdatePipeline/SelfMutate",
         "EncryptionKey": "alias/aws/s3",
-        "Environment": Object {
+        "Environment": {
           "ComputeType": "BUILD_GENERAL1_SMALL",
-          "EnvironmentVariables": Array [
-            Object {
+          "EnvironmentVariables": [
+            {
               "Name": "DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/domain-name",
             },
-            Object {
+            {
               "Name": "SUB_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/sub-domain-name",
             },
-            Object {
+            {
               "Name": "WALLET_DOMAIN_NAME",
               "Type": "PARAMETER_STORE",
               "Value": "/findy-issuer-tool/wallet-domain-name",
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_NAME",
               "Type": "PLAINTEXT",
-              "Value": Object {
+              "Value": {
                 "Ref": "MyTestStackconfbucket3F056BA4",
               },
             },
-            Object {
+            {
               "Name": "CONF_BUCKET_ARN",
               "Type": "PLAINTEXT",
-              "Value": Object {
-                "Fn::GetAtt": Array [
+              "Value": {
+                "Fn::GetAtt": [
                   "MyTestStackconfbucket3F056BA4",
                   "Arn",
                 ],
@@ -2828,24 +2828,24 @@ Object {
           "Type": "LINUX_CONTAINER",
         },
         "Name": "FindyIssuerToolPipeline-selfupdate",
-        "ServiceRole": Object {
-          "Fn::GetAtt": Array [
+        "ServiceRole": {
+          "Fn::GetAtt": [
             "PipelineUpdatePipelineSelfMutationRole57E559E8",
             "Arn",
           ],
         },
-        "Source": Object {
+        "Source": {
           "BuildSpec": "{
-  \\"version\\": \\"0.2\\",
-  \\"phases\\": {
-    \\"install\\": {
-      \\"commands\\": [
-        \\"npm install -g aws-cdk@2\\"
+  "version": "0.2",
+  "phases": {
+    "install": {
+      "commands": [
+        "npm install -g aws-cdk@2"
       ]
     },
-    \\"build\\": {
-      \\"commands\\": [
-        \\"cdk -a . deploy MyTestStack --require-approval=never --verbose\\"
+    "build": {
+      "commands": [
+        "cdk -a . deploy MyTestStack --require-approval=never --verbose"
       ]
     }
   }
@@ -2855,14 +2855,14 @@ Object {
       },
       "Type": "AWS::CodeBuild::Project",
     },
-    "PipelineUpdatePipelineSelfMutationRole57E559E8": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineUpdatePipelineSelfMutationRole57E559E8": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
               "Action": "sts:AssumeRole",
               "Effect": "Allow",
-              "Principal": Object {
+              "Principal": {
                 "Service": "codebuild.amazonaws.com",
               },
             },
@@ -2872,44 +2872,44 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "PipelineUpdatePipelineSelfMutationRoleDefaultPolicyA225DA4E": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
+    "PipelineUpdatePipelineSelfMutationRoleDefaultPolicyA225DA4E": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
               "Action": "ssm:GetParameters",
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/sub-domain-name",
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":ssm:us-east-1:123456789012:parameter/findy-issuer-tool/wallet-domain-name",
@@ -2918,39 +2918,39 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::Join": Array [
+              "Resource": [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineUpdatePipelineSelfMutationDAA41400",
                       },
                     ],
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
+                    [
                       "arn:",
-                      Object {
+                      {
                         "Ref": "AWS::Partition",
                       },
                       ":logs:us-east-1:123456789012:log-group:/aws/codebuild/",
-                      Object {
+                      {
                         "Ref": "PipelineUpdatePipelineSelfMutationDAA41400",
                       },
                       ":*",
@@ -2959,8 +2959,8 @@ Object {
                 },
               ],
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "codebuild:CreateReportGroup",
                 "codebuild:CreateReport",
                 "codebuild:UpdateReport",
@@ -2968,16 +2968,16 @@ Object {
                 "codebuild:BatchPutCodeCoverages",
               ],
               "Effect": "Allow",
-              "Resource": Object {
-                "Fn::Join": Array [
+              "Resource": {
+                "Fn::Join": [
                   "",
-                  Array [
+                  [
                     "arn:",
-                    Object {
+                    {
                       "Ref": "AWS::Partition",
                     },
                     ":codebuild:us-east-1:123456789012:report-group/",
-                    Object {
+                    {
                       "Ref": "PipelineUpdatePipelineSelfMutationDAA41400",
                     },
                     "-*",
@@ -2985,11 +2985,11 @@ Object {
                 ],
               },
             },
-            Object {
+            {
               "Action": "sts:AssumeRole",
-              "Condition": Object {
-                "ForAnyValue:StringEquals": Object {
-                  "iam:ResourceTag/aws-cdk:bootstrap-role": Array [
+              "Condition": {
+                "ForAnyValue:StringEquals": {
+                  "iam:ResourceTag/aws-cdk:bootstrap-role": [
                     "image-publishing",
                     "file-publishing",
                     "deploy",
@@ -2999,36 +2999,36 @@ Object {
               "Effect": "Allow",
               "Resource": "arn:*:iam::123456789012:role/*",
             },
-            Object {
+            {
               "Action": "cloudformation:DescribeStacks",
               "Effect": "Allow",
               "Resource": "*",
             },
-            Object {
+            {
               "Action": "s3:ListBucket",
               "Effect": "Allow",
               "Resource": "*",
             },
-            Object {
-              "Action": Array [
+            {
+              "Action": [
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*",
               ],
               "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
                     "PipelineArtifactsBucketAEA9A052",
                     "Arn",
                   ],
                 },
-                Object {
-                  "Fn::Join": Array [
+                {
+                  "Fn::Join": [
                     "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
+                    [
+                      {
+                        "Fn::GetAtt": [
                           "PipelineArtifactsBucketAEA9A052",
                           "Arn",
                         ],
@@ -3043,8 +3043,8 @@ Object {
           "Version": "2012-10-17",
         },
         "PolicyName": "PipelineUpdatePipelineSelfMutationRoleDefaultPolicyA225DA4E",
-        "Roles": Array [
-          Object {
+        "Roles": [
+          {
             "Ref": "PipelineUpdatePipelineSelfMutationRole57E559E8",
           },
         ],
@@ -3052,22 +3052,22 @@ Object {
       "Type": "AWS::IAM::Policy",
     },
   },
-  "Rules": Object {
-    "CheckBootstrapVersion": Object {
-      "Assertions": Array [
-        Object {
-          "Assert": Object {
-            "Fn::Not": Array [
-              Object {
-                "Fn::Contains": Array [
-                  Array [
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
                     "1",
                     "2",
                     "3",
                     "4",
                     "5",
                   ],
-                  Object {
+                  {
                     "Ref": "BootstrapVersion",
                   },
                 ],
