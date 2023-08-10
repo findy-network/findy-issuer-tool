@@ -1,6 +1,6 @@
 {
   "name": "issuer-tool",
-  "version": "0.2.24",
+  "version": "0.2.25",
   "description": "Sample issuer service API for Findy identity network",
   "main": "src/index.js",
   "scripts": {
