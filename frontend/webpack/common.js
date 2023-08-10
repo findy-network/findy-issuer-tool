@@ -43,4 +43,9 @@ module.exports = {
     }),
     new webpack.DefinePlugin({ CONFIG: JSON.stringify(require('config')) }),
   ],
+  resolve: {
+    alias: {
+      '@mui/styled-engine': '@mui/styled-engine-sc'
+    },
+  },
 };

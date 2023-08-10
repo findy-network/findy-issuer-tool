@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
-import CssBaseline from '@material-ui/core/CssBaseline';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import AppBar from '../components/app-bar';
 import AppContainer from '../components/app-container';

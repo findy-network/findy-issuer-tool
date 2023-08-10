@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import AppBarComponent from '@material-ui/core/AppBar';
-import ToolbarComponent from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { Button } from '@material-ui/core';
+import AppBarComponent from '@mui/material/AppBar';
+import ToolbarComponent from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const Toolbar = styled(ToolbarComponent)`

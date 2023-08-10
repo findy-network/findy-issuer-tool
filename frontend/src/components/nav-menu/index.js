@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItemText from '@material-ui/core/ListItemText';
+import Paper from '@mui/material/Paper';
+import List from '@mui/material/List';
+import ListItemText from '@mui/material/ListItemText';
 
 import { Link, ListItem } from './style';
 

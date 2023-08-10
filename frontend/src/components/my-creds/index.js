@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Paper } from '@material-ui/core';
+import { Paper } from '@mui/material';
 import styled from 'styled-components';
 
 import PairwiseEditor from '../pairwise-editor';
@@ -16,7 +16,7 @@ function MyCreds(props) {
 
   const [pairwiseName, setPairwiseName] = useState('');
   const credDefId = credDefs.find((item) =>
-    item.toLowerCase().includes('github')
+    item.toLowerCase().includes('github'),
   );
   const { name, id, email } = user;
   return (

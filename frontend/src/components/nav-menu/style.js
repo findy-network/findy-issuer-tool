@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Item from '@material-ui/core/ListItem';
+import Item from '@mui/material/ListItem';
 
 import { Link as LinkComponent } from 'react-router-dom';
 

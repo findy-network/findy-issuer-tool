@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 import TextField from '../text-input';
 import EditorButtons from '../editor-buttons';
@@ -40,7 +40,7 @@ function CredEditor({ credDefs, onSend, defaultValues, sending }) {
         Object.keys(newDefault).map((key) => ({
           key,
           value: newDefault[key],
-        }))
+        })),
       );
     } else {
       setAttributes(defaultAttributes);
@@ -56,8 +56,10 @@ function CredEditor({ credDefs, onSend, defaultValues, sending }) {
         onChange={(k) =>
           setAttributes(
             attributes.map((prevItem, itemIndex) =>
-              index === itemIndex ? { key: k, value: prevItem.value } : prevItem
-            )
+              index === itemIndex
+                ? { key: k, value: prevItem.value }
+                : prevItem,
+            ),
           )
         }
       />
@@ -69,8 +71,8 @@ function CredEditor({ credDefs, onSend, defaultValues, sending }) {
         onChange={(v) =>
           setAttributes(
             attributes.map((prevItem, itemIndex) =>
-              index === itemIndex ? { value: v, key: prevItem.key } : prevItem
-            )
+              index === itemIndex ? { value: v, key: prevItem.key } : prevItem,
+            ),
           )
         }
       />
@@ -78,7 +80,7 @@ function CredEditor({ credDefs, onSend, defaultValues, sending }) {
         <Button
           onClick={() =>
             setAttributes(
-              attributes.filter((_, itemIndex) => index !== itemIndex)
+              attributes.filter((_, itemIndex) => index !== itemIndex),
             )
           }
         >
@@ -119,9 +121,9 @@ function CredEditor({ credDefs, onSend, defaultValues, sending }) {
                 ...result,
                 [item.key]: item.value,
               }),
-              {}
+              {},
             ),
-            credDefId
+            credDefId,
           )
         }
         okLabel="Send"

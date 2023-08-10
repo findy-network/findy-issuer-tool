@@ -98,21 +98,21 @@ const initUserFetchEpic = (action$) =>
         }
       }
       return of(fetchUser());
-    })
+    }),
   );
 
 const initConfigFetchEpic = (action$, state$) =>
   action$.pipe(
     ofType(INIT_APP),
     filter(() => !state$.value.config),
-    switchMap(() => of(fetchConfig()))
+    switchMap(() => of(fetchConfig())),
   );
 
 const initLedgerFetchEpic = (action$, state$) =>
   action$.pipe(
     ofType(INIT_APP),
     filter(() => !state$.value.ledger),
-    switchMap(() => of(fetchLedger()))
+    switchMap(() => of(fetchLedger())),
   );
 
 const initAlertEpic = (action$) =>
@@ -127,12 +127,12 @@ const initAlertEpic = (action$) =>
     }),
     switchMap(() => {
       const sent = new URLSearchParams(window.location.search).get(
-        'cred_ready'
+        'cred_ready',
       );
       return sent === 'true'
         ? of(fetchCredentialFulfilled())
         : of(fetchCredentialRejected());
-    })
+    }),
   );
 
 const initFtnEpic = (action$) =>
@@ -147,12 +147,12 @@ const initFtnEpic = (action$) =>
     }),
     switchMap(() => {
       const sent = new URLSearchParams(window.location.search).get(
-        'ftn_cred_ready'
+        'ftn_cred_ready',
       );
       return sent === 'true'
         ? of(fetchFtnStatusFulfilled({ status: 'done_ok' }))
         : of(fetchFtnStatusFulfilled({ status: 'done_fail' }));
-    })
+    }),
   );
 
 const fetchLedgerEpic = (action$, state$) =>
@@ -161,9 +161,9 @@ const fetchLedgerEpic = (action$, state$) =>
     mergeMap(() =>
       get(state$, '/ledger').pipe(
         map(({ response }) => fetchLedgerFulfilled(response)),
-        catchError((error) => of(fetchLedgerRejected(error.xhr.response)))
-      )
-    )
+        catchError((error) => of(fetchLedgerRejected(error.xhr.response))),
+      ),
+    ),
   );
 
 const initConnectionsFetchEpic = (action$, state$) =>
@@ -173,10 +173,10 @@ const initConnectionsFetchEpic = (action$, state$) =>
       () =>
         !state$.value.connections ||
         ['/message', '/issue', '/verify'].find((item) =>
-          state$.value.router.location.pathname.includes(item)
-        )
+          state$.value.router.location.pathname.includes(item),
+        ),
     ),
-    switchMap(() => of(fetchConnections()))
+    switchMap(() => of(fetchConnections())),
   );
 
 const fetchConnectionsEpic = (action$, state$) =>
@@ -185,9 +185,9 @@ const fetchConnectionsEpic = (action$, state$) =>
     mergeMap(() =>
       get(state$, '/connections').pipe(
         map(({ response }) => fetchConnectionsFulfilled(response)),
-        catchError((error) => of(fetchConnectionsRejected(error.xhr.response)))
-      )
-    )
+        catchError((error) => of(fetchConnectionsRejected(error.xhr.response))),
+      ),
+    ),
   );
 
 const fetchUserEpic = (action$, state$) =>
@@ -198,10 +198,10 @@ const fetchUserEpic = (action$, state$) =>
         map(({ response }) => fetchUserFulfilled(response)),
         catchError(() =>
           // TODO: do we need to: push('/');
-          of(fetchUserFulfilled({}))
-        )
-      )
-    )
+          of(fetchUserFulfilled({})),
+        ),
+      ),
+    ),
   );
 
 const fetchConfigEpic = (action$, state$) =>
@@ -209,9 +209,9 @@ const fetchConfigEpic = (action$, state$) =>
     ofType(FETCH_CONFIG),
     mergeMap(() =>
       get(state$, '/auth/config').pipe(
-        map(({ response }) => fetchConfigFulfilled(response))
-      )
-    )
+        map(({ response }) => fetchConfigFulfilled(response)),
+      ),
+    ),
   );
 
 const createEpic =
@@ -222,9 +222,9 @@ const createEpic =
       mergeMap(({ payload }) =>
         httpVerb(state$, path(payload), reqPayload(payload)).pipe(
           map(({ response }) => fulfilled(response)),
-          catchError((error) => of(rejected(error.xhr.response)))
-        )
-      )
+          catchError((error) => of(rejected(error.xhr.response))),
+        ),
+      ),
     );
 
 const fetchFtnStatusEpic = (action$, state$) =>
@@ -236,11 +236,11 @@ const fetchFtnStatusEpic = (action$, state$) =>
         map(({ response }) =>
           response.status.startsWith('ready')
             ? fetchFtnStatusFulfilled(response)
-            : fetchFtnStatus({ id: payload.id, status: response.status })
+            : fetchFtnStatus({ id: payload.id, status: response.status }),
         ),
-        catchError((error) => of(fetchFtnStatusRejected(error.xhr.response)))
-      )
-    )
+        catchError((error) => of(fetchFtnStatusRejected(error.xhr.response))),
+      ),
+    ),
   );
 
 export default combineEpics(
@@ -259,7 +259,7 @@ export default combineEpics(
     () => '/pairwise/invitation',
     () => {},
     fetchPairwiseInvitationFulfilled,
-    fetchPairwiseInvitationRejected
+    fetchPairwiseInvitationRejected,
   ),
   createEpic(
     SAVE_SCHEMA,
@@ -267,7 +267,7 @@ export default combineEpics(
     () => '/create/schema',
     (payload) => payload,
     saveSchemaFulfilled,
-    saveSchemaRejected
+    saveSchemaRejected,
   ),
   createEpic(
     SAVE_CRED_DEF,
@@ -275,7 +275,7 @@ export default combineEpics(
     () => '/create/cred-def',
     (payload) => payload,
     saveCredDefFulfilled,
-    saveCredDefRejected
+    saveCredDefRejected,
   ),
   createEpic(
     FETCH_EVENTS_LOG,
@@ -283,7 +283,7 @@ export default combineEpics(
     () => `/events/log`,
     () => {},
     fetchEventsLogFulfilled,
-    fetchEventsLogRejected
+    fetchEventsLogRejected,
   ),
   createEpic(
     SEND_BASIC_MESSAGE,
@@ -291,7 +291,7 @@ export default combineEpics(
     () => '/pairwise/basic-message',
     (payload) => payload,
     sendBasicMessageFulfilled,
-    sendBasicMessageRejected
+    sendBasicMessageRejected,
   ),
   createEpic(
     SEND_PROOF_REQUEST,
@@ -299,7 +299,7 @@ export default combineEpics(
     () => '/pairwise/proof-request',
     (payload) => payload,
     sendProofRequestFulfilled,
-    sendProofRequestRejected
+    sendProofRequestRejected,
   ),
   createEpic(
     SEND_CREDENTIAL,
@@ -307,7 +307,7 @@ export default combineEpics(
     () => '/pairwise/credential',
     (payload) => payload,
     sendCredentialFulfilled,
-    sendCredentialRejected
+    sendCredentialRejected,
   ),
   createEpic(
     FETCH_URL,
@@ -316,7 +316,7 @@ export default combineEpics(
       `${url}?connectionId=${connectionId}&credDefId=${credDefId}`,
     () => {},
     fetchUrlFulfilled,
-    fetchUrlRejected
+    fetchUrlRejected,
   ),
   createEpic(
     FETCH_FTN_INVITATION,
@@ -324,8 +324,8 @@ export default combineEpics(
     () => `/ftn/start`,
     () => {},
     fetchFtnInvitationFulfilled,
-    fetchFtnInvitationRejected
+    fetchFtnInvitationRejected,
   ),
   fetchFtnStatusEpic,
-  initFtnEpic
+  initFtnEpic,
 );

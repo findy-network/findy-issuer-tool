@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Divider from '@material-ui/core/Divider';
+import Divider from '@mui/material/Divider';
 import { saveSchema, saveCredDef } from '../store/actions';
 import CredDefEditor from '../components/cred-def-editor';
 import SchemaEditor from '../components/schema-editor';

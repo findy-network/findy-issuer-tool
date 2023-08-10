@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import LedgerLink from '../ledger-link';
 import TextField from '../text-input';
 import EditorButtons from '../editor-buttons';
