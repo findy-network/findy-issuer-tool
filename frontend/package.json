@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.10",
-    "@mui/icons-material": "^5.14.3",
+    "@mui/icons-material": "^5.14.6",
     "@mui/lab": "^5.0.0-alpha.140",
     "@mui/material": "^5.14.6",
     "@mui/styled-engine-sc": "^5.12.0",
