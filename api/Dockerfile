@@ -1,5 +1,5 @@
 
-FROM node:16.14.2-alpine3.15
+FROM node:18.17-alpine3.18
 
 WORKDIR /usr/src/app
 
@@ -13,7 +13,7 @@ ENV NODE_ENV production
 
 RUN npm run build:production
 
-FROM node:16.14.2-alpine3.15
+FROM node:18.17-alpine3.18
 
 ARG ISSUER_TOOL_SERVER_CERT_PATH
 
