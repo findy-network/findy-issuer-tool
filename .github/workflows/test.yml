@@ -116,7 +116,7 @@ jobs:
 
       - name: collect docker logs
         if: ${{ failure() }}
-        uses: jwalton/gh-docker-logs@v2.0.2
+        uses: jwalton/gh-docker-logs@v2.2.1
         with:
           dest: "./tests_output/docker-logs"
 
