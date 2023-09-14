@@ -65,9 +65,8 @@ export default async (
     log.info(
       `Decrypting token with isb signing key ${JSON.stringify(isbSigningKey)}`,
     );
-    const verificationResult = await jose.JWS.createVerify(
-      isbSigningKey,
-    ).verify(decrypted);
+    const verificationResult =
+      await jose.JWS.createVerify(isbSigningKey).verify(decrypted);
     return JSON.parse(verificationResult.payload.toString());
   };
 
