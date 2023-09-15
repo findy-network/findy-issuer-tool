@@ -1,6 +1,6 @@
 {
   "name": "findy-issuer-app",
-  "version": "0.2.27",
+  "version": "0.2.28",
   "description": "Sample service app for issuing credentials via Findy Network.",
   "main": "src/index.js",
   "scripts": {
