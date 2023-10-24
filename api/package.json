@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@findy-network/findy-common-ts": "^0.3.4",
+    "@findy-network/findy-common-ts": "^0.3.5",
     "aws-sdk": "^2.1478.0",
     "axios": "^1.5.1",
     "config": "^3.3.9",
