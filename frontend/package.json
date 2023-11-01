@@ -42,7 +42,7 @@
     "@babel/runtime": "^7.23.2",
     "@mui/icons-material": "^5.14.15",
     "@mui/lab": "5.0.0-alpha.151",
-    "@mui/material": "^5.14.15",
+    "@mui/material": "^5.14.16",
     "@mui/styled-engine-sc": "^5.14.12",
     "immutable": "^4.3.4",
     "prop-types": "15.8.1",
