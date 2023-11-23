@@ -41,7 +41,7 @@
   "dependencies": {
     "@babel/runtime": "^7.23.4",
     "@findy-network/findy-common-ts": "^0.3.6",
-    "aws-sdk": "^2.1501.0",
+    "aws-sdk": "^2.1502.0",
     "axios": "^1.6.2",
     "config": "^3.3.9",
     "cors": "^2.8.5",
