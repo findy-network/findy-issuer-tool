@@ -249,7 +249,7 @@ exports[`Pipeline Created 1`] = `
       "Properties": {
         "Code": {
           "S3Bucket": "cdk-hnb659fds-assets-123456789012-us-east-1",
-          "S3Key": "5bc602ecde93c947efe5899ae355f999986a1acbe610b1c0b9c468d738857555.zip",
+          "S3Key": "4e26bf2d0a26f2097fb2b261f22bb51e3f6b4b52635777b1e54edbd8e2d58c35.zip",
         },
         "Handler": "index.handler",
         "Role": {
@@ -1060,7 +1060,7 @@ exports[`Pipeline Created 1`] = `
     },
     "build": {
       "commands": [
-        "cdk-assets --path \\"assembly-MyTestStack-Deploy/MyTestStackDeployFindyIssuerToolInfraStack703E1CDB.assets.json\\" --verbose publish \\"d4c47643615e33c32aac58169698a692fa1d1f3e0da0dd6c4bf1c0e6af68d757:123456789012-us-east-1\\""
+        "cdk-assets --path \\"assembly-MyTestStack-Deploy/MyTestStackDeployFindyIssuerToolInfraStack703E1CDB.assets.json\\" --verbose publish \\"b073cebcf4d61fb152a30f5a5e57a94df7f980a549fdf1a79a0b18c5750522d8:123456789012-us-east-1\\""
       ]
     }
   }
