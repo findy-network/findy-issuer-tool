@@ -39,7 +39,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@babel/runtime": "^7.23.6",
+    "@babel/runtime": "^7.23.7",
     "@findy-network/findy-common-ts": "^0.3.7",
     "aws-sdk": "^2.1529.0",
     "axios": "^1.6.3",
