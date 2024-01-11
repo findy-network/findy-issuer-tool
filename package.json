@@ -21,6 +21,6 @@
   "devDependencies": {
     "chromedriver": "^120.0.1",
     "js-green-licenses": "^4.0.0",
-    "nightwatch": "^3.3.7"
+    "nightwatch": "^3.3.8"
   }
 }
