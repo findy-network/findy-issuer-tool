@@ -41,7 +41,7 @@
   "dependencies": {
     "@babel/runtime": "^7.23.8",
     "@mui/icons-material": "^5.15.4",
-    "@mui/lab": "5.0.0-alpha.160",
+    "@mui/lab": "5.0.0-alpha.161",
     "@mui/material": "^5.15.5",
     "@mui/styled-engine-sc": "^5.14.12",
     "immutable": "^4.3.4",
