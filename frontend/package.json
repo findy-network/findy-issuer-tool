@@ -39,7 +39,7 @@
     }
   },
   "dependencies": {
-    "@babel/runtime": "^7.23.8",
+    "@babel/runtime": "^7.23.9",
     "@mui/icons-material": "^5.15.6",
     "@mui/lab": "5.0.0-alpha.162",
     "@mui/material": "^5.15.6",
