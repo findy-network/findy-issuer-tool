@@ -19,7 +19,7 @@ export default async (
 ) => {
   const { clientId } = config.auth.apps['findy-issuer-app'].isb;
   const isbHost = config.auth.apps['findy-issuer-app'].isb.host;
-  
+
   const urlGenPath = '/creds/isb-url';
   const signAlg = 'RS256';
   const { ourHost } = config;
@@ -27,7 +27,7 @@ export default async (
   let issuer;
   try {
     issuer = await Issuer.discover(isbHost);
-  } catch {
+  } catch (_) {
     log.error('Failed to discover ISB');
     return null;
   }

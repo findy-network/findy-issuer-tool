@@ -43,8 +43,8 @@ export default async (storage, config) => {
     getIntegrationConfig: getConfig,
     githubLogin: ghLogin.githubLoginIssuer,
     devModeLogin: devLogin.devLogin,
-    findyLogin: findyLogin ? findyLogin.findyOIDCCallback : () => { },
-    isbGetUrlForEmail: isbCred ? isbCred.getUrlForEmailForRequest : () => { },
-    isbCallback: isbCred ? isbCred.isbCallback : () => { },
+    findyLogin: findyLogin ? findyLogin.findyOIDCCallback : () => {},
+    isbGetUrlForEmail: isbCred ? isbCred.getUrlForEmailForRequest : () => {},
+    isbCallback: isbCred ? isbCred.isbCallback : () => {},
   };
 };
