@@ -34,7 +34,7 @@ export default async (storage, config) => {
         ...(findyLogin ? { findy: { url: findyLogin.getUrl(req) } } : {}),
       },
       creds: {
-        ftn: { url: isbCred.getUrl() },
+        ftn: { url: isbCred && isbCred.getUrl() },
       },
     };
     return conf;
@@ -43,8 +43,8 @@ export default async (storage, config) => {
     getIntegrationConfig: getConfig,
     githubLogin: ghLogin.githubLoginIssuer,
     devModeLogin: devLogin.devLogin,
-    findyLogin: findyLogin ? findyLogin.findyOIDCCallback : () => {},
-    isbGetUrlForEmail: isbCred.getUrlForEmailForRequest,
-    isbCallback: isbCred.isbCallback,
+    findyLogin: findyLogin ? findyLogin.findyOIDCCallback : () => { },
+    isbGetUrlForEmail: isbCred ? isbCred.getUrlForEmailForRequest : () => { },
+    isbCallback: isbCred ? isbCred.isbCallback : () => { },
   };
 };
