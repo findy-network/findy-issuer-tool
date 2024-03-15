@@ -536,6 +536,7 @@ exports[`Pipeline Created 1`] = `
           "Type": "S3",
         },
         "Name": "FindyIssuerToolPipeline",
+        "PipelineType": "V1",
         "RestartExecutionOnUpdate": true,
         "RoleArn": {
           "Fn::GetAtt": [
