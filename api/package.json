@@ -45,7 +45,7 @@
     "axios": "^1.6.7",
     "config": "^3.3.11",
     "cors": "^2.8.5",
-    "express": "^4.18.2",
+    "express": "^4.18.3",
     "express-json-validator-middleware": "^3.0.1",
     "express-jwt": "^8.4.1",
     "express-session": "^1.18.0",
