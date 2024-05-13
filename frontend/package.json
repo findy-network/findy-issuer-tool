@@ -84,7 +84,7 @@
     "npm-outdated-to-latest": "^1.0.6",
     "prettier": "^3.2.5",
     "react-test-renderer": "^18.3.1",
-    "rimraf": "5.0.5",
+    "rimraf": "5.0.7",
     "source-map-loader": "^5.0.0",
     "svg-url-loader": "^8.0.0",
     "url-loader": "^4.1.1",
